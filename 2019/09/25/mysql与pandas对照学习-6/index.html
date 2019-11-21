@@ -1,0 +1,3088 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>mysql与pandas对照学习(6) - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="The JOIN operation&#x2F;zhThe JOIN operation&#x2F;zh game(賽事)    id(編號) mdate(日期) stadium(場館) team1(隊伍1) team2(隊伍2)    1001 8 June 2012 National Stadium, Warsaw POL GRE   1002 8 June 2012 Stadion Miejski (Wrocl">
+<meta name="keywords" content="数据分析,mysql,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql与pandas对照学习(6)">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;25&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="The JOIN operation&#x2F;zhThe JOIN operation&#x2F;zh game(賽事)    id(編號) mdate(日期) stadium(場館) team1(隊伍1) team2(隊伍2)    1001 8 June 2012 National Stadium, Warsaw POL GRE   1002 8 June 2012 Stadion Miejski (Wrocl">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-20T12:39:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="mysql与pandas对照学习(6)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    22 分钟 读完 (大约 3252 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                mysql与pandas对照学习(6)
+            
+        </h1>
+        <div class="content">
+            <h2 id="The-JOIN-operation-zh"><a href="#The-JOIN-operation-zh" class="headerlink" title="The JOIN operation/zh"></a>The JOIN operation/zh</h2><p><a href="https://sqlzoo.net/wiki/The_JOIN_operation/zh" target="_blank" rel="noopener">The JOIN operation/zh</a></p>
+<p>game(賽事)</p>
+<table>
+<thead>
+<tr>
+<th>id(編號)</th>
+<th>mdate(日期)</th>
+<th>stadium(場館)</th>
+<th>team1(隊伍1)</th>
+<th>team2(隊伍2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1001</td>
+<td>8 June 2012</td>
+<td>National Stadium, Warsaw</td>
+<td>POL</td>
+<td>GRE</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>8 June 2012</td>
+<td>Stadion Miejski (Wroclaw)</td>
+<td>RUS</td>
+<td>CZE</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>12 June 2012</td>
+<td>Stadion Miejski (Wroclaw)</td>
+<td>GRE</td>
+<td>CZE</td>
+</tr>
+<tr>
+<td>1004</td>
+<td>12 June 2012</td>
+<td>National Stadium, Warsaw</td>
+<td>POL</td>
+<td>RUS</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<p>goal(入球)</p>
+<table>
+<thead>
+<tr>
+<th>matchid(賽事編號)</th>
+<th>teamid(隊伍編號)</th>
+<th>player(入球球員)</th>
+<th>gtime(入球時間)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1001</td>
+<td>POL</td>
+<td>Robert Lewandowski</td>
+<td>17</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>GRE</td>
+<td>Dimitris Salpingidis</td>
+<td>51</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>RUS</td>
+<td>Alan Dzagoev</td>
+<td>15</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>RUS</td>
+<td>Roman Pavlyuchenko</td>
+<td>82</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>eteam(歐洲隊伍)</p>
+<table>
+<thead>
+<tr>
+<th>id(編號)</th>
+<th>teamname(隊名)</th>
+<th>coach(教練)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>POL</td>
+<td>Poland</td>
+<td>Franciszek Smuda</td>
+</tr>
+<tr>
+<td>RUS</td>
+<td>Russia</td>
+<td>Dick Advocaat</td>
+</tr>
+<tr>
+<td>CZE</td>
+<td>Czech Republic</td>
+<td>Michal Bilek</td>
+</tr>
+<tr>
+<td>GRE</td>
+<td>Greece</td>
+<td>Fernando Santos</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="合拼表格-歐洲國家盃-UEFA-EURO-2012"><a href="#合拼表格-歐洲國家盃-UEFA-EURO-2012" class="headerlink" title="合拼表格-- 歐洲國家盃 UEFA EURO 2012"></a>合拼表格-- 歐洲國家盃 UEFA EURO 2012</h3><p>此教程是介召 <code>JOIN</code>的使用，讓你合拼2個或更多的表格。數據庫的表格貯存了在波蘭 Poland 和烏克欄 Ukraine的歐洲國家盃2012的賽事和入球資料。</p>
+<hr>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sql</span><br><span class="line">%sql mysql+pymysql://root:lanhoo@localhost/dbs</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> sqlalchemy</span><br><span class="line">engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://root:lanhoo@localhost/dbs"</span>)</span><br><span class="line">game = pd.read_sql_table(<span class="hljs-string">"game"</span>, engine)</span><br><span class="line">goal = pd.read_sql_table(<span class="hljs-string">"goal"</span>, engine)</span><br><span class="line">eteam = pd.read_sql_table(<span class="hljs-string">"eteam"</span>, engine)</span><br></pre></td></tr></table></figure>
+
+<pre><code>The sql extension is already loaded. To reload it, use:
+  %reload_ext sql</code></pre><h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><p>第一個例子列出球員姓氏為’Bender’的入球數據。 <code>*</code> 表示列出表格的全部欄位，簡化了寫<code>matchid, teamid, player, gtime</code>語句。</p>
+<p>修改此SQL以列出 賽事編號<em>matchid</em> 和球員名 <em>player</em> ,該球員代表德國隊Germany入球的。要找出德國隊球員，要檢查: <code>teamid = &#39;GER&#39;</code></p>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT matchid, player FROM goal WHERE teamid = <span class="hljs-string">'GER'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+10 rows affected.</code></pre><table>
+    <tr>
+        <th>matchid</th>
+        <th>player</th>
+    </tr>
+    <tr>
+        <td>1008</td>
+        <td>Mario Gómez</td>
+    </tr>
+    <tr>
+        <td>1010</td>
+        <td>Mario Gómez</td>
+    </tr>
+    <tr>
+        <td>1010</td>
+        <td>Mario Gómez</td>
+    </tr>
+    <tr>
+        <td>1012</td>
+        <td>Lukas Podolski</td>
+    </tr>
+    <tr>
+        <td>1012</td>
+        <td>Lars Bender</td>
+    </tr>
+    <tr>
+        <td>1026</td>
+        <td>Philipp Lahm</td>
+    </tr>
+    <tr>
+        <td>1026</td>
+        <td>Sami Khedira</td>
+    </tr>
+    <tr>
+        <td>1026</td>
+        <td>Miroslav Klose</td>
+    </tr>
+    <tr>
+        <td>1026</td>
+        <td>Marco Reus</td>
+    </tr>
+    <tr>
+        <td>1030</td>
+        <td>Mesut Özil</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goal.query(<span class="hljs-string">" teamid == 'GER'"</span>)[[<span class="hljs-string">"matchid"</span>, <span class="hljs-string">"player"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>matchid</th>
+      <th>player</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15</th>
+      <td>1008</td>
+      <td>Mario Gómez</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1010</td>
+      <td>Mario Gómez</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>1010</td>
+      <td>Mario Gómez</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>1012</td>
+      <td>Lukas Podolski</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>1012</td>
+      <td>Lars Bender</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>1026</td>
+      <td>Philipp Lahm</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>1026</td>
+      <td>Sami Khedira</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>1026</td>
+      <td>Miroslav Klose</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>1026</td>
+      <td>Marco Reus</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>1030</td>
+      <td>Mesut Özil</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2><p>由以上查詢，你可見Lars Bender’s 於賽事 1012入球。.現在我們想知道此賽事的對賽隊伍是哪一隊。</p>
+<p>留意在 <code>goal</code> 表格中的欄位 <code>matchid</code> ，是對應表格<code>game</code>的欄位<code>id</code>。我們可以在表格 <strong>game</strong>中找出賽事1012的資料。</p>
+<p>只顯示賽事1012的 id, stadium, team1, team2</p>
+<h3 id="mysql-1"><a href="#mysql-1" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT id,stadium,team1,team2 FROM game WHERE id = <span class="hljs-number">1012</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>id</th>
+        <th>stadium</th>
+        <th>team1</th>
+        <th>team2</th>
+    </tr>
+    <tr>
+        <td>1012</td>
+        <td>Arena Lviv</td>
+        <td>DEN</td>
+        <td>GER</td>
+    </tr>
+</table>
+
+
+
+<h2 id="3-顯示每一個德國入球的球員名，隊伍名，場館和日期。"><a href="#3-顯示每一個德國入球的球員名，隊伍名，場館和日期。" class="headerlink" title="3.顯示每一個德國入球的球員名，隊伍名，場館和日期。"></a>3.顯示每一個德國入球的球員名，隊伍名，場館和日期。</h2><p>我們可以利用<code>JOIN</code>來同時進行以上兩個步驟。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">  FROM game JOIN goal ON (id=matchid)</span><br></pre></td></tr></table></figure>
+
+<p>語句<strong>FROM</strong> 表示合拼兩個表格game 和 goal的數據。語句 <strong>ON</strong> 表示如何找出 <strong>game</strong>中每一列應該配對<strong>goal</strong>中的哪一列 -- <strong>goal</strong>的 <strong>id</strong> 必須配對<strong>game</strong>的 <strong>matchid</strong> 。 簡單來說，就是
+<code>ON (game.id=goal.matchid)</code></p>
+<p>以下SQL列出每個入球的球員(來自goal表格)和場館名(來自game表格)</p>
+<p>修改它來顯示每一個德國入球的球員名，隊伍名，場館和日期。</p>
+<h3 id="mysql-2"><a href="#mysql-2" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT player,teamid,stadium,mdate \</span><br><span class="line">  FROM game JOIN goal ON (game.id=goal.matchid) WHERE teamid=<span class="hljs-string">'GER'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+10 rows affected.</code></pre><table>
+    <tr>
+        <th>player</th>
+        <th>teamid</th>
+        <th>stadium</th>
+        <th>mdate</th>
+    </tr>
+    <tr>
+        <td>Mario Gómez</td>
+        <td>GER</td>
+        <td>Arena Lviv</td>
+        <td>9 June 2012</td>
+    </tr>
+    <tr>
+        <td>Mario Gómez</td>
+        <td>GER</td>
+        <td>Metalist Stadium</td>
+        <td>13 June 2012</td>
+    </tr>
+    <tr>
+        <td>Mario Gómez</td>
+        <td>GER</td>
+        <td>Metalist Stadium</td>
+        <td>13 June 2012</td>
+    </tr>
+    <tr>
+        <td>Lukas Podolski</td>
+        <td>GER</td>
+        <td>Arena Lviv</td>
+        <td>17 June 2012</td>
+    </tr>
+    <tr>
+        <td>Lars Bender</td>
+        <td>GER</td>
+        <td>Arena Lviv</td>
+        <td>17 June 2012</td>
+    </tr>
+    <tr>
+        <td>Philipp Lahm</td>
+        <td>GER</td>
+        <td>PGE Arena Gdansk</td>
+        <td>22 June 2012</td>
+    </tr>
+    <tr>
+        <td>Sami Khedira</td>
+        <td>GER</td>
+        <td>PGE Arena Gdansk</td>
+        <td>22 June 2012</td>
+    </tr>
+    <tr>
+        <td>Miroslav Klose</td>
+        <td>GER</td>
+        <td>PGE Arena Gdansk</td>
+        <td>22 June 2012</td>
+    </tr>
+    <tr>
+        <td>Marco Reus</td>
+        <td>GER</td>
+        <td>PGE Arena Gdansk</td>
+        <td>22 June 2012</td>
+    </tr>
+    <tr>
+        <td>Mesut Özil</td>
+        <td>GER</td>
+        <td>National Stadium, Warsaw</td>
+        <td>28 June 2012</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 使用merge达到mysql里join的效果</span></span><br><span class="line">game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>)[[<span class="hljs-string">"player"</span>, <span class="hljs-string">"teamid"</span>, <span class="hljs-string">"stadium"</span>, <span class="hljs-string">"mdate"</span>]]\</span><br><span class="line">    .query(<span class="hljs-string">"teamid == 'GER'"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>player</th>
+      <th>teamid</th>
+      <th>stadium</th>
+      <th>mdate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15</th>
+      <td>Mario Gómez</td>
+      <td>GER</td>
+      <td>Arena Lviv</td>
+      <td>9 June 2012</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Mario Gómez</td>
+      <td>GER</td>
+      <td>Metalist Stadium</td>
+      <td>13 June 2012</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Mario Gómez</td>
+      <td>GER</td>
+      <td>Metalist Stadium</td>
+      <td>13 June 2012</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Lukas Podolski</td>
+      <td>GER</td>
+      <td>Arena Lviv</td>
+      <td>17 June 2012</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Lars Bender</td>
+      <td>GER</td>
+      <td>Arena Lviv</td>
+      <td>17 June 2012</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>Philipp Lahm</td>
+      <td>GER</td>
+      <td>PGE Arena Gdansk</td>
+      <td>22 June 2012</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>Sami Khedira</td>
+      <td>GER</td>
+      <td>PGE Arena Gdansk</td>
+      <td>22 June 2012</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Miroslav Klose</td>
+      <td>GER</td>
+      <td>PGE Arena Gdansk</td>
+      <td>22 June 2012</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>Marco Reus</td>
+      <td>GER</td>
+      <td>PGE Arena Gdansk</td>
+      <td>22 June 2012</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>Mesut Özil</td>
+      <td>GER</td>
+      <td>National Stadium, Warsaw</td>
+      <td>28 June 2012</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><p>使用上題相同的 <code>JOIN</code>語句，<br>列出球員名字叫Mario (<code>player LIKE &#39;Mario%&#39;</code>)有入球的 隊伍1 team1, 隊伍2 team2 和 球員名 player</p>
+<h3 id="mysql-3"><a href="#mysql-3" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT team1, team2, player FROM goal JOIN game ON matchid = id WHERE player LIKE <span class="hljs-string">'Mario%'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+9 rows affected.</code></pre><table>
+    <tr>
+        <th>team1</th>
+        <th>team2</th>
+        <th>player</th>
+    </tr>
+    <tr>
+        <td>GER</td>
+        <td>POR</td>
+        <td>Mario Gómez</td>
+    </tr>
+    <tr>
+        <td>NED</td>
+        <td>GER</td>
+        <td>Mario Gómez</td>
+    </tr>
+    <tr>
+        <td>NED</td>
+        <td>GER</td>
+        <td>Mario Gómez</td>
+    </tr>
+    <tr>
+        <td>IRL</td>
+        <td>CRO</td>
+        <td>Mario Mandžukic</td>
+    </tr>
+    <tr>
+        <td>IRL</td>
+        <td>CRO</td>
+        <td>Mario Mandžukic</td>
+    </tr>
+    <tr>
+        <td>ITA</td>
+        <td>CRO</td>
+        <td>Mario Mandžukic</td>
+    </tr>
+    <tr>
+        <td>ITA</td>
+        <td>IRL</td>
+        <td>Mario Balotelli</td>
+    </tr>
+    <tr>
+        <td>GER</td>
+        <td>ITA</td>
+        <td>Mario Balotelli</td>
+    </tr>
+    <tr>
+        <td>GER</td>
+        <td>ITA</td>
+        <td>Mario Balotelli</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">temp = game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>)[[<span class="hljs-string">"team1"</span>, <span class="hljs-string">"team2"</span>, <span class="hljs-string">"player"</span>]]</span><br><span class="line">temp[temp.player.str.startswith(<span class="hljs-string">"Mario"</span>)]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>team1</th>
+      <th>team2</th>
+      <th>player</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15</th>
+      <td>GER</td>
+      <td>POR</td>
+      <td>Mario Gómez</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>NED</td>
+      <td>GER</td>
+      <td>Mario Gómez</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>NED</td>
+      <td>GER</td>
+      <td>Mario Gómez</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>IRL</td>
+      <td>CRO</td>
+      <td>Mario Mandžukic</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>IRL</td>
+      <td>CRO</td>
+      <td>Mario Mandžukic</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>ITA</td>
+      <td>CRO</td>
+      <td>Mario Mandžukic</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>ITA</td>
+      <td>IRL</td>
+      <td>Mario Balotelli</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>GER</td>
+      <td>ITA</td>
+      <td>Mario Balotelli</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>GER</td>
+      <td>ITA</td>
+      <td>Mario Balotelli</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h2><p>表格<code>eteam</code> 貯存了每一國家隊的資料，包括教練。你可以使用語句 <code>goal JOIN eteam on teamid=id</code>來合拼 <code>JOIN</code> 表格<code>goal</code> 到 表格<code>eteam</code>。</p>
+<p><strong>列出每場球賽中首10分鐘<code>gtime&lt;=10</code>有入球的球員 <code>player</code>, 隊伍<code>teamid</code>, 教練<code>coach</code>, 入球時間<code>gtime</code></strong></p>
+<h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT player, teamid, coach, gtime FROM goal \</span><br><span class="line">JOIN eteam ON teamid=id WHERE gtime&lt;=<span class="hljs-number">10</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+4 rows affected.</code></pre><table>
+    <tr>
+        <th>player</th>
+        <th>teamid</th>
+        <th>coach</th>
+        <th>gtime</th>
+    </tr>
+    <tr>
+        <td>Petr Jirácek</td>
+        <td>CZE</td>
+        <td>Michal Bílek</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Václav Pilar</td>
+        <td>CZE</td>
+        <td>Michal Bílek</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>Mario Mandžukic</td>
+        <td>CRO</td>
+        <td>Slaven Bilic</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Fernando Torres</td>
+        <td>ESP</td>
+        <td>Vicente del Bosque</td>
+        <td>4</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-3"><a href="#pandas-3" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eteam.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"teamid"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"player"</span>, <span class="hljs-string">"teamid"</span>, <span class="hljs-string">"coach"</span>, <span class="hljs-string">"gtime"</span>]].query(<span class="hljs-string">"gtime &lt;= 10"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>player</th>
+      <th>teamid</th>
+      <th>coach</th>
+      <th>gtime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>Petr Jirácek</td>
+      <td>CZE</td>
+      <td>Michal Bílek</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Václav Pilar</td>
+      <td>CZE</td>
+      <td>Michal Bílek</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Fernando Torres</td>
+      <td>ESP</td>
+      <td>Vicente del Bosque</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>Mario Mandžukic</td>
+      <td>CRO</td>
+      <td>Slaven Bilic</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h2><p>要合拼<code>JOIN</code> 表格<code>game</code> 和表格 <code>eteam</code>，你可以使用
+<code>game JOIN eteam ON (team1=eteam.id)</code>
+或
+<code>game JOIN eteam ON (team2=eteam.id)</code></p>
+<p>注意欄位<code>id</code>同時是表格<code>game</code> 和表格 <code>eteam</code>的欄位，你要清楚指出<code>eteam.id</code>而不是只用<code>id</code></p>
+<p><strong>列出’Fernando Santos’作為隊伍1 team1 的教練的賽事日期，和隊伍名。</strong></p>
+<h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT mdate, teamname FROM game JOIN eteam \</span><br><span class="line">ON team1=eteam.id \</span><br><span class="line">WHERE coach = <span class="hljs-string">'Fernando Santos'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+2 rows affected.</code></pre><table>
+    <tr>
+        <th>mdate</th>
+        <th>teamname</th>
+    </tr>
+    <tr>
+        <td>12 June 2012</td>
+        <td>Greece</td>
+    </tr>
+    <tr>
+        <td>16 June 2012</td>
+        <td>Greece</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-4"><a href="#pandas-4" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">game.merge(eteam, left_on=<span class="hljs-string">"team1"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"coach == 'Fernando Santos'"</span>)[[<span class="hljs-string">"mdate"</span>, <span class="hljs-string">"teamname"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mdate</th>
+      <th>teamname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>12 June 2012</td>
+      <td>Greece</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16 June 2012</td>
+      <td>Greece</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h2><p><strong>列出場館 ‘National Stadium, Warsaw’的入球球員。</strong></p>
+<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT player FROM goal JOIN game ON matchid = id \</span><br><span class="line">WHERE stadium = <span class="hljs-string">'National Stadium, Warsaw'</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+9 rows affected.</code></pre><table>
+    <tr>
+        <th>player</th>
+    </tr>
+    <tr>
+        <td>Robert Lewandowski</td>
+    </tr>
+    <tr>
+        <td>Dimitris Salpingidis</td>
+    </tr>
+    <tr>
+        <td>Alan Dzagoev</td>
+    </tr>
+    <tr>
+        <td>Jakub Blaszczykowski</td>
+    </tr>
+    <tr>
+        <td>Giorgos Karagounis</td>
+    </tr>
+    <tr>
+        <td>Cristiano Ronaldo</td>
+    </tr>
+    <tr>
+        <td>Mario Balotelli</td>
+    </tr>
+    <tr>
+        <td>Mario Balotelli</td>
+    </tr>
+    <tr>
+        <td>Mesut Özil</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-5"><a href="#pandas-5" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">goal.merge(game, left_on=<span class="hljs-string">"matchid"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"stadium == 'National Stadium, Warsaw'"</span>)[[<span class="hljs-string">"player"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>player</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Robert Lewandowski</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Dimitris Salpingidis</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Jakub Blaszczykowski</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Alan Dzagoev</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Giorgos Karagounis</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>Cristiano Ronaldo</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>Mesut Özil</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Mario Balotelli</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>Mario Balotelli</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="更困難的題目"><a href="#更困難的題目" class="headerlink" title="更困難的題目"></a>更困難的題目</h2><h2 id="8"><a href="#8" class="headerlink" title="8."></a>8.</h2><p>以下例子找出德國-希臘Germany-Greece 的八強賽事的入球</p>
+<blockquote>
+<p>例子  </p>
+</blockquote>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT player, gtime</span><br><span class="line">  FROM game JOIN goal ON matchid = id </span><br><span class="line">    WHERE (team1=&apos;GER&apos; AND team2=&apos;GRE&apos;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改它，只列出全部賽事，射入德國龍門的球員名字。</strong></p>
+<p>HINT</p>
+<p>找非德國球員的入球，德國可以在賽事中作<strong>team1</strong> 隊伍１（主）或<strong>team2</strong>隊伍２（客）。 你可以用 <code>teamid!=&#39;GER&#39;</code> 來防止列出德國球員。 你可以用 <code>DISTINCT</code>來防止球員出現兩次以上。</p>
+<h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT DISTINCT player FROM game \</span><br><span class="line">    JOIN goal ON matchid = id \</span><br><span class="line">    WHERE ((team1=<span class="hljs-string">'GER'</span> OR team2=<span class="hljs-string">'GER'</span>) AND teamid &lt;&gt; <span class="hljs-string">'GER'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>player</th>
+    </tr>
+    <tr>
+        <td>Robin van Persie</td>
+    </tr>
+    <tr>
+        <td>Michael Krohn-Dehli</td>
+    </tr>
+    <tr>
+        <td>Georgios Samaras</td>
+    </tr>
+    <tr>
+        <td>Dimitris Salpingidis</td>
+    </tr>
+    <tr>
+        <td>Mario Balotelli</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-6"><a href="#pandas-6" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"(team1 == 'GER' or team2=='GER') and teamid != 'GER'"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"player"</span>]].drop_duplicates()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>player</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>21</th>
+      <td>Robin van Persie</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Michael Krohn-Dehli</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>Georgios Samaras</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>Dimitris Salpingidis</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Mario Balotelli</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h2><p><strong>列出隊伍名稱 <code>teamname</code> 和該隊入球總數</strong></p>
+<p>COUNT and GROUP BY</p>
+<p>你應該在SELECT語句中使用COUNT(*)和使用GROUP BY teamname</p>
+<h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT teamname, COUNT(player) \</span><br><span class="line">  FROM eteam JOIN goal ON id=teamid GROUP BY teamname</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+16 rows affected.</code></pre><table>
+    <tr>
+        <th>teamname</th>
+        <th>COUNT(player)</th>
+    </tr>
+    <tr>
+        <td>Croatia</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Czech Republic</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Denmark</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>England</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>France</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Germany</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Greece</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Italy</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>Netherlands</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Poland</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Portugal</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>Republic of Ireland</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Russia</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Spain</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Sweden</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Ukraine</td>
+        <td>2</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-7"><a href="#pandas-7" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eteam.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"teamid"</span>).groupby(<span class="hljs-string">"teamname"</span>).size()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>teamname
+Croatia                 4
+Czech Republic          4
+Denmark                 4
+England                 5
+France                  3
+Germany                10
+Greece                  5
+Italy                   6
+Netherlands             2
+Poland                  2
+Portugal                6
+Republic of Ireland     1
+Russia                  5
+Spain                  12
+Sweden                  5
+Ukraine                 2
+dtype: int64</code></pre><h2 id="10"><a href="#10" class="headerlink" title="10."></a>10.</h2><p><strong>列出場館名和在該場館的入球數字。</strong></p>
+<h3 id="mysql-9"><a href="#mysql-9" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT stadium, COUNT(player) FROM \</span><br><span class="line"> game JOIN goal ON id = matchid GROUP BY stadium</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+8 rows affected.</code></pre><table>
+    <tr>
+        <th>stadium</th>
+        <th>COUNT(player)</th>
+    </tr>
+    <tr>
+        <td>Arena Lviv</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>Donbass Arena</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>Metalist Stadium</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>National Stadium, Warsaw</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>Olimpiyskiy National Sports Complex</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>PGE Arena Gdansk</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>Stadion Miejski (Poznan)</td>
+        <td>8</td>
+    </tr>
+    <tr>
+        <td>Stadion Miejski (Wroclaw)</td>
+        <td>9</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-8"><a href="#pandas-8" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>).groupby(<span class="hljs-string">"stadium"</span>).size()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>stadium
+Arena Lviv                              9
+Donbass Arena                           7
+Metalist Stadium                        7
+National Stadium, Warsaw                9
+Olimpiyskiy National Sports Complex    14
+PGE Arena Gdansk                       13
+Stadion Miejski (Poznan)                8
+Stadion Miejski (Wroclaw)               9
+dtype: int64</code></pre><h2 id="11"><a href="#11" class="headerlink" title="11."></a>11.</h2><p><strong>每一場波蘭’POL’有參與的賽事中，列出賽事編號 matchid, 日期date 和入球數字。</strong></p>
+<h3 id="mysql-10"><a href="#mysql-10" class="headerlink" title="mysql"></a>mysql</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><blockquote>
+<p>使用 <strong><code>group_concat()</code></strong> 可以对分组后的元素进行拼接。前面再加上 <strong><code>distinct</code></strong> 可以对唯一的字符串去重</p>
+</blockquote>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT matchid, group_concat(distinct mdate), count(teamid) \</span><br><span class="line">          FROM game JOIN goal ON matchid = id \</span><br><span class="line">             WHERE (team1 = <span class="hljs-string">'POL'</span> OR team2 = <span class="hljs-string">'POL'</span>) \</span><br><span class="line">                GROUP BY matchid</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>matchid</th>
+        <th>group_concat(distinct mdate)</th>
+        <th>count(teamid)</th>
+    </tr>
+    <tr>
+        <td>1001</td>
+        <td>8 June 2012</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>1004</td>
+        <td>12 June 2012</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>1005</td>
+        <td>16 June 2012</td>
+        <td>1</td>
+    </tr>
+</table>
+
+
+
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT matchid, mdate, count(teamid) \</span><br><span class="line">          FROM game JOIN goal ON matchid = id \</span><br><span class="line">             WHERE (team1 = <span class="hljs-string">'POL'</span> OR team2 = <span class="hljs-string">'POL'</span>) \</span><br><span class="line">                GROUP BY matchid, mdate</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>matchid</th>
+        <th>mdate</th>
+        <th>count(teamid)</th>
+    </tr>
+    <tr>
+        <td>1001</td>
+        <td>8 June 2012</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>1004</td>
+        <td>12 June 2012</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>1005</td>
+        <td>16 June 2012</td>
+        <td>1</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-9"><a href="#pandas-9" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"team1 == 'POL' or team2 == 'POL'"</span>)\</span><br><span class="line">    .groupby([<span class="hljs-string">"matchid"</span>, <span class="hljs-string">"mdate"</span>])\</span><br><span class="line">    .agg(&#123;<span class="hljs-string">"teamid"</span>: <span class="hljs-string">"count"</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>teamid</th>
+    </tr>
+    <tr>
+      <th>matchid</th>
+      <th>mdate</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1001</th>
+      <th>8 June 2012</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1004</th>
+      <th>12 June 2012</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1005</th>
+      <th>16 June 2012</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="12"><a href="#12" class="headerlink" title="12."></a>12.</h2><p><strong>每一場德國’GER’有參與的賽事中，列出賽事編號 matchid, 日期date 和德國的入球數字。</strong></p>
+<h3 id="mysql-11"><a href="#mysql-11" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT matchid, mdate, COUNT(<span class="hljs-number">1</span>) \</span><br><span class="line">     FROM game JOIN goal ON matchid = id \</span><br><span class="line">     WHERE (team1 = <span class="hljs-string">'GER'</span> OR team2 = <span class="hljs-string">'GER'</span>) AND teamid = <span class="hljs-string">'GER'</span> \</span><br><span class="line">     GROUP BY matchid, mdate</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>matchid</th>
+        <th>mdate</th>
+        <th>COUNT(1)</th>
+    </tr>
+    <tr>
+        <td>1008</td>
+        <td>9 June 2012</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>1010</td>
+        <td>13 June 2012</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>1012</td>
+        <td>17 June 2012</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>1026</td>
+        <td>22 June 2012</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>1030</td>
+        <td>28 June 2012</td>
+        <td>1</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-10"><a href="#pandas-10" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"(team1 == 'GER' or team2 == 'GER') and teamid == 'GER'"</span>)\</span><br><span class="line">    .groupby([<span class="hljs-string">"matchid"</span>, <span class="hljs-string">"mdate"</span>])\</span><br><span class="line">    .agg(&#123;<span class="hljs-string">"matchid"</span>:<span class="hljs-string">"count"</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>matchid</th>
+    </tr>
+    <tr>
+      <th>matchid</th>
+      <th>mdate</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1008</th>
+      <th>9 June 2012</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1010</th>
+      <th>13 June 2012</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1012</th>
+      <th>17 June 2012</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1026</th>
+      <th>22 June 2012</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1030</th>
+      <th>28 June 2012</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="13"><a href="#13" class="headerlink" title="13."></a>13.</h2><p>List every match with the goals scored by each team as shown. This will use “<a href="https://sqlzoo.net/wiki/CASE" target="_blank" rel="noopener">CASE WHEN</a>“ which has not been explained in any previous exercises.</p>
+<table>
+<thead>
+<tr>
+<th>mdate</th>
+<th>team1</th>
+<th>score1</th>
+<th>team2</th>
+<th>score2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 July 2012</td>
+<td>ESP</td>
+<td>4</td>
+<td>ITA</td>
+<td>0</td>
+</tr>
+<tr>
+<td>10 June 2012</td>
+<td>ESP</td>
+<td>1</td>
+<td>ITA</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10 June 2012</td>
+<td>IRL</td>
+<td>1</td>
+<td>CRO</td>
+<td>3</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Notice in the query given every goal is listed. If it was a team1 goal then a 1 appears in score1, otherwise there is a 0. You could SUM this column to get a count of the goals scored by team1. <strong>Sort your result by mdate, matchid, team1 and team2.</strong></p>
+<h3 id="mysql-12"><a href="#mysql-12" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT mdate,\</span><br><span class="line">       team1,\</span><br><span class="line">       SUM(CASE WHEN teamid = team1 THEN <span class="hljs-number">1</span> ELSE <span class="hljs-number">0</span> END) AS score1,\</span><br><span class="line">       team2,\</span><br><span class="line">       SUM(CASE WHEN teamid = team2 THEN <span class="hljs-number">1</span> ELSE <span class="hljs-number">0</span> END) AS score2 FROM \</span><br><span class="line">    game LEFT JOIN goal ON (id = matchid) \</span><br><span class="line">    GROUP BY mdate,team1,team2 \</span><br><span class="line">    ORDER BY mdate, matchid, team1, team2</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+31 rows affected.</code></pre><table>
+    <tr>
+        <th>mdate</th>
+        <th>team1</th>
+        <th>score1</th>
+        <th>team2</th>
+        <th>score2</th>
+    </tr>
+    <tr>
+        <td>1 July 2012</td>
+        <td>ESP</td>
+        <td>4</td>
+        <td>ITA </td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>10 June 2012</td>
+        <td>ESP</td>
+        <td>1</td>
+        <td>ITA</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>10 June 2012</td>
+        <td>IRL</td>
+        <td>1</td>
+        <td>CRO</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>11 June 2012</td>
+        <td>FRA</td>
+        <td>1</td>
+        <td>ENG</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>11 June 2012</td>
+        <td>UKR</td>
+        <td>2</td>
+        <td>SWE</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>12 June 2012</td>
+        <td>GRE</td>
+        <td>1</td>
+        <td>CZE</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>12 June 2012</td>
+        <td>POL</td>
+        <td>1</td>
+        <td>RUS</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>13 June 2012</td>
+        <td>DEN</td>
+        <td>2</td>
+        <td>POR</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>13 June 2012</td>
+        <td>NED</td>
+        <td>1</td>
+        <td>GER</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>14 June 2012</td>
+        <td>ITA</td>
+        <td>1</td>
+        <td>CRO</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>14 June 2012</td>
+        <td>ESP</td>
+        <td>4</td>
+        <td>IRL</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>15 June 2012</td>
+        <td>UKR</td>
+        <td>0</td>
+        <td>FRA</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>15 June 2012</td>
+        <td>SWE</td>
+        <td>2</td>
+        <td>ENG</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>16 June 2012</td>
+        <td>CZE</td>
+        <td>1</td>
+        <td>POL</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>16 June 2012</td>
+        <td>GRE</td>
+        <td>1</td>
+        <td>RUS</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>17 June 2012</td>
+        <td>POR</td>
+        <td>2</td>
+        <td>NED</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>17 June 2012</td>
+        <td>DEN</td>
+        <td>1</td>
+        <td>GER</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>18 June 2012</td>
+        <td>CRO</td>
+        <td>0</td>
+        <td>ESP</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>18 June 2012</td>
+        <td>ITA</td>
+        <td>2</td>
+        <td>IRL</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>19 June 2012</td>
+        <td>ENG</td>
+        <td>1</td>
+        <td>UKR</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>19 June 2012</td>
+        <td>SWE</td>
+        <td>2</td>
+        <td>FRA</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>21 June 2012</td>
+        <td>CZE</td>
+        <td>0</td>
+        <td>POR</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>22 June 2012</td>
+        <td>GER</td>
+        <td>4</td>
+        <td>GRE</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>23 June 2012</td>
+        <td>ESP</td>
+        <td>2</td>
+        <td>FRA</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>24 June 2012</td>
+        <td>ENG</td>
+        <td>0</td>
+        <td>ITA</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>27 June 2012</td>
+        <td>POR</td>
+        <td>0</td>
+        <td>ESP</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>28 June 2012</td>
+        <td>GER</td>
+        <td>1</td>
+        <td>ITA</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>8 June 2012</td>
+        <td>POL</td>
+        <td>1</td>
+        <td>GRE</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>8 June 2012</td>
+        <td>RUS</td>
+        <td>4</td>
+        <td>CZE</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>9 June 2012</td>
+        <td>NED</td>
+        <td>0</td>
+        <td>DEN</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>9 June 2012</td>
+        <td>GER</td>
+        <td>1</td>
+        <td>POR</td>
+        <td>0</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-11"><a href="#pandas-11" class="headerlink" title="pandas"></a>pandas</h3><h4 id="使用merge"><a href="#使用merge" class="headerlink" title="使用merge()"></a>使用merge()</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m1 = game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>)</span><br><span class="line">m1.info()</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+Int64Index: 76 entries, 0 to 75
+Data columns (total 9 columns):
+id         76 non-null int64
+mdate      76 non-null object
+stadium    76 non-null object
+team1      76 non-null object
+team2      76 non-null object
+matchid    76 non-null int64
+teamid     76 non-null object
+player     76 non-null object
+gtime      76 non-null int64
+dtypes: int64(3), object(6)
+memory usage: 5.9+ KB</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 使用np.where()达到三元运算的效果</span></span><br><span class="line">m1[<span class="hljs-string">"score1"</span>] = np.where(m1.team1 == m1.teamid, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span><br><span class="line">m1[<span class="hljs-string">"score2"</span>] = np.where(m1.team2 == m1.teamid, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m1.head()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>mdate</th>
+      <th>stadium</th>
+      <th>team1</th>
+      <th>team2</th>
+      <th>matchid</th>
+      <th>teamid</th>
+      <th>player</th>
+      <th>gtime</th>
+      <th>score1</th>
+      <th>score2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1001</td>
+      <td>8 June 2012</td>
+      <td>National Stadium, Warsaw</td>
+      <td>POL</td>
+      <td>GRE</td>
+      <td>1001</td>
+      <td>POL</td>
+      <td>Robert Lewandowski</td>
+      <td>17</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1001</td>
+      <td>8 June 2012</td>
+      <td>National Stadium, Warsaw</td>
+      <td>POL</td>
+      <td>GRE</td>
+      <td>1001</td>
+      <td>GRE</td>
+      <td>Dimitris Salpingidis</td>
+      <td>51</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1002</td>
+      <td>8 June 2012</td>
+      <td>Stadion Miejski (Wroclaw)</td>
+      <td>RUS</td>
+      <td>CZE</td>
+      <td>1002</td>
+      <td>RUS</td>
+      <td>Alan Dzagoev</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1002</td>
+      <td>8 June 2012</td>
+      <td>Stadion Miejski (Wroclaw)</td>
+      <td>RUS</td>
+      <td>CZE</td>
+      <td>1002</td>
+      <td>RUS</td>
+      <td>Alan Dzagoev</td>
+      <td>79</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1002</td>
+      <td>8 June 2012</td>
+      <td>Stadion Miejski (Wroclaw)</td>
+      <td>RUS</td>
+      <td>CZE</td>
+      <td>1002</td>
+      <td>RUS</td>
+      <td>Roman Shirokov</td>
+      <td>24</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m1.groupby([<span class="hljs-string">"mdate"</span>, <span class="hljs-string">"team1"</span>, <span class="hljs-string">"team2"</span>]).agg(&#123;<span class="hljs-string">"score1"</span>:sum, <span class="hljs-string">"score2"</span>: sum&#125;).reset_index()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mdate</th>
+      <th>team1</th>
+      <th>team2</th>
+      <th>score1</th>
+      <th>score2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1 July 2012</td>
+      <td>ESP</td>
+      <td>ITA</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10 June 2012</td>
+      <td>ESP</td>
+      <td>ITA</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10 June 2012</td>
+      <td>IRL</td>
+      <td>CRO</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11 June 2012</td>
+      <td>FRA</td>
+      <td>ENG</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11 June 2012</td>
+      <td>UKR</td>
+      <td>SWE</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12 June 2012</td>
+      <td>GRE</td>
+      <td>CZE</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>12 June 2012</td>
+      <td>POL</td>
+      <td>RUS</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>13 June 2012</td>
+      <td>DEN</td>
+      <td>POR</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>13 June 2012</td>
+      <td>NED</td>
+      <td>GER</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>14 June 2012</td>
+      <td>ESP</td>
+      <td>IRL</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>14 June 2012</td>
+      <td>ITA</td>
+      <td>CRO</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>15 June 2012</td>
+      <td>SWE</td>
+      <td>ENG</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>15 June 2012</td>
+      <td>UKR</td>
+      <td>FRA</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>16 June 2012</td>
+      <td>CZE</td>
+      <td>POL</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>16 June 2012</td>
+      <td>GRE</td>
+      <td>RUS</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>17 June 2012</td>
+      <td>DEN</td>
+      <td>GER</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17 June 2012</td>
+      <td>POR</td>
+      <td>NED</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18 June 2012</td>
+      <td>CRO</td>
+      <td>ESP</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>18 June 2012</td>
+      <td>ITA</td>
+      <td>IRL</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>19 June 2012</td>
+      <td>ENG</td>
+      <td>UKR</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>19 June 2012</td>
+      <td>SWE</td>
+      <td>FRA</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>21 June 2012</td>
+      <td>CZE</td>
+      <td>POR</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>22 June 2012</td>
+      <td>GER</td>
+      <td>GRE</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>23 June 2012</td>
+      <td>ESP</td>
+      <td>FRA</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>28 June 2012</td>
+      <td>GER</td>
+      <td>ITA</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>8 June 2012</td>
+      <td>POL</td>
+      <td>GRE</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>8 June 2012</td>
+      <td>RUS</td>
+      <td>CZE</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>9 June 2012</td>
+      <td>GER</td>
+      <td>POR</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>9 June 2012</td>
+      <td>NED</td>
+      <td>DEN</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p><strong>注意上面的求解并非左连接，有数据的缺失,需要加上参数<code>how=&quot;left&quot;</code></strong></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m2 = game.merge(goal, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"matchid"</span>, how=<span class="hljs-string">"left"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m2.info()</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+Int64Index: 78 entries, 0 to 77
+Data columns (total 9 columns):
+id         78 non-null int64
+mdate      78 non-null object
+stadium    78 non-null object
+team1      78 non-null object
+team2      78 non-null object
+matchid    76 non-null float64
+teamid     76 non-null object
+player     76 non-null object
+gtime      76 non-null float64
+dtypes: float64(2), int64(1), object(6)
+memory usage: 6.1+ KB</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m2[<span class="hljs-string">"score1"</span>] = np.where(m2.team1 == m2.teamid, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span><br><span class="line">m2[<span class="hljs-string">"score2"</span>] = np.where(m2.team2 == m2.teamid, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m2.groupby([<span class="hljs-string">"mdate"</span>, <span class="hljs-string">"team1"</span>, <span class="hljs-string">"team2"</span>]).agg(&#123;<span class="hljs-string">"score1"</span>:sum, <span class="hljs-string">"score2"</span>: sum&#125;).reset_index()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mdate</th>
+      <th>team1</th>
+      <th>team2</th>
+      <th>score1</th>
+      <th>score2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1 July 2012</td>
+      <td>ESP</td>
+      <td>ITA</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10 June 2012</td>
+      <td>ESP</td>
+      <td>ITA</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10 June 2012</td>
+      <td>IRL</td>
+      <td>CRO</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11 June 2012</td>
+      <td>FRA</td>
+      <td>ENG</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11 June 2012</td>
+      <td>UKR</td>
+      <td>SWE</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12 June 2012</td>
+      <td>GRE</td>
+      <td>CZE</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>12 June 2012</td>
+      <td>POL</td>
+      <td>RUS</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>13 June 2012</td>
+      <td>DEN</td>
+      <td>POR</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>13 June 2012</td>
+      <td>NED</td>
+      <td>GER</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>14 June 2012</td>
+      <td>ESP</td>
+      <td>IRL</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>14 June 2012</td>
+      <td>ITA</td>
+      <td>CRO</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>15 June 2012</td>
+      <td>SWE</td>
+      <td>ENG</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>15 June 2012</td>
+      <td>UKR</td>
+      <td>FRA</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>16 June 2012</td>
+      <td>CZE</td>
+      <td>POL</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>16 June 2012</td>
+      <td>GRE</td>
+      <td>RUS</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>17 June 2012</td>
+      <td>DEN</td>
+      <td>GER</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17 June 2012</td>
+      <td>POR</td>
+      <td>NED</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18 June 2012</td>
+      <td>CRO</td>
+      <td>ESP</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>18 June 2012</td>
+      <td>ITA</td>
+      <td>IRL</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>19 June 2012</td>
+      <td>ENG</td>
+      <td>UKR</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>19 June 2012</td>
+      <td>SWE</td>
+      <td>FRA</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>21 June 2012</td>
+      <td>CZE</td>
+      <td>POR</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>22 June 2012</td>
+      <td>GER</td>
+      <td>GRE</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>23 June 2012</td>
+      <td>ESP</td>
+      <td>FRA</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>24 June 2012</td>
+      <td>ENG</td>
+      <td>ITA</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>27 June 2012</td>
+      <td>POR</td>
+      <td>ESP</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>28 June 2012</td>
+      <td>GER</td>
+      <td>ITA</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>8 June 2012</td>
+      <td>POL</td>
+      <td>GRE</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>8 June 2012</td>
+      <td>RUS</td>
+      <td>CZE</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>9 June 2012</td>
+      <td>GER</td>
+      <td>POR</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>9 June 2012</td>
+      <td>NED</td>
+      <td>DEN</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="第13题里merge-默认的连接方式为how-quot-inner-quot-，要改为-quot-left-quot-才是正确的答案"><a href="#第13题里merge-默认的连接方式为how-quot-inner-quot-，要改为-quot-left-quot-才是正确的答案" class="headerlink" title="第13题里merge()默认的连接方式为how=&quot;inner&quot;，要改为&quot;left&quot;才是正确的答案"></a>第13题里merge()默认的连接方式为<code>how=&quot;inner&quot;</code>，要改为<code>&quot;left&quot;</code>才是正确的答案</h3>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">mysql与pandas对照学习(7)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/24/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5/">
+                <span class="level-item">mysql与pandas对照学习(5)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#The-JOIN-operation-zh">
+        <span class="has-mr-6">1</span>
+        <span>The JOIN operation/zh</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#合拼表格-歐洲國家盃-UEFA-EURO-2012">
+        <span class="has-mr-6">1.1</span>
+        <span>合拼表格-- 歐洲國家盃 UEFA EURO 2012</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1">
+        <span class="has-mr-6">2</span>
+        <span>1.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql">
+        <span class="has-mr-6">2.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">2.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2">
+        <span class="has-mr-6">3</span>
+        <span>2.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-1">
+        <span class="has-mr-6">3.1</span>
+        <span>mysql</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-顯示每一個德國入球的球員名，隊伍名，場館和日期。">
+        <span class="has-mr-6">4</span>
+        <span>3.顯示每一個德國入球的球員名，隊伍名，場館和日期。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-2">
+        <span class="has-mr-6">4.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-1">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4">
+        <span class="has-mr-6">5</span>
+        <span>4.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-3">
+        <span class="has-mr-6">5.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-2">
+        <span class="has-mr-6">5.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5">
+        <span class="has-mr-6">6</span>
+        <span>5.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-4">
+        <span class="has-mr-6">6.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-3">
+        <span class="has-mr-6">6.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6">
+        <span class="has-mr-6">7</span>
+        <span>6.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-5">
+        <span class="has-mr-6">7.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">7.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#7">
+        <span class="has-mr-6">8</span>
+        <span>7.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-6">
+        <span class="has-mr-6">8.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-5">
+        <span class="has-mr-6">8.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#更困難的題目">
+        <span class="has-mr-6">9</span>
+        <span>更困難的題目</span>
+        </a></li><li>
+        <a class="is-flex" href="#8">
+        <span class="has-mr-6">10</span>
+        <span>8.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-7">
+        <span class="has-mr-6">10.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-6">
+        <span class="has-mr-6">10.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#9">
+        <span class="has-mr-6">11</span>
+        <span>9.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-8">
+        <span class="has-mr-6">11.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-7">
+        <span class="has-mr-6">11.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#10">
+        <span class="has-mr-6">12</span>
+        <span>10.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-9">
+        <span class="has-mr-6">12.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-8">
+        <span class="has-mr-6">12.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#11">
+        <span class="has-mr-6">13</span>
+        <span>11.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-10">
+        <span class="has-mr-6">13.1</span>
+        <span>mysql</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#方法一">
+        <span class="has-mr-6">13.1.1</span>
+        <span>方法一</span>
+        </a></li><li>
+        <a class="is-flex" href="#方法二">
+        <span class="has-mr-6">13.1.2</span>
+        <span>方法二</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#pandas-9">
+        <span class="has-mr-6">13.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#12">
+        <span class="has-mr-6">14</span>
+        <span>12.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-11">
+        <span class="has-mr-6">14.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-10">
+        <span class="has-mr-6">14.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#13">
+        <span class="has-mr-6">15</span>
+        <span>13.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-12">
+        <span class="has-mr-6">15.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-11">
+        <span class="has-mr-6">15.2</span>
+        <span>pandas</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#使用merge">
+        <span class="has-mr-6">15.2.1</span>
+        <span>使用merge()</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#第13题里merge-默认的连接方式为how-quot-inner-quot-，要改为-quot-left-quot-才是正确的答案">
+        <span class="has-mr-6">15.3</span>
+        <span>第13题里merge()默认的连接方式为how=&quot;inner&quot;，要改为&quot;left&quot;才是正确的答案</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time></div>
+                    <a href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(9)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time></div>
+                    <a href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(8)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time></div>
+                    <a href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(7)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time></div>
+                    <a href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(6)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="mysql与pandas对照学习(6)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

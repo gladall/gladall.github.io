@@ -1,0 +1,4191 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>mysql与pandas对照学习(2) - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="SQLZOO:SELECT from WORLD Tutorial&#x2F;zhSQLZOO:SELECT_from_WORLD_Tutorial&#x2F;zh    name continent area population gdp    Afghanistan Asia 652230 25500100 20343000000   Albania Europe 28748 2831741 1296000000">
+<meta name="keywords" content="数据分析,mysql,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql与pandas对照学习(2)">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;21&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-2&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="SQLZOO:SELECT from WORLD Tutorial&#x2F;zhSQLZOO:SELECT_from_WORLD_Tutorial&#x2F;zh    name continent area population gdp    Afghanistan Asia 652230 25500100 20343000000   Albania Europe 28748 2831741 1296000000">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-20T12:39:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="mysql与pandas对照学习(2)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-21T00:35:43.000Z">2019-09-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    26 分钟 读完 (大约 3961 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                mysql与pandas对照学习(2)
+            
+        </h1>
+        <div class="content">
+            <h2 id="SQLZOO-SELECT-from-WORLD-Tutorial-zh"><a href="#SQLZOO-SELECT-from-WORLD-Tutorial-zh" class="headerlink" title="SQLZOO:SELECT from WORLD Tutorial/zh"></a>SQLZOO:SELECT from WORLD Tutorial/zh</h2><p><a href="https://sqlzoo.net/wiki/SQLZOO:SELECT_from_WORLD_Tutorial/zh" target="_blank" rel="noopener">SQLZOO:SELECT_from_WORLD_Tutorial/zh</a></p>
+<table>
+<thead>
+<tr>
+<th align="left">name</th>
+<th align="left">continent</th>
+<th align="left">area</th>
+<th align="left">population</th>
+<th align="left">gdp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="left">652230</td>
+<td align="left">25500100</td>
+<td align="left">20343000000</td>
+</tr>
+<tr>
+<td align="left">Albania</td>
+<td align="left">Europe</td>
+<td align="left">28748</td>
+<td align="left">2831741</td>
+<td align="left">12960000000</td>
+</tr>
+<tr>
+<td align="left">Algeria</td>
+<td align="left">Africa</td>
+<td align="left">2381741</td>
+<td align="left">37100000</td>
+<td align="left">188681000000</td>
+</tr>
+<tr>
+<td align="left">Andorra</td>
+<td align="left">Europe</td>
+<td align="left">468</td>
+<td align="left">78115</td>
+<td align="left">3712000000</td>
+</tr>
+<tr>
+<td align="left">Angola</td>
+<td align="left">Africa</td>
+<td align="left">1246700</td>
+<td align="left">20609294</td>
+<td align="left">100990000000</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>name:國家名稱
+continent:洲份
+area:面積
+population:人口
+gdp:國內生產總值</p>
+<a id="more"></a>
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sql</span><br><span class="line">%sql mysql+pymysql://root:lanhoo@localhost/dbs</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> sqlalchemy</span><br><span class="line">engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://root:lanhoo@localhost/dbs"</span>)</span><br><span class="line">world = pd.read_sql_table(<span class="hljs-string">"world"</span>, engine)</span><br></pre></td></tr></table></figure>
+
+<pre><code>The sql extension is already loaded. To reload it, use:
+  %reload_ext sql</code></pre><h2 id="1-第一个例子展示简单的SQL命令"><a href="#1-第一个例子展示简单的SQL命令" class="headerlink" title="1.第一个例子展示简单的SQL命令"></a>1.第一个例子展示简单的SQL命令</h2><p><a href="https://sqlzoo.net/wiki/Read_the_notes_about_this_table." target="_blank" rel="noopener">閱讀此表的注意事項</a> 觀察運行一個簡單的SQL命令的結果。</p>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 显示结果有点多，所以加了限制，只取前5</span></span><br><span class="line">%sql SELECT name, continent, population FROM world LIMIT <span class="hljs-number">5</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>continent</th>
+        <th>population</th>
+    </tr>
+    <tr>
+        <td>Afghanistan</td>
+        <td>Asia</td>
+        <td>25500100</td>
+    </tr>
+    <tr>
+        <td>Albania</td>
+        <td>Europe</td>
+        <td>2821977</td>
+    </tr>
+    <tr>
+        <td>Algeria</td>
+        <td>Africa</td>
+        <td>38700000</td>
+    </tr>
+    <tr>
+        <td>Andorra</td>
+        <td>Europe</td>
+        <td>76098</td>
+    </tr>
+    <tr>
+        <td>Angola</td>
+        <td>Africa</td>
+        <td>19183590</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"continent"</span>, <span class="hljs-string">"population"</span>]].head(<span class="hljs-number">5</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>continent</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>25500100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Europe</td>
+      <td>2821977</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>38700000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Andorra</td>
+      <td>Europe</td>
+      <td>76098</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>Africa</td>
+      <td>19183590</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 方法二</span></span><br><span class="line">world.loc[:<span class="hljs-number">5</span>, [<span class="hljs-string">"name"</span>, <span class="hljs-string">"continent"</span>, <span class="hljs-string">"population"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>continent</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>25500100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Europe</td>
+      <td>2821977</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>38700000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Andorra</td>
+      <td>Europe</td>
+      <td>76098</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>Africa</td>
+      <td>19183590</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Antigua and Barbuda</td>
+      <td>Caribbean</td>
+      <td>86295</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="2-顯示具有至少2億人口的國家名稱"><a href="#2-顯示具有至少2億人口的國家名稱" class="headerlink" title="2.顯示具有至少2億人口的國家名稱"></a>2.顯示具有至少2億人口的國家名稱</h2><p><a href="https://sqlzoo.net/wiki/WHERE_filters" target="_blank" rel="noopener">如何使用WHERE來篩選記錄。</a> 顯示具有至少2億人口的國家名稱。 2億是200000000，有八個零。</p>
+<h3 id="mysql-1"><a href="#mysql-1" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name FROM world WHERE population&gt;<span class="hljs-number">200000000</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+    </tr>
+    <tr>
+        <td>China</td>
+    </tr>
+    <tr>
+        <td>India</td>
+    </tr>
+    <tr>
+        <td>Indonesia</td>
+    </tr>
+    <tr>
+        <td>United States</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world.query(<span class="hljs-string">"population &gt; 200000000"</span>)[[<span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Indonesia</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="3-找出有至少200百萬-2億-人口的國家名稱，及人均國內生產總值。"><a href="#3-找出有至少200百萬-2億-人口的國家名稱，及人均國內生產總值。" class="headerlink" title="3.找出有至少200百萬(2億)人口的國家名稱，及人均國內生產總值。"></a>3.找出有至少200百萬(2億)人口的國家名稱，及人均國內生產總值。</h2><p>找出有至少200百萬(2億)人口的國家名稱，及人均國內生產總值。</p>
+<p>求助：如何人均國內生產總值計算</p>
+<p>人均國內生產總值，即是國內生產總值除以人口(GDP/population)。</p>
+<h3 id="mysql-2"><a href="#mysql-2" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, gdp/population FROM world WHERE population &gt; <span class="hljs-number">200000000</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>gdp/population</th>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>11115.2648</td>
+    </tr>
+    <tr>
+        <td>China</td>
+        <td>6121.7106</td>
+    </tr>
+    <tr>
+        <td>India</td>
+        <td>1504.7931</td>
+    </tr>
+    <tr>
+        <td>Indonesia</td>
+        <td>3482.0205</td>
+    </tr>
+    <tr>
+        <td>United States</td>
+        <td>51032.2945</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = world[world.population &gt; <span class="hljs-number">200000000</span>]</span><br><span class="line">pd.DataFrame(&#123;<span class="hljs-string">"name"</span>: df.name, <span class="hljs-string">"gdp/pop"</span>: df.gdp / df.population&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>gdp/pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>11115.264751</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+      <td>6121.710599</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>India</td>
+      <td>1504.793124</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Indonesia</td>
+      <td>3482.020488</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>United States</td>
+      <td>51032.294546</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="4-顯示’South-America’南美洲大陸的國家名字和以百萬為單位人口數"><a href="#4-顯示’South-America’南美洲大陸的國家名字和以百萬為單位人口數" class="headerlink" title="4.顯示’South America’南美洲大陸的國家名字和以百萬為單位人口數"></a>4.顯示’South America’南美洲大陸的國家名字和以百萬為單位人口數</h2><p>顯示’South America’南美洲大陸的國家名字和以百萬為單位人口數。 將人口population 除以一百萬(1000000)得可得到以百萬為單位人口數。</p>
+<h3 id="mysql-3"><a href="#mysql-3" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, population/<span class="hljs-number">1000000</span> FROM world WHERE continent = <span class="hljs-string">'South America'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+13 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>population/1000000</th>
+    </tr>
+    <tr>
+        <td>Argentina</td>
+        <td>42.6695</td>
+    </tr>
+    <tr>
+        <td>Bolivia</td>
+        <td>10.0273</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>202.7940</td>
+    </tr>
+    <tr>
+        <td>Chile</td>
+        <td>17.7730</td>
+    </tr>
+    <tr>
+        <td>Colombia</td>
+        <td>47.6620</td>
+    </tr>
+    <tr>
+        <td>Ecuador</td>
+        <td>15.7742</td>
+    </tr>
+    <tr>
+        <td>Guyana</td>
+        <td>0.7849</td>
+    </tr>
+    <tr>
+        <td>Paraguay</td>
+        <td>6.7834</td>
+    </tr>
+    <tr>
+        <td>Peru</td>
+        <td>30.4751</td>
+    </tr>
+    <tr>
+        <td>Saint Vincent and the Grenadines</td>
+        <td>0.1090</td>
+    </tr>
+    <tr>
+        <td>Suriname</td>
+        <td>0.5342</td>
+    </tr>
+    <tr>
+        <td>Uruguay</td>
+        <td>3.2863</td>
+    </tr>
+    <tr>
+        <td>Venezuela</td>
+        <td>28.9461</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-3"><a href="#pandas-3" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = world[world.continent == <span class="hljs-string">"South America"</span>]</span><br><span class="line">pd.DataFrame(&#123;<span class="hljs-string">"name"</span>: df.name, <span class="hljs-string">"pop(million)"</span>: df.population/<span class="hljs-number">1000000</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>pop(million)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6</th>
+      <td>Argentina</td>
+      <td>42.669500</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Bolivia</td>
+      <td>10.027254</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>202.794000</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Chile</td>
+      <td>17.773000</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Colombia</td>
+      <td>47.662000</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Ecuador</td>
+      <td>15.774200</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Guyana</td>
+      <td>0.784894</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>Paraguay</td>
+      <td>6.783374</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>Peru</td>
+      <td>30.475144</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>Saint Vincent and the Grenadines</td>
+      <td>0.109000</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>Suriname</td>
+      <td>0.534189</td>
+    </tr>
+    <tr>
+      <th>186</th>
+      <td>Uruguay</td>
+      <td>3.286314</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>Venezuela</td>
+      <td>28.946101</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="5-顯示法國，德國，意大利-France-Germany-Italy-的國家名稱和人口。"><a href="#5-顯示法國，德國，意大利-France-Germany-Italy-的國家名稱和人口。" class="headerlink" title="5.顯示法國，德國，意大利(France, Germany, Italy)的國家名稱和人口。"></a>5.顯示法國，德國，意大利(France, Germany, Italy)的國家名稱和人口。</h2><p>顯示法國，德國，意大利(France, Germany, Italy)的國家名稱和人口。</p>
+<h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, population FROM world WHERE name <span class="hljs-keyword">in</span> (<span class="hljs-string">'France'</span>, <span class="hljs-string">'Germany'</span>, <span class="hljs-string">'Italy'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>population</th>
+    </tr>
+    <tr>
+        <td>France</td>
+        <td>65906000</td>
+    </tr>
+    <tr>
+        <td>Germany</td>
+        <td>80716000</td>
+    </tr>
+    <tr>
+        <td>Italy</td>
+        <td>60782668</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-4"><a href="#pandas-4" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world[world.name.isin([<span class="hljs-string">"France"</span>, <span class="hljs-string">"Germany"</span>, <span class="hljs-string">"Italy"</span>])][[<span class="hljs-string">"name"</span>, <span class="hljs-string">"population"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>59</th>
+      <td>France</td>
+      <td>65906000</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Germany</td>
+      <td>80716000</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>Italy</td>
+      <td>60782668</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="6-顯示包含單詞“United”為名稱的國家。"><a href="#6-顯示包含單詞“United”為名稱的國家。" class="headerlink" title="6.顯示包含單詞“United”為名稱的國家。"></a>6.顯示包含單詞“United”為名稱的國家。</h2><p>顯示包含單詞“United”為名稱的國家。</p>
+<h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name FROM world WHERE name LIKE <span class="hljs-string">'%United%'</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+    </tr>
+    <tr>
+        <td>United Arab Emirates</td>
+    </tr>
+    <tr>
+        <td>United Kingdom</td>
+    </tr>
+    <tr>
+        <td>United States</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-5"><a href="#pandas-5" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world[world.name.str.contains(<span class="hljs-string">"United"</span>)][[<span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>183</th>
+      <td>United Arab Emirates</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="7-展示大國的名稱，人口和面積。"><a href="#7-展示大國的名稱，人口和面積。" class="headerlink" title="7.展示大國的名稱，人口和面積。"></a>7.展示大國的名稱，人口和面積。</h2><p>成為大國的兩種方式：如果它有3百萬平方公里以上的面積，或擁有250百萬(2.5億)以上人口。</p>
+<p>展示大國的名稱，人口和面積。</p>
+<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, population, area FROM world WHERE area &gt; <span class="hljs-number">3000000</span> <span class="hljs-keyword">or</span> population &gt; <span class="hljs-number">250000000</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+8 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>population</th>
+        <th>area</th>
+    </tr>
+    <tr>
+        <td>Australia</td>
+        <td>23545500</td>
+        <td>7692024</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>202794000</td>
+        <td>8515767</td>
+    </tr>
+    <tr>
+        <td>Canada</td>
+        <td>35427524</td>
+        <td>9984670</td>
+    </tr>
+    <tr>
+        <td>China</td>
+        <td>1365370000</td>
+        <td>9596961</td>
+    </tr>
+    <tr>
+        <td>India</td>
+        <td>1246160000</td>
+        <td>3166414</td>
+    </tr>
+    <tr>
+        <td>Indonesia</td>
+        <td>252164800</td>
+        <td>1904569</td>
+    </tr>
+    <tr>
+        <td>Russia</td>
+        <td>146000000</td>
+        <td>17125242</td>
+    </tr>
+    <tr>
+        <td>United States</td>
+        <td>318320000</td>
+        <td>9826675</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-6"><a href="#pandas-6" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 这样的顺序跟sql书写的顺序一致</span></span><br><span class="line">%time world[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"population"</span>, <span class="hljs-string">"area"</span>]].query(<span class="hljs-string">"area &gt; 3000000 or population &gt; 250000000"</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>CPU times: user 19 ms, sys: 3.27 ms, total: 22.3 ms
+Wall time: 27.9 ms</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>population</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>Australia</td>
+      <td>23545500</td>
+      <td>7692024</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>202794000</td>
+      <td>8515767</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Canada</td>
+      <td>35427524</td>
+      <td>9984670</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+      <td>1365370000</td>
+      <td>9596961</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>India</td>
+      <td>1246160000</td>
+      <td>3166414</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Indonesia</td>
+      <td>252164800</td>
+      <td>1904569</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>Russia</td>
+      <td>146000000</td>
+      <td>17125242</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>United States</td>
+      <td>318320000</td>
+      <td>9826675</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 而这种写法更推荐一些，先筛选再取所需的列，当数据量比较大，这种会更快些。</span></span><br><span class="line">%time world.query(<span class="hljs-string">"area &gt; 3000000 or population &gt; 250000000"</span>)[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"population"</span>, <span class="hljs-string">"area"</span>]]</span><br></pre></td></tr></table></figure>
+
+<pre><code>CPU times: user 21.3 ms, sys: 209 µs, total: 21.6 ms
+Wall time: 22.3 ms</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>population</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>Australia</td>
+      <td>23545500</td>
+      <td>7692024</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>202794000</td>
+      <td>8515767</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Canada</td>
+      <td>35427524</td>
+      <td>9984670</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+      <td>1365370000</td>
+      <td>9596961</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>India</td>
+      <td>1246160000</td>
+      <td>3166414</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Indonesia</td>
+      <td>252164800</td>
+      <td>1904569</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>Russia</td>
+      <td>146000000</td>
+      <td>17125242</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>United States</td>
+      <td>318320000</td>
+      <td>9826675</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="8-顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積"><a href="#8-顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積" class="headerlink" title="8.顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積"></a>8.顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積</h2><p>美國、印度和中國(USA, India, China)是人口又大，同時面積又大的國家。排除這些國家。</p>
+<p>顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積。</p>
+<h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, population, area FROM world WHERE \</span><br><span class="line">(area &gt;= <span class="hljs-number">3000000</span> <span class="hljs-keyword">and</span> population &lt; <span class="hljs-number">250000000</span>) <span class="hljs-keyword">or</span> (area &lt; <span class="hljs-number">3000000</span> <span class="hljs-keyword">and</span> population &gt; <span class="hljs-number">250000000</span>);</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>population</th>
+        <th>area</th>
+    </tr>
+    <tr>
+        <td>Australia</td>
+        <td>23545500</td>
+        <td>7692024</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>202794000</td>
+        <td>8515767</td>
+    </tr>
+    <tr>
+        <td>Canada</td>
+        <td>35427524</td>
+        <td>9984670</td>
+    </tr>
+    <tr>
+        <td>Indonesia</td>
+        <td>252164800</td>
+        <td>1904569</td>
+    </tr>
+    <tr>
+        <td>Russia</td>
+        <td>146000000</td>
+        <td>17125242</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-7"><a href="#pandas-7" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">world.query(<span class="hljs-string">"(area &gt;= 3000000 and population &lt; 250000000) or (area &lt; 3000000 and population &gt; 250000000)"</span>)\</span><br><span class="line">[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"population"</span>, <span class="hljs-string">"area"</span>]] <span class="hljs-comment"># 先筛选只留下五行，再展示所需的列名</span></span><br><span class="line"><span class="hljs-comment"># 下面的语句所得结果一样：</span></span><br><span class="line"><span class="hljs-comment"># world[["name", "population", "area"]]\</span></span><br><span class="line"><span class="hljs-comment"># .query("(area &gt;= 3000000 and population &lt; 250000000) or (area &lt; 3000000 and population &gt; 250000000)")</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>population</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>Australia</td>
+      <td>23545500</td>
+      <td>7692024</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>202794000</td>
+      <td>8515767</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Canada</td>
+      <td>35427524</td>
+      <td>9984670</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Indonesia</td>
+      <td>252164800</td>
+      <td>1904569</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>Russia</td>
+      <td>146000000</td>
+      <td>17125242</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="9-對於南美顯示以百萬計人口，以十億計2位小數GDP。"><a href="#9-對於南美顯示以百萬計人口，以十億計2位小數GDP。" class="headerlink" title="9.對於南美顯示以百萬計人口，以十億計2位小數GDP。"></a>9.對於南美顯示以百萬計人口，以十億計2位小數GDP。</h2><p>除以為1000000（6個零）是以百萬計。除以1000000000（9個零）是以十億計。使用 <a href="https://sqlzoo.net/wiki/ROUND" target="_blank" rel="noopener">ROUND</a> 函數來顯示的數值到小數點後兩位。</p>
+<p>對於南美顯示以百萬計人口，以十億計2位小數GDP。</p>
+<h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, ROUND(population/<span class="hljs-number">1000000</span>, <span class="hljs-number">2</span>), ROUND(gdp/<span class="hljs-number">1000000000</span>, <span class="hljs-number">2</span>) FROM world \</span><br><span class="line">WHERE continent = <span class="hljs-string">'South America'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+13 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>ROUND(population/1000000, 2)</th>
+        <th>ROUND(gdp/1000000000, 2)</th>
+    </tr>
+    <tr>
+        <td>Argentina</td>
+        <td>42.67</td>
+        <td>477.03</td>
+    </tr>
+    <tr>
+        <td>Bolivia</td>
+        <td>10.03</td>
+        <td>27.04</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>202.79</td>
+        <td>2254.11</td>
+    </tr>
+    <tr>
+        <td>Chile</td>
+        <td>17.77</td>
+        <td>268.31</td>
+    </tr>
+    <tr>
+        <td>Colombia</td>
+        <td>47.66</td>
+        <td>369.81</td>
+    </tr>
+    <tr>
+        <td>Ecuador</td>
+        <td>15.77</td>
+        <td>87.50</td>
+    </tr>
+    <tr>
+        <td>Guyana</td>
+        <td>0.78</td>
+        <td>2.85</td>
+    </tr>
+    <tr>
+        <td>Paraguay</td>
+        <td>6.78</td>
+        <td>25.94</td>
+    </tr>
+    <tr>
+        <td>Peru</td>
+        <td>30.48</td>
+        <td>204.68</td>
+    </tr>
+    <tr>
+        <td>Saint Vincent and the Grenadines</td>
+        <td>0.11</td>
+        <td>0.69</td>
+    </tr>
+    <tr>
+        <td>Suriname</td>
+        <td>0.53</td>
+        <td>5.01</td>
+    </tr>
+    <tr>
+        <td>Uruguay</td>
+        <td>3.29</td>
+        <td>49.92</td>
+    </tr>
+    <tr>
+        <td>Venezuela</td>
+        <td>28.95</td>
+        <td>382.42</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-8"><a href="#pandas-8" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 前面有个例子用了列数据运算的方式，这次用apply()函数，再来拆分</span></span><br><span class="line"><span class="hljs-comment"># 1.先取得所有南美洲的国家</span></span><br><span class="line">df = world[world.continent == <span class="hljs-string">"South America"</span>]</span><br><span class="line"><span class="hljs-comment"># 2.再使用apply()函数取得国家，人口，gdp三个元素所组成的元组</span></span><br><span class="line">df2 = df.apply(<span class="hljs-keyword">lambda</span> x: \</span><br><span class="line">         (x[<span class="hljs-string">"name"</span>], \</span><br><span class="line">          round(x.population/<span class="hljs-number">1000000</span>, <span class="hljs-number">2</span>), \</span><br><span class="line">          round(x.gdp/<span class="hljs-number">1000000000</span>, <span class="hljs-number">2</span>)), </span><br><span class="line">         axis=<span class="hljs-number">1</span>)   <span class="hljs-comment">#注意这里的x.name是序号，只能用x["name"]来取国家名字</span></span><br><span class="line">pd.DataFrame(&#123;<span class="hljs-string">"name"</span>: [i[<span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> df2], \</span><br><span class="line">                       <span class="hljs-string">"pop(million)"</span>: [i[<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> df2], \</span><br><span class="line">                       <span class="hljs-string">"gdp(billion)"</span>: [i[<span class="hljs-number">2</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> df2]&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>pop(million)</th>
+      <th>gdp(billion)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Argentina</td>
+      <td>42.67</td>
+      <td>477.03</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bolivia</td>
+      <td>10.03</td>
+      <td>27.04</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Brazil</td>
+      <td>202.79</td>
+      <td>2254.11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Chile</td>
+      <td>17.77</td>
+      <td>268.31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Colombia</td>
+      <td>47.66</td>
+      <td>369.81</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Ecuador</td>
+      <td>15.77</td>
+      <td>87.50</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Guyana</td>
+      <td>0.78</td>
+      <td>2.85</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Paraguay</td>
+      <td>6.78</td>
+      <td>25.93</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Peru</td>
+      <td>30.48</td>
+      <td>204.68</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Saint Vincent and the Grenadines</td>
+      <td>0.11</td>
+      <td>0.69</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Suriname</td>
+      <td>0.53</td>
+      <td>5.01</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Uruguay</td>
+      <td>3.29</td>
+      <td>49.92</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Venezuela</td>
+      <td>28.95</td>
+      <td>382.42</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="10-顯示萬億元國家的人均國內生產總值，四捨五入到最近的-1000。"><a href="#10-顯示萬億元國家的人均國內生產總值，四捨五入到最近的-1000。" class="headerlink" title="10.顯示萬億元國家的人均國內生產總值，四捨五入到最近的$ 1000。"></a>10.顯示萬億元國家的人均國內生產總值，四捨五入到最近的$ 1000。</h2><p>顯示國家有至少一個萬億元國內生產總值（萬億，也就是12個零）的人均國內生產總值。四捨五入這個值到最接近1000。</p>
+<p>顯示萬億元國家的人均國內生產總值，四捨五入到最近的$ 1000。</p>
+<h3 id="mysql-9"><a href="#mysql-9" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, ROUND(gdp/population/<span class="hljs-number">1000</span>)*<span class="hljs-number">1000</span> FROM world WHERE gdp &gt; <span class="hljs-number">1000000000000</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+15 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>ROUND(gdp/population/1000)*1000</th>
+    </tr>
+    <tr>
+        <td>Australia</td>
+        <td>66000</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>11000</td>
+    </tr>
+    <tr>
+        <td>Canada</td>
+        <td>45000</td>
+    </tr>
+    <tr>
+        <td>China</td>
+        <td>6000</td>
+    </tr>
+    <tr>
+        <td>France</td>
+        <td>40000</td>
+    </tr>
+    <tr>
+        <td>Germany</td>
+        <td>42000</td>
+    </tr>
+    <tr>
+        <td>India</td>
+        <td>2000</td>
+    </tr>
+    <tr>
+        <td>Italy</td>
+        <td>33000</td>
+    </tr>
+    <tr>
+        <td>Japan</td>
+        <td>47000</td>
+    </tr>
+    <tr>
+        <td>Mexico</td>
+        <td>10000</td>
+    </tr>
+    <tr>
+        <td>Russia</td>
+        <td>14000</td>
+    </tr>
+    <tr>
+        <td>South Korea</td>
+        <td>22000</td>
+    </tr>
+    <tr>
+        <td>Spain</td>
+        <td>28000</td>
+    </tr>
+    <tr>
+        <td>United Kingdom</td>
+        <td>39000</td>
+    </tr>
+    <tr>
+        <td>United States</td>
+        <td>51000</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-9"><a href="#pandas-9" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = world[world.gdp &gt; <span class="hljs-number">1000000000000</span>][[<span class="hljs-string">"name"</span>, <span class="hljs-string">"gdp"</span>, <span class="hljs-string">"population"</span>]]</span><br><span class="line">pd.DataFrame(&#123;<span class="hljs-string">"name"</span>: df.name, <span class="hljs-string">"avg_gdp"</span>: round(df.gdp/df.population/<span class="hljs-number">1000</span>)*<span class="hljs-number">1000</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>avg_gdp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>Australia</td>
+      <td>66000.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>11000.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Canada</td>
+      <td>45000.0</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+      <td>6000.0</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>France</td>
+      <td>40000.0</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Germany</td>
+      <td>42000.0</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>India</td>
+      <td>2000.0</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>Italy</td>
+      <td>33000.0</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>Japan</td>
+      <td>47000.0</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>Mexico</td>
+      <td>10000.0</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>Russia</td>
+      <td>14000.0</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>South Korea</td>
+      <td>22000.0</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>Spain</td>
+      <td>28000.0</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>United Kingdom</td>
+      <td>39000.0</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>United States</td>
+      <td>51000.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<hr>
+<h2 id="困難的題目"><a href="#困難的題目" class="headerlink" title="困難的題目"></a>困難的題目</h2><h2 id="11-Show-the-name-but-substitute-Australasia-for-Oceania-for-countries-beginning-with-N"><a href="#11-Show-the-name-but-substitute-Australasia-for-Oceania-for-countries-beginning-with-N" class="headerlink" title="11. Show the name - but substitute Australasia for Oceania - for countries beginning with N."></a>11. Show the name - but substitute Australasia for Oceania - for countries beginning with N.</h2><h3 id="题目给出的例子"><a href="#题目给出的例子" class="headerlink" title="题目给出的例子"></a>题目给出的例子</h3><p>The CASE statement shown is used to substitute North America for Caribbean in the third column.</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT name, continent,</span><br><span class="line">       CASE WHEN continent=&apos;Caribbean&apos; THEN &apos;North America&apos;</span><br><span class="line">            ELSE continent END</span><br><span class="line">  FROM world</span><br><span class="line"> WHERE name LIKE &apos;J%&apos;</span><br></pre></td></tr></table></figure>
+
+
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>continent</th>
+<th>CASE WHEN con..</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Jamaica</td>
+<td>Caribbean</td>
+<td>North America</td>
+</tr>
+<tr>
+<td>Japan</td>
+<td>Asia</td>
+<td>Asia</td>
+</tr>
+<tr>
+<td>Jordan</td>
+<td>Asia</td>
+<td>Asia</td>
+</tr>
+</tbody></table>
+<h3 id="mysql-10"><a href="#mysql-10" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, \</span><br><span class="line">        CASE WHEN continent=<span class="hljs-string">'Oceania'</span> THEN <span class="hljs-string">'Australasia'</span> \</span><br><span class="line">            ELSE continent END \</span><br><span class="line">    FROM world \</span><br><span class="line">    WHERE name LIKE <span class="hljs-string">'N%'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+10 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>CASE WHEN continent=&#x27;Oceania&#x27; THEN &#x27;Australasia&#x27;              ELSE continent END</th>
+    </tr>
+    <tr>
+        <td>Namibia</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Nauru</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Nepal</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Netherlands</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>New Zealand</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Nicaragua</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Niger</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Nigeria</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>North Korea</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Norway</td>
+        <td>Europe</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-10"><a href="#pandas-10" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = world[world[<span class="hljs-string">"name"</span>].str.startswith(<span class="hljs-string">"N"</span>)]</span><br><span class="line"><span class="hljs-comment"># 这里用到了numpy.where()方法来达到三元运算的效果。</span></span><br><span class="line">df.continent = np.where(df.continent==<span class="hljs-string">"Oceania"</span>, <span class="hljs-string">"Australasia"</span>, df.continent)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>continent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>118</th>
+      <td>Namibia</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>Nauru</td>
+      <td>Australasia</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>Nepal</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Netherlands</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>New Zealand</td>
+      <td>Australasia</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>Nicaragua</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Niger</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>Nigeria</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>North Korea</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Norway</td>
+      <td>Europe</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="12-Show-the-name-and-the-continent-but-substitute-Eurasia-for-Europe-and-Asia-substitute-America-for-each-country-in-North-America-or-South-America-or-Caribbean-Show-countries-beginning-with-A-or-B"><a href="#12-Show-the-name-and-the-continent-but-substitute-Eurasia-for-Europe-and-Asia-substitute-America-for-each-country-in-North-America-or-South-America-or-Caribbean-Show-countries-beginning-with-A-or-B" class="headerlink" title="12. Show the name and the continent - but substitute Eurasia for Europe and Asia; substitute America - for each country in North America or South America or Caribbean. Show countries beginning with A or B"></a>12. Show the name and the continent - but substitute Eurasia for Europe and Asia; substitute America - for each country in North America or South America or Caribbean. Show countries beginning with A or B</h2><h3 id="mysql-11"><a href="#mysql-11" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, \</span><br><span class="line">            CASE WHEN continent=<span class="hljs-string">'Europe'</span> <span class="hljs-keyword">or</span> continent=<span class="hljs-string">'Asia'</span> THEN <span class="hljs-string">'Eurasia'</span> \</span><br><span class="line">                 WHEN continent <span class="hljs-keyword">in</span> (<span class="hljs-string">'North America'</span>,<span class="hljs-string">'South America'</span>,<span class="hljs-string">'Caribbean'</span>) THEN <span class="hljs-string">'America'</span> \</span><br><span class="line">            ELSE continent \</span><br><span class="line">            END contient \</span><br><span class="line">    FROM world \</span><br><span class="line">    WHERE name LIKE <span class="hljs-string">'A%'</span> OR name LIKE <span class="hljs-string">'B%'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+28 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>contient</th>
+    </tr>
+    <tr>
+        <td>Afghanistan</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Albania</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Algeria</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Andorra</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Angola</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Antigua and Barbuda</td>
+        <td>America</td>
+    </tr>
+    <tr>
+        <td>Argentina</td>
+        <td>America</td>
+    </tr>
+    <tr>
+        <td>Armenia</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Australia</td>
+        <td>Oceania</td>
+    </tr>
+    <tr>
+        <td>Austria</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Azerbaijan</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Bahamas</td>
+        <td>America</td>
+    </tr>
+    <tr>
+        <td>Bahrain</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Bangladesh</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Barbados</td>
+        <td>America</td>
+    </tr>
+    <tr>
+        <td>Belarus</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Belgium</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Belize</td>
+        <td>America</td>
+    </tr>
+    <tr>
+        <td>Benin</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Bhutan</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Bolivia</td>
+        <td>America</td>
+    </tr>
+    <tr>
+        <td>Bosnia and Herzegovina</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Botswana</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>America</td>
+    </tr>
+    <tr>
+        <td>Brunei</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Bulgaria</td>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Burkina Faso</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Burundi</td>
+        <td>Africa</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-11"><a href="#pandas-11" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = world[world.name.str.match(<span class="hljs-string">r'[AB]'</span>)] <span class="hljs-comment"># 使用match加正则非常方便地找到以A或B开头的国家</span></span><br><span class="line">df = df[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"continent"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 方法一</span></span><br><span class="line">df.continent = np.where(df.continent.isin([<span class="hljs-string">"Europe"</span>, <span class="hljs-string">"Asia"</span>]), <span class="hljs-string">'Eurasia'</span>, df.continent)</span><br><span class="line">df.continent = np.where(df.continent.isin([<span class="hljs-string">'North America'</span>, <span class="hljs-string">'South America'</span>, <span class="hljs-string">'Caribbean'</span>]), <span class="hljs-string">"America"</span>, df.continent)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>continent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Andorra</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Antigua and Barbuda</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Argentina</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Armenia</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Australia</td>
+      <td>Oceania</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Austria</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Azerbaijan</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Bahamas</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Bahrain</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Bangladesh</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Barbados</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Belarus</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Belgium</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Belize</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Benin</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Bhutan</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Bolivia</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Bosnia and Herzegovina</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Botswana</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Brunei</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Bulgaria</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Burkina Faso</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Burundi</td>
+      <td>Africa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">## 方法二</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(x)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">if</span> x <span class="hljs-keyword">in</span> [<span class="hljs-string">"Europe"</span>, <span class="hljs-string">"Asia"</span>]:</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"Eurasia"</span></span><br><span class="line">    <span class="hljs-keyword">elif</span> x <span class="hljs-keyword">in</span> [<span class="hljs-string">'North America'</span>, <span class="hljs-string">'South America'</span>, <span class="hljs-string">'Caribbean'</span>]:</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"America"</span></span><br><span class="line">    <span class="hljs-keyword">return</span> x</span><br><span class="line">df = world[world.name.str.match(<span class="hljs-string">r'[AB]'</span>)][[<span class="hljs-string">"name"</span>, <span class="hljs-string">"continent"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.continent = df.continent.apply(func)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>continent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Andorra</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Antigua and Barbuda</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Argentina</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Armenia</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Australia</td>
+      <td>Oceania</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Austria</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Azerbaijan</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Bahamas</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Bahrain</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Bangladesh</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Barbados</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Belarus</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Belgium</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Belize</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Benin</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Bhutan</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Bolivia</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Bosnia and Herzegovina</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Botswana</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Brunei</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Bulgaria</td>
+      <td>Eurasia</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Burkina Faso</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Burundi</td>
+      <td>Africa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="13-Show-the-name-the-original-continent-and-the-new-continent-of-all-countries"><a href="#13-Show-the-name-the-original-continent-and-the-new-continent-of-all-countries" class="headerlink" title="13. Show the name, the original continent and the new continent of all countries."></a>13. Show the name, the original continent and the new continent of all countries.</h2><p>Put the continents right…</p>
+<p>Oceania becomes Australasia
+Countries in Eurasia and Turkey go to Europe/Asia
+Caribbean islands starting with ‘B’ go to North America, other Caribbean islands go to South America
+Show the name, the original continent and the new continent of all countries.</p>
+<h3 id="mysql-12"><a href="#mysql-12" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name, continent, \</span><br><span class="line">    CASE \</span><br><span class="line">        WHEN continent = <span class="hljs-string">'Oceania'</span> THEN <span class="hljs-string">'Australasia'</span>\</span><br><span class="line">        WHEN continent = <span class="hljs-string">'Eurasia'</span> THEN <span class="hljs-string">'Europe/Asia'</span>\</span><br><span class="line">        WHEN name = <span class="hljs-string">'Turkey'</span> THEN <span class="hljs-string">'Europe/Asia'</span>\</span><br><span class="line">        WHEN continent = <span class="hljs-string">'Caribbean'</span> AND name LIKE <span class="hljs-string">'B%'</span> THEN <span class="hljs-string">'North America'</span>\</span><br><span class="line">        WHEN continent = <span class="hljs-string">'Caribbean'</span> THEN <span class="hljs-string">'South America'</span>\</span><br><span class="line">        ELSE continent \</span><br><span class="line">    END new_continent\</span><br><span class="line">FROM world ORDER BY name</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+195 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>continent</th>
+        <th>new_continent</th>
+    </tr>
+    <tr>
+        <td>Afghanistan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Albania</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Algeria</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Andorra</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Angola</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Antigua and Barbuda</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Argentina</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Armenia</td>
+        <td>Eurasia</td>
+        <td>Europe/Asia</td>
+    </tr>
+    <tr>
+        <td>Australia</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Austria</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Azerbaijan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Bahamas</td>
+        <td>Caribbean</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Bahrain</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Bangladesh</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Barbados</td>
+        <td>Caribbean</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Belarus</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Belgium</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Belize</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Benin</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Bhutan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Bolivia</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Bosnia and Herzegovina</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Botswana</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Brunei</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Bulgaria</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Burkina Faso</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Burundi</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Cambodia</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Cameroon</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Canada</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Cape Verde</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Central African Republic</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Chad</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Chile</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>China</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Colombia</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Comoros</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Congo, Democratic Republic of</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Congo, Republic of</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Costa Rica</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Côte d&#x27;Ivoire</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Croatia</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Cuba</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Cyprus</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Czech Republic</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Denmark</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Djibouti</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Dominica</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Dominican Republic</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Ecuador</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Egypt</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>El Salvador</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Equatorial Guinea</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Eritrea</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Estonia</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Ethiopia</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Fiji</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Finland</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>France</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Gabon</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Gambia</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Georgia</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Germany</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Ghana</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Greece</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Grenada</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Guatemala</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Guinea</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Guinea-Bissau</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Guyana</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Haiti</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Honduras</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Hungary</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Iceland</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>India</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Indonesia</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Iran</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Iraq</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Ireland</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Israel</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Italy</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Jamaica</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Japan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Jordan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Kazakhstan</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Kenya</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Kiribati</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Kuwait</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Kyrgyzstan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Laos</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Latvia</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Lebanon</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Lesotho</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Liberia</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Libya</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Liechtenstein</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Lithuania</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Luxembourg</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Macedonia</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Madagascar</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Malawi</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Malaysia</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Maldives</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Mali</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Malta</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Marshall Islands</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Mauritania</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Mauritius</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Mexico</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Micronesia, Federated States of</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Moldova</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Monaco</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Mongolia</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Montenegro</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Morocco</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Mozambique</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Myanmar</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Namibia</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Nauru</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Nepal</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Netherlands</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>New Zealand</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Nicaragua</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Niger</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Nigeria</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>North Korea</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Norway</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Oman</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Pakistan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Palau</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Panama</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Papua New Guinea</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Paraguay</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Peru</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Philippines</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Poland</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Portugal</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Qatar</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Romania</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Russia</td>
+        <td>Eurasia</td>
+        <td>Europe/Asia</td>
+    </tr>
+    <tr>
+        <td>Rwanda</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Saint Kitts and Nevis</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Saint Lucia</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Saint Vincent and the Grenadines</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Samoa</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>San Marino</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Sao Tomé and Príncipe</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Saudi Arabia</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Senegal</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Serbia</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Seychelles</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Sierra Leone</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Singapore</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Slovakia</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Slovenia</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Solomon Islands</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Somalia</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>South Africa</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>South Korea</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>South Sudan</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Spain</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Sri Lanka</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Sudan</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Suriname</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Swaziland</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Sweden</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Switzerland</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Syria</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Taiwan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Tajikistan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Tanzania</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Thailand</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Timor-Leste</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Togo</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Tonga</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Trinidad and Tobago</td>
+        <td>Caribbean</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Tunisia</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Turkey</td>
+        <td>Asia</td>
+        <td>Europe/Asia</td>
+    </tr>
+    <tr>
+        <td>Turkmenistan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Tuvalu</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Uganda</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Ukraine</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>United Arab Emirates</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>United Kingdom</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>United States</td>
+        <td>North America</td>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>Uruguay</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Uzbekistan</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Vanuatu</td>
+        <td>Oceania</td>
+        <td>Australasia</td>
+    </tr>
+    <tr>
+        <td>Vatican City</td>
+        <td>Europe</td>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Venezuela</td>
+        <td>South America</td>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Vietnam</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Yemen</td>
+        <td>Asia</td>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Zambia</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Zimbabwe</td>
+        <td>Africa</td>
+        <td>Africa</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-12"><a href="#pandas-12" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 由于不单是一列数据进行判断，np.where()不适用，可以使用apply()完成这道题</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(x)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">if</span> x.continent == <span class="hljs-string">"Oceania"</span>:</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"Australasia"</span></span><br><span class="line">    <span class="hljs-keyword">elif</span> x.continent == <span class="hljs-string">"Eurasia"</span> <span class="hljs-keyword">or</span> x[<span class="hljs-string">"name"</span>] == <span class="hljs-string">"Turkey"</span>:</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"Europe/Asia"</span></span><br><span class="line">    <span class="hljs-keyword">elif</span> x.continent == <span class="hljs-string">"Caribbean"</span>:     <span class="hljs-comment"># 下面会有详细的说明 </span></span><br><span class="line">        <span class="hljs-keyword">if</span> x[<span class="hljs-string">"name"</span>].startswith(<span class="hljs-string">"B"</span>):    </span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-string">"North America"</span></span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-string">"South America"</span></span><br><span class="line">    <span class="hljs-keyword">else</span>:</span><br><span class="line">        <span class="hljs-keyword">return</span> x.continent</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = world[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"continent"</span>]].copy()</span><br><span class="line">df[<span class="hljs-string">"new_continent"</span>] = df.apply(func, axis=<span class="hljs-number">1</span>)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>continent</th>
+      <th>new_continent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Andorra</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Antigua and Barbuda</td>
+      <td>Caribbean</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Argentina</td>
+      <td>South America</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Armenia</td>
+      <td>Eurasia</td>
+      <td>Europe/Asia</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Australia</td>
+      <td>Oceania</td>
+      <td>Australasia</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Austria</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Azerbaijan</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Bahamas</td>
+      <td>Caribbean</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Bahrain</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Bangladesh</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Barbados</td>
+      <td>Caribbean</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Belarus</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Belgium</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Belize</td>
+      <td>North America</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Benin</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Bhutan</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Bolivia</td>
+      <td>South America</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Bosnia and Herzegovina</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Botswana</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Brazil</td>
+      <td>South America</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Brunei</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Bulgaria</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Burkina Faso</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Burundi</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Cambodia</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Cameroon</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td>Swaziland</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>Sweden</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>Switzerland</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Syria</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>Taiwan</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>Tajikistan</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>Tanzania</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>Thailand</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>Timor-Leste</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>Togo</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>Tonga</td>
+      <td>Oceania</td>
+      <td>Australasia</td>
+    </tr>
+    <tr>
+      <th>176</th>
+      <td>Trinidad and Tobago</td>
+      <td>Caribbean</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>Tunisia</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td>Turkey</td>
+      <td>Asia</td>
+      <td>Europe/Asia</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>Turkmenistan</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>Tuvalu</td>
+      <td>Oceania</td>
+      <td>Australasia</td>
+    </tr>
+    <tr>
+      <th>181</th>
+      <td>Uganda</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>182</th>
+      <td>Ukraine</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>United Arab Emirates</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>United Kingdom</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>United States</td>
+      <td>North America</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>186</th>
+      <td>Uruguay</td>
+      <td>South America</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td>Uzbekistan</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>188</th>
+      <td>Vanuatu</td>
+      <td>Oceania</td>
+      <td>Australasia</td>
+    </tr>
+    <tr>
+      <th>189</th>
+      <td>Vatican City</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>Venezuela</td>
+      <td>South America</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>191</th>
+      <td>Vietnam</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>192</th>
+      <td>Yemen</td>
+      <td>Asia</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>Zambia</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>Africa</td>
+    </tr>
+  </tbody>
+</table>
+<p>195 rows × 3 columns</p>
+</div>
+
+
+
+<h3 id="对mysql和pandas的代码进行补充说明"><a href="#对mysql和pandas的代码进行补充说明" class="headerlink" title="对mysql和pandas的代码进行补充说明"></a>对<em>mysql</em>和<em>pandas</em>的代码进行补充说明</h3><ul>
+<li>mysql:它运行<code>CASE WHEN</code>代码时会先全部完成第一个判断，再进行第二个判断，所以可以这样写<code>WHEN continent = &#39;Caribbean&#39; THEN &#39;South America&#39;</code>，它前面已经把既是<code>Caribbean</code>又是国家名开头字母为<code>B</code>的信息给改动了。</li>
+<li>pandas:<code>df.apply(func, axis=1)</code>它是逐行进行判断，所以需要一个嵌套<code>if</code>来进行判断，或者把里面的一层<code>if</code>时行拆分，用<code>and</code>和第一层进行组合判断。</li>
+<li>由于它们两者的执行顺序不同，sqlzoo里的答案提示里要加上一个<code>ORDER BY name</code>，而pandas就不用排序就可以了。</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/22/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-3/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">mysql与pandas对照学习(3)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/20/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-1/">
+                <span class="level-item">mysql与pandas对照学习(1)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#SQLZOO-SELECT-from-WORLD-Tutorial-zh">
+        <span class="has-mr-6">1</span>
+        <span>SQLZOO:SELECT from WORLD Tutorial/zh</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-第一个例子展示简单的SQL命令">
+        <span class="has-mr-6">2</span>
+        <span>1.第一个例子展示简单的SQL命令</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql">
+        <span class="has-mr-6">2.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">2.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-顯示具有至少2億人口的國家名稱">
+        <span class="has-mr-6">3</span>
+        <span>2.顯示具有至少2億人口的國家名稱</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-1">
+        <span class="has-mr-6">3.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-1">
+        <span class="has-mr-6">3.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-找出有至少200百萬-2億-人口的國家名稱，及人均國內生產總值。">
+        <span class="has-mr-6">4</span>
+        <span>3.找出有至少200百萬(2億)人口的國家名稱，及人均國內生產總值。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-2">
+        <span class="has-mr-6">4.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-2">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4-顯示’South-America’南美洲大陸的國家名字和以百萬為單位人口數">
+        <span class="has-mr-6">5</span>
+        <span>4.顯示’South America’南美洲大陸的國家名字和以百萬為單位人口數</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-3">
+        <span class="has-mr-6">5.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-3">
+        <span class="has-mr-6">5.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5-顯示法國，德國，意大利-France-Germany-Italy-的國家名稱和人口。">
+        <span class="has-mr-6">6</span>
+        <span>5.顯示法國，德國，意大利(France, Germany, Italy)的國家名稱和人口。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-4">
+        <span class="has-mr-6">6.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">6.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6-顯示包含單詞“United”為名稱的國家。">
+        <span class="has-mr-6">7</span>
+        <span>6.顯示包含單詞“United”為名稱的國家。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-5">
+        <span class="has-mr-6">7.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-5">
+        <span class="has-mr-6">7.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#7-展示大國的名稱，人口和面積。">
+        <span class="has-mr-6">8</span>
+        <span>7.展示大國的名稱，人口和面積。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-6">
+        <span class="has-mr-6">8.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-6">
+        <span class="has-mr-6">8.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#8-顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積">
+        <span class="has-mr-6">9</span>
+        <span>8.顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-7">
+        <span class="has-mr-6">9.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-7">
+        <span class="has-mr-6">9.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#9-對於南美顯示以百萬計人口，以十億計2位小數GDP。">
+        <span class="has-mr-6">10</span>
+        <span>9.對於南美顯示以百萬計人口，以十億計2位小數GDP。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-8">
+        <span class="has-mr-6">10.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-8">
+        <span class="has-mr-6">10.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#10-顯示萬億元國家的人均國內生產總值，四捨五入到最近的-1000。">
+        <span class="has-mr-6">11</span>
+        <span>10.顯示萬億元國家的人均國內生產總值，四捨五入到最近的$ 1000。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-9">
+        <span class="has-mr-6">11.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-9">
+        <span class="has-mr-6">11.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#困難的題目">
+        <span class="has-mr-6">12</span>
+        <span>困難的題目</span>
+        </a></li><li>
+        <a class="is-flex" href="#11-Show-the-name-but-substitute-Australasia-for-Oceania-for-countries-beginning-with-N">
+        <span class="has-mr-6">13</span>
+        <span>11. Show the name - but substitute Australasia for Oceania - for countries beginning with N.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#题目给出的例子">
+        <span class="has-mr-6">13.1</span>
+        <span>题目给出的例子</span>
+        </a></li><li>
+        <a class="is-flex" href="#mysql-10">
+        <span class="has-mr-6">13.2</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-10">
+        <span class="has-mr-6">13.3</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#12-Show-the-name-and-the-continent-but-substitute-Eurasia-for-Europe-and-Asia-substitute-America-for-each-country-in-North-America-or-South-America-or-Caribbean-Show-countries-beginning-with-A-or-B">
+        <span class="has-mr-6">14</span>
+        <span>12. Show the name and the continent - but substitute Eurasia for Europe and Asia; substitute America - for each country in North America or South America or Caribbean. Show countries beginning with A or B</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-11">
+        <span class="has-mr-6">14.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-11">
+        <span class="has-mr-6">14.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#13-Show-the-name-the-original-continent-and-the-new-continent-of-all-countries">
+        <span class="has-mr-6">15</span>
+        <span>13. Show the name, the original continent and the new continent of all countries.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-12">
+        <span class="has-mr-6">15.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-12">
+        <span class="has-mr-6">15.2</span>
+        <span>pandas</span>
+        </a></li><li>
+        <a class="is-flex" href="#对mysql和pandas的代码进行补充说明">
+        <span class="has-mr-6">15.3</span>
+        <span>对mysql和pandas的代码进行补充说明</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time></div>
+                    <a href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(9)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time></div>
+                    <a href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(8)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time></div>
+                    <a href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(7)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time></div>
+                    <a href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(6)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="mysql与pandas对照学习(2)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

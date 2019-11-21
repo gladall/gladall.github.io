@@ -1,0 +1,3075 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>mysql与pandas对照学习(9) - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="Self joinSelf join Edinburgh BusesDetails of the database Looking at the data stops(id, name) route(num, company, pos, stop)    stops    id   name      route    num   company   pos   stop">
+<meta name="keywords" content="数据分析,mysql,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql与pandas对照学习(9)">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;28&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="Self joinSelf join Edinburgh BusesDetails of the database Looking at the data stops(id, name) route(num, company, pos, stop)    stops    id   name      route    num   company   pos   stop">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-20T12:39:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="mysql与pandas对照学习(9)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    18 分钟 读完 (大约 2706 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                mysql与pandas对照学习(9)
+            
+        </h1>
+        <div class="content">
+            <h2 id="Self-join"><a href="#Self-join" class="headerlink" title="Self join"></a>Self join</h2><p><a href="https://sqlzoo.net/wiki/Self_join" target="_blank" rel="noopener">Self join</a></p>
+<h3 id="Edinburgh-Buses"><a href="#Edinburgh-Buses" class="headerlink" title="Edinburgh Buses"></a>Edinburgh Buses</h3><p><a href="https://sqlzoo.net/wiki/Edinburgh_Buses." target="_blank" rel="noopener" title="Edinburgh Buses.">Details of the database</a> Looking at the data</p>
+<p>stops(<strong>id</strong>, name)
+route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>stop</em>)</p>
+<table>
+<thead>
+<tr>
+<th><strong>stops</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>id</em></td>
+</tr>
+<tr>
+<td>name</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>route</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>num</em></td>
+</tr>
+<tr>
+<td><em>company</em></td>
+</tr>
+<tr>
+<td><em>pos</em></td>
+</tr>
+<tr>
+<td>stop</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<hr>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sql</span><br><span class="line">%sql mysql+pymysql://root:lanhoo@localhost/dbs</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> sqlalchemy</span><br><span class="line">engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://root:lanhoo@localhost/dbs"</span>)</span><br><span class="line">stops = pd.read_sql_table(<span class="hljs-string">"stops"</span>, engine)</span><br><span class="line">route = pd.read_sql_table(<span class="hljs-string">"route"</span>, engine)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><p>How many <strong>stops</strong> are in the database.</p>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT COUNT(id) FROM stops;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>COUNT(id)</th>
+    </tr>
+    <tr>
+        <td>246</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stops.id.count()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>246</code></pre><h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2><p>Find the <strong>id</strong> value for the stop ‘Craiglockhart’</p>
+<h3 id="mysql-1"><a href="#mysql-1" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT id FROM stops WHERE name = <span class="hljs-string">'Craiglockhart'</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>id</th>
+    </tr>
+    <tr>
+        <td>53</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stops.query(<span class="hljs-string">"name == 'Craiglockhart'"</span>)[[<span class="hljs-string">"id"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>52</th>
+      <td>53</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h2><p>Give the <strong>id</strong> and the <strong>name</strong> for the <strong>stops</strong> on the ‘4’ ‘LRT’ service.</p>
+<h3 id="mysql-2"><a href="#mysql-2" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql select id, name <span class="hljs-keyword">from</span> stops \</span><br><span class="line">where id <span class="hljs-keyword">in</span> (select stop <span class="hljs-keyword">from</span> route where num = <span class="hljs-string">'4'</span> <span class="hljs-keyword">and</span> company = <span class="hljs-string">'LRT'</span>) </span><br><span class="line"><span class="hljs-comment"># 一开始以为num为整型，写成 num = 4，虽然结果还是出来，mysql里设置了允许类型不匹配。</span></span><br><span class="line"><span class="hljs-comment"># 后来改成 num = '4',没有那些警告,警告如下图</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+9 rows affected.</code></pre><table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+    </tr>
+    <tr>
+        <td>19</td>
+        <td>Bingham</td>
+    </tr>
+    <tr>
+        <td>53</td>
+        <td>Craiglockhart</td>
+    </tr>
+    <tr>
+        <td>85</td>
+        <td>Fairmilehead</td>
+    </tr>
+    <tr>
+        <td>115</td>
+        <td>Haymarket</td>
+    </tr>
+    <tr>
+        <td>117</td>
+        <td>Hillend</td>
+    </tr>
+    <tr>
+        <td>149</td>
+        <td>London Road</td>
+    </tr>
+    <tr>
+        <td>177</td>
+        <td>Northfield</td>
+    </tr>
+    <tr>
+        <td>179</td>
+        <td>Oxgangs</td>
+    </tr>
+    <tr>
+        <td>194</td>
+        <td>Princes Street</td>
+    </tr>
+</table>
+
+
+
+<p><img src="attachment:image.png" alt="image.png"></p>
+<h3 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stopids = route.query(<span class="hljs-string">"num == '4' and company == 'LRT'"</span>)[<span class="hljs-string">"stop"</span>].values  <span class="hljs-comment"># 一开始是写成 num == 4 结果stopids为空</span></span><br><span class="line">stopids</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([ 19,  53,  85, 115, 117, 149, 177, 179, 194])</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stops[stops.id.isin(stopids)][[<span class="hljs-string">"id"</span>, <span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>18</th>
+      <td>19</td>
+      <td>Bingham</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>53</td>
+      <td>Craiglockhart</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>85</td>
+      <td>Fairmilehead</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>115</td>
+      <td>Haymarket</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>117</td>
+      <td>Hillend</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>149</td>
+      <td>London Road</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>177</td>
+      <td>Northfield</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>179</td>
+      <td>Oxgangs</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>194</td>
+      <td>Princes Street</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="Routes-and-stops"><a href="#Routes-and-stops" class="headerlink" title="Routes and stops"></a>Routes and stops</h2><h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><p>The query shown gives the number of routes that visit either London Road (149) or Craiglockhart (53). Run the query and notice the two services that link these <strong>stops</strong> have a count of 2. Add a HAVING clause to restrict the output to these two routes.</p>
+<blockquote>
+<p>示例</p>
+</blockquote>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT company, num, COUNT(*)</span><br><span class="line">FROM route WHERE stop=149 OR stop=53</span><br><span class="line">GROUP BY company, num</span><br></pre></td></tr></table></figure>
+<p><img src="attachment:image.png" alt="image.png"></p>
+<h3 id="mysql-3"><a href="#mysql-3" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT company, num, COUNT(*) \</span><br><span class="line">FROM route WHERE stop=<span class="hljs-number">149</span> OR stop=<span class="hljs-number">53</span> \</span><br><span class="line">GROUP BY company, num HAVING COUNT(*)=<span class="hljs-number">2</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+2 rows affected.</code></pre><table>
+    <tr>
+        <th>company</th>
+        <th>num</th>
+        <th>COUNT(*)</th>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>4</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>45</td>
+        <td>2</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-3"><a href="#pandas-3" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">temp = route[(route.stop == <span class="hljs-number">149</span>) | (route.stop == <span class="hljs-number">53</span>)].groupby([<span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>]).count().reset_index()</span><br><span class="line">temp</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>company</th>
+      <th>num</th>
+      <th>pos</th>
+      <th>stop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LRT</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LRT</td>
+      <td>15</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LRT</td>
+      <td>20</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LRT</td>
+      <td>26A</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LRT</td>
+      <td>27</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LRT</td>
+      <td>34</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LRT</td>
+      <td>35</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LRT</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LRT</td>
+      <td>42</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>LRT</td>
+      <td>43</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>LRT</td>
+      <td>44</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>LRT</td>
+      <td>45</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>LRT</td>
+      <td>46A</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>LRT</td>
+      <td>47</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>LRT</td>
+      <td>5</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>LRT</td>
+      <td>51</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>LRT</td>
+      <td>63</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>LRT</td>
+      <td>65</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>LRT</td>
+      <td>75</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>LRT</td>
+      <td>87</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>LRT</td>
+      <td>87A</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>SMT</td>
+      <td>106</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>SMT</td>
+      <td>113</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>SMT</td>
+      <td>124</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>SMT</td>
+      <td>66</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>SMT</td>
+      <td>66A</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>SMT</td>
+      <td>C5</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>SMT</td>
+      <td>C55</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">temp.query(<span class="hljs-string">"pos == 2"</span>)[[<span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>company</th>
+      <th>num</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h2><p>Execute the self join shown and observe that b.stop gives all the places you can get to from Craiglockhart, without changing routes. Change the query so that it shows the services from Craiglockhart to London Road.</p>
+<blockquote>
+<p>示例</p>
+</blockquote>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">SELECT a.company, a.num, a.stop, b.stop</span><br><span class="line">FROM route a JOIN route b ON</span><br><span class="line">  (a.company=b.company AND a.num=b.num)</span><br><span class="line">WHERE a.stop=53</span><br><span class="line">```     </span><br><span class="line"></span><br><span class="line">![image.png](attachment:image.png)</span><br><span class="line">**...**</span><br><span class="line">### mysql</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">%sql SELECT a.company, a.num, a.stop, b.stop \</span><br><span class="line">FROM route a JOIN route b ON \</span><br><span class="line">  (a.company=b.company AND a.num=b.num) \</span><br><span class="line">WHERE a.stop=53 and b.stop = ( \</span><br><span class="line">select id from stops where name = &apos;London Road&apos;)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+2 rows affected.</code></pre><table>
+    <tr>
+        <th>company</th>
+        <th>num</th>
+        <th>stop</th>
+        <th>stop_1</th>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>4</td>
+        <td>53</td>
+        <td>149</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>45</td>
+        <td>53</td>
+        <td>149</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-4"><a href="#pandas-4" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># merge()里的参数left_on不单是单个字段（字符串），也可以是多个字段（列表）</span></span><br><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>]).query(<span class="hljs-string">"stop_x == 53 and stop_y == 149"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>num</th>
+      <th>company</th>
+      <th>pos_x</th>
+      <th>stop_x</th>
+      <th>pos_y</th>
+      <th>stop_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3018</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>6</td>
+      <td>53</td>
+      <td>3</td>
+      <td>149</td>
+    </tr>
+    <tr>
+      <th>8680</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>7</td>
+      <td>53</td>
+      <td>4</td>
+      <td>149</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 选取所需的列</span></span><br><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>]).query(<span class="hljs-string">"stop_x == 53 and stop_y == 149"</span>)\</span><br><span class="line">[[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>, <span class="hljs-string">"stop_x"</span>, <span class="hljs-string">"stop_y"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>num</th>
+      <th>company</th>
+      <th>stop_x</th>
+      <th>stop_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3018</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>53</td>
+      <td>149</td>
+    </tr>
+    <tr>
+      <th>8680</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>53</td>
+      <td>149</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h2><p>The query shown is similar to the previous one, however by joining two copies of the <strong>stops</strong> table we can refer to <strong>stops</strong> by <strong>name</strong> rather than by number. Change the query so that the services between ‘Craiglockhart’ and ‘London Road’ are shown. If you are tired of these places try ‘Fairmilehead’ against ‘Tollcross’</p>
+<blockquote>
+<p>示例    </p>
+</blockquote>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT a.company, a.num, stopa.name, stopb.name</span><br><span class="line">FROM route a JOIN route b ON</span><br><span class="line">  (a.company=b.company AND a.num=b.num)</span><br><span class="line">  JOIN stops stopa ON (a.stop=stopa.id)</span><br><span class="line">  JOIN stops stopb ON (b.stop=stopb.id)</span><br><span class="line">WHERE stopa.name=&apos;Craiglockhart&apos;</span><br></pre></td></tr></table></figure>
+<p><img src="attachment:image.png" alt="image.png">
+<strong>…</strong></p>
+<h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT a.company, a.num, stopa.name, stopb.name \</span><br><span class="line">FROM route a JOIN route b ON \</span><br><span class="line">  (a.company=b.company AND a.num=b.num) \</span><br><span class="line">  JOIN stops stopa ON (a.stop=stopa.id) \</span><br><span class="line">  JOIN stops stopb ON (b.stop=stopb.id) \</span><br><span class="line">WHERE stopa.name=<span class="hljs-string">'Craiglockhart'</span> <span class="hljs-keyword">and</span> stopb.name = <span class="hljs-string">'London Road'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+2 rows affected.</code></pre><table>
+    <tr>
+        <th>company</th>
+        <th>num</th>
+        <th>name</th>
+        <th>name_1</th>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>4</td>
+        <td>Craiglockhart</td>
+        <td>London Road</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>45</td>
+        <td>Craiglockhart</td>
+        <td>London Road</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-5"><a href="#pandas-5" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>])\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_x"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_y"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"name_x == 'Craiglockhart' and name_y == 'London Road'"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>, <span class="hljs-string">"name_x"</span>, <span class="hljs-string">"name_y"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>company</th>
+      <th>num</th>
+      <th>name_x</th>
+      <th>name_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>361</th>
+      <td>LRT</td>
+      <td>4</td>
+      <td>Craiglockhart</td>
+      <td>London Road</td>
+    </tr>
+    <tr>
+      <th>362</th>
+      <td>LRT</td>
+      <td>45</td>
+      <td>Craiglockhart</td>
+      <td>London Road</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="Using-a-self-join"><a href="#Using-a-self-join" class="headerlink" title="Using a self join"></a><a href="https://sqlzoo.net/wiki/Using_a_self_join" target="_blank" rel="noopener" title="Using a self join">Using a self join</a></h2><h2 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h2><p><strong>Give a list of all the services which connect stops 115 and 137 (‘Haymarket’ and ‘Leith’)</strong></p>
+<h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql select DISTINCTROW a.company, a.num \     <span class="hljs-comment"># mysql里用了DISTINCTROW来删除重复行</span></span><br><span class="line"><span class="hljs-keyword">from</span> route a join route b on \</span><br><span class="line">(a.company = b.company <span class="hljs-keyword">and</span> a.num = b.num) \</span><br><span class="line">join stops stopa on (a.stop = stopa.id) \</span><br><span class="line">join stops stopb on (b.stop = stopb.id) \</span><br><span class="line">where stopa.name = <span class="hljs-string">'Haymarket'</span> <span class="hljs-keyword">and</span> stopb.name = <span class="hljs-string">'Leith'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+6 rows affected.</code></pre><table>
+    <tr>
+        <th>company</th>
+        <th>num</th>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>22</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>25</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>2A</td>
+    </tr>
+    <tr>
+        <td>SMT</td>
+        <td>C5</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-6"><a href="#pandas-6" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>])\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_x"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_y"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"name_x == 'Haymarket' and name_y == 'Leith'"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>]].drop_duplicates()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>company</th>
+      <th>num</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3574</th>
+      <td>LRT</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>3576</th>
+      <td>LRT</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3578</th>
+      <td>LRT</td>
+      <td>2A</td>
+    </tr>
+    <tr>
+      <th>3580</th>
+      <td>SMT</td>
+      <td>C5</td>
+    </tr>
+    <tr>
+      <th>3581</th>
+      <td>LRT</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>3582</th>
+      <td>LRT</td>
+      <td>25</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="8"><a href="#8" class="headerlink" title="8."></a>8.</h2><p>Give a list of the services which connect the <strong>stops</strong> ‘Craiglockhart’ and ‘Tollcross’</p>
+<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT DISTINCTROW a.company, a.num \</span><br><span class="line">FROM route a JOIN route b \</span><br><span class="line">ON (a.company = b.company AND a.num = b.num) \</span><br><span class="line">JOIN stops stopa ON (a.stop = stopa.id) \</span><br><span class="line">JOIN stops stopb ON (b.stop = stopb.id) \</span><br><span class="line">WHERE stopa.name = <span class="hljs-string">'Craiglockhart'</span> AND stopb.name = <span class="hljs-string">'Tollcross'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+4 rows affected.</code></pre><table>
+    <tr>
+        <th>company</th>
+        <th>num</th>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+</table>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>])\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_x"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_y"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"name_x == 'Craiglockhart' and name_y == 'Tollcross'"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>]].drop_duplicates()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>company</th>
+      <th>num</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8325</th>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>8326</th>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>8327</th>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>8328</th>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h2><p>Give a distinct list of the <strong>stops</strong> which may be reached from ‘Craiglockhart’ by taking one bus, including ‘Craiglockhart’ itself, offered by the LRT company. Include the company and bus no. of the relevant services.</p>
+<h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%sql select DISTINCTROW stopb.name, a.company, a.num <span class="hljs-keyword">from</span> route a \</span><br><span class="line">join route b on (a.company = b.company <span class="hljs-keyword">and</span> a.num = b.num) \</span><br><span class="line">join stops stopa on (a.stop = stopa.id) \</span><br><span class="line">join stops stopb on (b.stop = stopb.id) \</span><br><span class="line">where a.company = <span class="hljs-string">'LRT'</span> <span class="hljs-keyword">and</span> stopa.name = <span class="hljs-string">'Craiglockhart'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+46 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>company</th>
+        <th>num</th>
+    </tr>
+    <tr>
+        <td>Balerno</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Balerno Church</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Bingham</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Brunstane</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Canonmills</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Canonmills</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Cockburn Crescent</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Colinton</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Colinton</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Colinton</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Craiglockhart</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Craiglockhart</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Craiglockhart</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Craiglockhart</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Craiglockhart</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Crewe Toll</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Currie</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Currie</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Duddingston</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Fairmilehead</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Hanover Street</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Hanover Street</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Hanover Street</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Haymarket</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Hillend</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Hunters Tryst</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Leith</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Leith Walk</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>London Road</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>London Road</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Muirhouse</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Newhaven</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Northfield</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Northfield</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Oxgangs</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Oxgangs</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Princes Street</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Princes Street</td>
+        <td>LRT</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Riccarton Campus</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Silverknowes</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Silverknowes</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Tollcross</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Tollcross</td>
+        <td>LRT</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>Tollcross</td>
+        <td>LRT</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>Tollcross</td>
+        <td>LRT</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Torphin</td>
+        <td>LRT</td>
+        <td>10</td>
+    </tr>
+</table>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>])\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_x"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_y"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"company == 'LRT' and name_x == 'Craiglockhart'"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"name_y"</span>, <span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>]].drop_duplicates().sort_values(<span class="hljs-string">"name_y"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name_y</th>
+      <th>company</th>
+      <th>num</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7424</th>
+      <td>Balerno</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>7462</th>
+      <td>Balerno Church</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>7850</th>
+      <td>Bingham</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>6835</th>
+      <td>Brunstane</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>1812</th>
+      <td>Canonmills</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>1813</th>
+      <td>Canonmills</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>7515</th>
+      <td>Cockburn Crescent</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>8142</th>
+      <td>Colinton</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>8141</th>
+      <td>Colinton</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>8140</th>
+      <td>Colinton</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>7880</th>
+      <td>Craiglockhart</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>7879</th>
+      <td>Craiglockhart</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>7878</th>
+      <td>Craiglockhart</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7877</th>
+      <td>Craiglockhart</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>7881</th>
+      <td>Craiglockhart</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2074</th>
+      <td>Crewe Toll</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>7585</th>
+      <td>Currie</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>7586</th>
+      <td>Currie</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>8222</th>
+      <td>Duddingston</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>7936</th>
+      <td>Fairmilehead</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1397</th>
+      <td>Hanover Street</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>1396</th>
+      <td>Hanover Street</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>1395</th>
+      <td>Hanover Street</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>6358</th>
+      <td>Haymarket</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7995</th>
+      <td>Hillend</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>11223</th>
+      <td>Hunters Tryst</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>3641</th>
+      <td>Leith</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>9148</th>
+      <td>Leith Walk</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>361</th>
+      <td>London Road</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>362</th>
+      <td>London Road</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>10607</th>
+      <td>Muirhouse</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>5517</th>
+      <td>Newhaven</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>7331</th>
+      <td>Northfield</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7332</th>
+      <td>Northfield</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>8030</th>
+      <td>Oxgangs</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8031</th>
+      <td>Oxgangs</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>5131</th>
+      <td>Princes Street</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>5130</th>
+      <td>Princes Street</td>
+      <td>LRT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8257</th>
+      <td>Riccarton Campus</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>9641</th>
+      <td>Silverknowes</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>9640</th>
+      <td>Silverknowes</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>8326</th>
+      <td>Tollcross</td>
+      <td>LRT</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>8327</th>
+      <td>Tollcross</td>
+      <td>LRT</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>8325</th>
+      <td>Tollcross</td>
+      <td>LRT</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>8328</th>
+      <td>Tollcross</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>11671</th>
+      <td>Torphin</td>
+      <td>LRT</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="10"><a href="#10" class="headerlink" title="10."></a>10.</h2><p>Find the routes involving two buses that can go from <strong>Craiglockhart</strong> to <strong>Lochend</strong>.    
+Show the bus no. and company for the first bus, the name of the stop for the transfer,<br>and the bus no. and company for the second bus.</p>
+<p>Hint</p>
+<p>Self-join twice to find buses that visit Craiglockhart and Lochend, then join those on matching stops.</p>
+<h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT a.num, a.company, stops.name, c.num, c.company \</span><br><span class="line"><span class="hljs-keyword">from</span> route a join route b on a.company=b.company AND a.num=b.num \</span><br><span class="line">join stops on stops.id=a.stop \</span><br><span class="line">join route c on stops.id=c.stop \</span><br><span class="line">join route d on c.company=d.company AND c.num=d.num \</span><br><span class="line">where b.stop =(select id <span class="hljs-keyword">from</span> stops where name= <span class="hljs-string">'Craiglockhart'</span>) \</span><br><span class="line"><span class="hljs-keyword">and</span> d.stop =(select id <span class="hljs-keyword">from</span> stops where name= <span class="hljs-string">'Lochend'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+36 rows affected.</code></pre><table>
+    <tr>
+        <th>num</th>
+        <th>company</th>
+        <th>name</th>
+        <th>num_1</th>
+        <th>company_1</th>
+    </tr>
+    <tr>
+        <td>27</td>
+        <td>LRT</td>
+        <td>Crewe Toll</td>
+        <td>20</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>20</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>20</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>27</td>
+        <td>LRT</td>
+        <td>Canonmills</td>
+        <td>34</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>47</td>
+        <td>LRT</td>
+        <td>Canonmills</td>
+        <td>34</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>LRT</td>
+        <td>Leith</td>
+        <td>34</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>34</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>34</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>27</td>
+        <td>LRT</td>
+        <td>Canonmills</td>
+        <td>35</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>47</td>
+        <td>LRT</td>
+        <td>Canonmills</td>
+        <td>35</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>LRT</td>
+        <td>Leith</td>
+        <td>35</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>35</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>35</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>Duddingston</td>
+        <td>42</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>42</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>42</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>Duddingston</td>
+        <td>46A</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>46A</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>46A</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>Haymarket</td>
+        <td>65</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>65</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>65</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>LRT</td>
+        <td>Princes Street</td>
+        <td>65</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>Princes Street</td>
+        <td>65</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>Riccarton Campus</td>
+        <td>65</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>LRT</td>
+        <td>Leith</td>
+        <td>87</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>87</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>87</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>87A</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>87A</td>
+        <td>LRT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>Haymarket</td>
+        <td>C5</td>
+        <td>SMT</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>LRT</td>
+        <td>Leith</td>
+        <td>C5</td>
+        <td>SMT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>C5</td>
+        <td>SMT</td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>LRT</td>
+        <td>London Road</td>
+        <td>C5</td>
+        <td>SMT</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>LRT</td>
+        <td>Princes Street</td>
+        <td>C5</td>
+        <td>SMT</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>LRT</td>
+        <td>Princes Street</td>
+        <td>C5</td>
+        <td>SMT</td>
+    </tr>
+</table>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stops.query(<span class="hljs-string">"name == 'Craiglockhart'"</span>)[<span class="hljs-string">"id"</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>52    53
+Name: id, dtype: int64</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stops.query(<span class="hljs-string">"name == 'Lochend'"</span>)[<span class="hljs-string">"id"</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>143    147
+Name: id, dtype: int64</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>])\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_x"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .merge(route, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"stop"</span>).head()</span><br><span class="line"><span class="hljs-comment"># 后面还有连接一个"route"，尝试过，会出现重复的列名，所以要先对数据更改列名</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>num_x</th>
+      <th>company_x</th>
+      <th>pos_x</th>
+      <th>stop_x</th>
+      <th>pos_y</th>
+      <th>stop_y</th>
+      <th>id</th>
+      <th>name</th>
+      <th>num_y</th>
+      <th>company_y</th>
+      <th>pos</th>
+      <th>stop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>39</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>2</td>
+      <td>95</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>4</td>
+      <td>149</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>8</td>
+      <td>151</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m = route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>])\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_x"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .merge(route, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"stop"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.columns = [<span class="hljs-string">"num_ab"</span>, <span class="hljs-string">"company_ab"</span>, <span class="hljs-string">"pos_a"</span>, <span class="hljs-string">"stop_a"</span>, <span class="hljs-string">"pos_b"</span>, <span class="hljs-string">"stop_b"</span>, <span class="hljs-string">"id"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"num_c"</span>, <span class="hljs-string">"company_c"</span>, <span class="hljs-string">"pos_c"</span>, <span class="hljs-string">"stop_c"</span>]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m.merge(route, left_on=[<span class="hljs-string">"company_c"</span>, <span class="hljs-string">"num_c"</span>], right_on=[<span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>])\</span><br><span class="line">    .query(<span class="hljs-string">"stop_b == 53 and stop == 147"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"num_ab"</span>, <span class="hljs-string">"company_ab"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"num_c"</span>, <span class="hljs-string">"company_c"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>num_ab</th>
+      <th>company_ab</th>
+      <th>name</th>
+      <th>num_c</th>
+      <th>company_c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>25175</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>34</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>26030</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>34</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>31595</th>
+      <td>47</td>
+      <td>LRT</td>
+      <td>Canonmills</td>
+      <td>34</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>32855</th>
+      <td>27</td>
+      <td>LRT</td>
+      <td>Canonmills</td>
+      <td>34</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>44015</th>
+      <td>10</td>
+      <td>LRT</td>
+      <td>Leith</td>
+      <td>34</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>54500</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>35</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>55355</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>35</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>60920</th>
+      <td>47</td>
+      <td>LRT</td>
+      <td>Canonmills</td>
+      <td>35</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>62180</th>
+      <td>27</td>
+      <td>LRT</td>
+      <td>Canonmills</td>
+      <td>35</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>73340</th>
+      <td>10</td>
+      <td>LRT</td>
+      <td>Leith</td>
+      <td>35</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>160879</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>20</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>161392</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>20</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>165235</th>
+      <td>27</td>
+      <td>LRT</td>
+      <td>Crewe Toll</td>
+      <td>20</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>252608</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>42</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>253178</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>42</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>268008</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>Duddingston</td>
+      <td>42</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>317860</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>46A</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>318430</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>46A</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>333260</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>Duddingston</td>
+      <td>46A</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>367956</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>65</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>368412</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>65</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>369820</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>Haymarket</td>
+      <td>65</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>373340</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>Princes Street</td>
+      <td>65</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>375420</th>
+      <td>10</td>
+      <td>LRT</td>
+      <td>Princes Street</td>
+      <td>65</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>377748</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>Riccarton Campus</td>
+      <td>65</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>437423</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>87</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>437993</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>87</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>448623</th>
+      <td>10</td>
+      <td>LRT</td>
+      <td>Leith</td>
+      <td>87</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>450915</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>87A</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>451314</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>87A</td>
+      <td>LRT</td>
+    </tr>
+    <tr>
+      <th>457918</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>C5</td>
+      <td>SMT</td>
+    </tr>
+    <tr>
+      <th>458545</th>
+      <td>45</td>
+      <td>LRT</td>
+      <td>London Road</td>
+      <td>C5</td>
+      <td>SMT</td>
+    </tr>
+    <tr>
+      <th>460481</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>Haymarket</td>
+      <td>C5</td>
+      <td>SMT</td>
+    </tr>
+    <tr>
+      <th>465321</th>
+      <td>4</td>
+      <td>LRT</td>
+      <td>Princes Street</td>
+      <td>C5</td>
+      <td>SMT</td>
+    </tr>
+    <tr>
+      <th>468181</th>
+      <td>10</td>
+      <td>LRT</td>
+      <td>Princes Street</td>
+      <td>C5</td>
+      <td>SMT</td>
+    </tr>
+    <tr>
+      <th>476508</th>
+      <td>10</td>
+      <td>LRT</td>
+      <td>Leith</td>
+      <td>C5</td>
+      <td>SMT</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_.count()  <span class="hljs-comment"># 这里有个小技巧："_"表示前一个结果的输出</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>num_ab        36
+company_ab    36
+name          36
+num_c         36
+company_c     36
+dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程复杂了不少，pandas对处理多个自连接有些不太方便–得处理命名问题</strong></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 这里展示了4个route关联，列名出现重复的现象</span></span><br><span class="line">route.merge(route, left_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>], right_on=[<span class="hljs-string">"num"</span>, <span class="hljs-string">"company"</span>])\</span><br><span class="line">    .merge(stops, left_on=<span class="hljs-string">"stop_x"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .merge(route, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"stop"</span>)\</span><br><span class="line">    .merge(route, left_on=[<span class="hljs-string">"company_y"</span>, <span class="hljs-string">"num_y"</span>], right_on=[<span class="hljs-string">"company"</span>, <span class="hljs-string">"num"</span>]).head()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>num_x</th>
+      <th>company_x</th>
+      <th>pos_x</th>
+      <th>stop_x</th>
+      <th>pos_y</th>
+      <th>stop_y</th>
+      <th>id</th>
+      <th>name</th>
+      <th>num_y</th>
+      <th>company_y</th>
+      <th>pos_x</th>
+      <th>stop_x</th>
+      <th>num</th>
+      <th>company</th>
+      <th>pos_y</th>
+      <th>stop_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>1</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>2</td>
+      <td>95</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>4</td>
+      <td>149</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Aberlady</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>9</td>
+      <td>1</td>
+      <td>124</td>
+      <td>SMT</td>
+      <td>8</td>
+      <td>151</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">分享一个按照模板文件格式自动汇总统计的脚本</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/">
+                <span class="level-item">mysql与pandas对照学习(8)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Self-join">
+        <span class="has-mr-6">1</span>
+        <span>Self join</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Edinburgh-Buses">
+        <span class="has-mr-6">1.1</span>
+        <span>Edinburgh Buses</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1">
+        <span class="has-mr-6">2</span>
+        <span>1.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql">
+        <span class="has-mr-6">2.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">2.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2">
+        <span class="has-mr-6">3</span>
+        <span>2.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-1">
+        <span class="has-mr-6">3.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-1">
+        <span class="has-mr-6">3.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3">
+        <span class="has-mr-6">4</span>
+        <span>3.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-2">
+        <span class="has-mr-6">4.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-2">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Routes-and-stops">
+        <span class="has-mr-6">5</span>
+        <span>Routes and stops</span>
+        </a></li><li>
+        <a class="is-flex" href="#4">
+        <span class="has-mr-6">6</span>
+        <span>4.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-3">
+        <span class="has-mr-6">6.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-3">
+        <span class="has-mr-6">6.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5">
+        <span class="has-mr-6">7</span>
+        <span>5.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">7.1</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6">
+        <span class="has-mr-6">8</span>
+        <span>6.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-4">
+        <span class="has-mr-6">8.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-5">
+        <span class="has-mr-6">8.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Using-a-self-join">
+        <span class="has-mr-6">9</span>
+        <span>Using a self join</span>
+        </a></li><li>
+        <a class="is-flex" href="#7">
+        <span class="has-mr-6">10</span>
+        <span>7.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-5">
+        <span class="has-mr-6">10.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-6">
+        <span class="has-mr-6">10.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#8">
+        <span class="has-mr-6">11</span>
+        <span>8.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-6">
+        <span class="has-mr-6">11.1</span>
+        <span>mysql</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#9">
+        <span class="has-mr-6">12</span>
+        <span>9.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-7">
+        <span class="has-mr-6">12.1</span>
+        <span>mysql</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#10">
+        <span class="has-mr-6">13</span>
+        <span>10.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-8">
+        <span class="has-mr-6">13.1</span>
+        <span>mysql</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time></div>
+                    <a href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(9)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time></div>
+                    <a href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(8)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time></div>
+                    <a href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(7)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time></div>
+                    <a href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(6)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="mysql与pandas对照学习(9)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,2983 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>mysql与pandas对照学习(3) - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="SELECT from Nobel Tutorial&#x2F;zhSELECT from Nobel Tutorial&#x2F;zh    yr subject winner    1960 Chemistry Willard F. Libby   1960 Literature Saint-John Perse   1960 Medicine Sir Frank Macfarlane Burnet   1960">
+<meta name="keywords" content="数据分析,mysql,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql与pandas对照学习(3)">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;22&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-3&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="SELECT from Nobel Tutorial&#x2F;zhSELECT from Nobel Tutorial&#x2F;zh    yr subject winner    1960 Chemistry Willard F. Libby   1960 Literature Saint-John Perse   1960 Medicine Sir Frank Macfarlane Burnet   1960">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-20T12:39:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="mysql与pandas对照学习(3)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-22T12:12:31.000Z">2019-09-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    19 分钟 读完 (大约 2809 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                mysql与pandas对照学习(3)
+            
+        </h1>
+        <div class="content">
+            <h2 id="SELECT-from-Nobel-Tutorial-zh"><a href="#SELECT-from-Nobel-Tutorial-zh" class="headerlink" title="SELECT from Nobel Tutorial/zh"></a>SELECT from Nobel Tutorial/zh</h2><p><a href="https://sqlzoo.net/wiki/SELECT_from_Nobel_Tutorial/zh" target="_blank" rel="noopener">SELECT from Nobel Tutorial/zh</a></p>
+<table>
+<thead>
+<tr>
+<th align="left">yr</th>
+<th align="left">subject</th>
+<th align="left">winner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1960</td>
+<td align="left">Chemistry</td>
+<td align="left">Willard F. Libby</td>
+</tr>
+<tr>
+<td align="left">1960</td>
+<td align="left">Literature</td>
+<td align="left">Saint-John Perse</td>
+</tr>
+<tr>
+<td align="left">1960</td>
+<td align="left">Medicine</td>
+<td align="left">Sir Frank Macfarlane Burnet</td>
+</tr>
+<tr>
+<td align="left">1960</td>
+<td align="left">Medicine</td>
+<td align="left">Peter Madawar</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>yr: 年份
+subject: 獎項
+winner: 得獎者</p>
+<a id="more"></a>
+<h3 id="nobel-諾貝爾獎得獎者"><a href="#nobel-諾貝爾獎得獎者" class="headerlink" title="nobel 諾貝爾獎得獎者"></a><code>nobel</code> 諾貝爾獎得獎者</h3><p>我們繼續練習簡單的單一表格SQL查詢。</p>
+<p>這個教程是有關諾貝爾獎得獎者的：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel(yr, subject, winner)</span><br></pre></td></tr></table></figure>
+
+<p>yr: 年份
+subject: 獎項
+winner: 得獎者</p>
+<h3 id="練習"><a href="#練習" class="headerlink" title="練習"></a>練習</h3><p>使用<code>SELECT</code>語句。</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sql</span><br><span class="line">%sql mysql+pymysql://root:lanhoo@localhost/dbs</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> sqlalchemy</span><br><span class="line">engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://root:lanhoo@localhost/dbs"</span>)</span><br><span class="line">nobel = pd.read_sql_table(<span class="hljs-string">"nobel"</span>, engine)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.info()</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 895 entries, 0 to 894
+Data columns (total 3 columns):
+yr         895 non-null object
+subject    895 non-null object
+winner     895 non-null object
+dtypes: object(3)
+memory usage: 21.1+ KB</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 更改yr字段为整型</span></span><br><span class="line">nobel.yr = nobel.yr.astype(np.int16)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-更改查詢以顯示1950年諾貝爾獎的獎項資料。"><a href="#1-更改查詢以顯示1950年諾貝爾獎的獎項資料。" class="headerlink" title="1.更改查詢以顯示1950年諾貝爾獎的獎項資料。"></a>1.更改查詢以顯示1950年諾貝爾獎的獎項資料。</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT yr, subject, winner \</span><br><span class="line">  FROM nobel \</span><br><span class="line"> WHERE yr = <span class="hljs-number">1950</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+8 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Chemistry</td>
+        <td>Kurt Alder</td>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Chemistry</td>
+        <td>Otto Diels</td>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Literature</td>
+        <td>Bertrand Russell</td>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Medicine</td>
+        <td>Philip S. Hench</td>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Medicine</td>
+        <td>Edward C. Kendall</td>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Medicine</td>
+        <td>Tadeus Reichstein</td>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Peace</td>
+        <td>Ralph Bunche</td>
+    </tr>
+    <tr>
+        <td>1950</td>
+        <td>Physics</td>
+        <td>Cecil Powell</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel[nobel.yr == <span class="hljs-number">1950</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>637</th>
+      <td>1950</td>
+      <td>Chemistry</td>
+      <td>Kurt Alder</td>
+    </tr>
+    <tr>
+      <th>638</th>
+      <td>1950</td>
+      <td>Chemistry</td>
+      <td>Otto Diels</td>
+    </tr>
+    <tr>
+      <th>639</th>
+      <td>1950</td>
+      <td>Literature</td>
+      <td>Bertrand Russell</td>
+    </tr>
+    <tr>
+      <th>640</th>
+      <td>1950</td>
+      <td>Medicine</td>
+      <td>Philip S. Hench</td>
+    </tr>
+    <tr>
+      <th>641</th>
+      <td>1950</td>
+      <td>Medicine</td>
+      <td>Edward C. Kendall</td>
+    </tr>
+    <tr>
+      <th>642</th>
+      <td>1950</td>
+      <td>Medicine</td>
+      <td>Tadeus Reichstein</td>
+    </tr>
+    <tr>
+      <th>643</th>
+      <td>1950</td>
+      <td>Peace</td>
+      <td>Ralph Bunche</td>
+    </tr>
+    <tr>
+      <th>644</th>
+      <td>1950</td>
+      <td>Physics</td>
+      <td>Cecil Powell</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="2-顯示誰贏得了1962年文學獎-Literature-。"><a href="#2-顯示誰贏得了1962年文學獎-Literature-。" class="headerlink" title="2.顯示誰贏得了1962年文學獎(Literature)。"></a>2.顯示誰贏得了1962年文學獎(Literature)。</h2><h3 id="mysql-1"><a href="#mysql-1" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT winner \</span><br><span class="line">FROM nobel \</span><br><span class="line">WHERE yr = <span class="hljs-number">1962</span> \</span><br><span class="line">    AND subject = <span class="hljs-string">'Literature'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>John Steinbeck</td>
+    </tr>
+</table>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 方法一</span></span><br><span class="line">nobel.query(<span class="hljs-string">"yr==1962 and subject=='Literature'"</span>)[[<span class="hljs-string">"winner"</span>]] <span class="hljs-comment"># query()可以进行一些简单的判断及其组合查询</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>556</th>
+      <td>John Steinbeck</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 方法二</span></span><br><span class="line">nobel[(nobel.yr == <span class="hljs-number">1962</span>) &amp; (nobel.subject == <span class="hljs-string">"Literature"</span>)][[<span class="hljs-string">"winner"</span>]] <span class="hljs-comment"># 这种查询要注意对条件判断加括号，并只能用『&amp;』、『|』和『~』</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>556</th>
+      <td>John Steinbeck</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<blockquote>
+<p>关于『&amp;』、『|』和『~』的详细说明可以浏览<a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#boolean-indexing" target="_blank" rel="noopener">这里</a></p>
+</blockquote>
+<h2 id="3-顯示“愛因斯坦”-‘Albert-Einstein’-的獲獎年份和獎項。"><a href="#3-顯示“愛因斯坦”-‘Albert-Einstein’-的獲獎年份和獎項。" class="headerlink" title="3.顯示“愛因斯坦”(‘Albert Einstein’) 的獲獎年份和獎項。"></a>3.顯示“愛因斯坦”(‘Albert Einstein’) 的獲獎年份和獎項。</h2><h3 id="mysql-2"><a href="#mysql-2" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT yr, subject FROM nobel WHERE winner=<span class="hljs-string">'Albert Einstein'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+    </tr>
+    <tr>
+        <td>1921</td>
+        <td>Physics</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"winner == 'Albert Einstein'"</span>)[[<span class="hljs-string">"yr"</span>, <span class="hljs-string">"subject"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>792</th>
+      <td>1921</td>
+      <td>Physics</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="4-顯示2000年及以後的和平獎-‘Peace’-得獎者。"><a href="#4-顯示2000年及以後的和平獎-‘Peace’-得獎者。" class="headerlink" title="4.顯示2000年及以後的和平獎(‘Peace’)得獎者。"></a>4.顯示2000年及以後的和平獎(‘Peace’)得獎者。</h2><h3 id="mysql-3"><a href="#mysql-3" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT winner FROM nobel WHERE subject=<span class="hljs-string">'Peace'</span> <span class="hljs-keyword">and</span> yr &gt;= <span class="hljs-number">2000</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+22 rows affected.</code></pre><table>
+    <tr>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>Tunisian National Dialogue Quartet</td>
+    </tr>
+    <tr>
+        <td>Kailash Satyarthi</td>
+    </tr>
+    <tr>
+        <td>Malala Yousafzai</td>
+    </tr>
+    <tr>
+        <td>European Union</td>
+    </tr>
+    <tr>
+        <td>Ellen Johnson Sirleaf</td>
+    </tr>
+    <tr>
+        <td>Leymah Gbowee</td>
+    </tr>
+    <tr>
+        <td>Tawakel Karman</td>
+    </tr>
+    <tr>
+        <td>Liu Xiaobo</td>
+    </tr>
+    <tr>
+        <td>Barack Obama</td>
+    </tr>
+    <tr>
+        <td>Martti Ahtisaari</td>
+    </tr>
+    <tr>
+        <td>Intergovernmental Panel on Climate Change</td>
+    </tr>
+    <tr>
+        <td>Al Gore</td>
+    </tr>
+    <tr>
+        <td>Grameen Bank</td>
+    </tr>
+    <tr>
+        <td>Muhammad Yunus</td>
+    </tr>
+    <tr>
+        <td>International Atomic Energy Agency</td>
+    </tr>
+    <tr>
+        <td>Mohamed ElBaradei</td>
+    </tr>
+    <tr>
+        <td>Wangari Maathai</td>
+    </tr>
+    <tr>
+        <td>Shirin Ebadi</td>
+    </tr>
+    <tr>
+        <td>Jimmy Carter</td>
+    </tr>
+    <tr>
+        <td>United Nations</td>
+    </tr>
+    <tr>
+        <td>Kofi Annan</td>
+    </tr>
+    <tr>
+        <td>Kim Dae-jung</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"subject=='Peace' and yr &gt;= 2000"</span>)[[<span class="hljs-string">"winner"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>Tunisian National Dialogue Quartet</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Kailash Satyarthi</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Malala Yousafzai</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>European Union</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>Ellen Johnson Sirleaf</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Leymah Gbowee</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>Tawakel Karman</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>Liu Xiaobo</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>Barack Obama</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>Martti Ahtisaari</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>Intergovernmental Panel on Climate Change</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>Al Gore</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>Grameen Bank</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>Muhammad Yunus</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>International Atomic Energy Agency</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Mohamed ElBaradei</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>Wangari Maathai</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>Shirin Ebadi</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>Jimmy Carter</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>United Nations</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>Kofi Annan</td>
+    </tr>
+    <tr>
+      <th>188</th>
+      <td>Kim Dae-jung</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="5-顯示1980年至1989年-包含首尾-的文學獎-Literature-獲獎者所有細節（年，主題，獲獎者）。"><a href="#5-顯示1980年至1989年-包含首尾-的文學獎-Literature-獲獎者所有細節（年，主題，獲獎者）。" class="headerlink" title="5.顯示1980年至1989年(包含首尾)的文學獎(Literature)獲獎者所有細節（年，主題，獲獎者）。"></a>5.顯示1980年至1989年(包含首尾)的文學獎(Literature)獲獎者所有細節（年，主題，獲獎者）。</h2><h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT * FROM nobel WHERE subject=<span class="hljs-string">'Literature'</span> AND yr BETWEEN <span class="hljs-number">1980</span> AND <span class="hljs-number">1989</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+10 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>1989</td>
+        <td>Literature</td>
+        <td>Camilo José Cela</td>
+    </tr>
+    <tr>
+        <td>1988</td>
+        <td>Literature</td>
+        <td>Naguib Mahfouz</td>
+    </tr>
+    <tr>
+        <td>1987</td>
+        <td>Literature</td>
+        <td>Joseph Brodsky</td>
+    </tr>
+    <tr>
+        <td>1986</td>
+        <td>Literature</td>
+        <td>Wole Soyinka</td>
+    </tr>
+    <tr>
+        <td>1985</td>
+        <td>Literature</td>
+        <td>Claude Simon</td>
+    </tr>
+    <tr>
+        <td>1984</td>
+        <td>Literature</td>
+        <td>Jaroslav Seifert</td>
+    </tr>
+    <tr>
+        <td>1983</td>
+        <td>Literature</td>
+        <td>William Golding</td>
+    </tr>
+    <tr>
+        <td>1982</td>
+        <td>Literature</td>
+        <td>Gabriel García Márquez</td>
+    </tr>
+    <tr>
+        <td>1981</td>
+        <td>Literature</td>
+        <td>Elias Canetti</td>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Literature</td>
+        <td>Czeslaw Milosz</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-3"><a href="#pandas-3" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"subject=='Literature' and 1980&lt;=yr&lt;=1989"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>299</th>
+      <td>1989</td>
+      <td>Literature</td>
+      <td>Camilo José Cela</td>
+    </tr>
+    <tr>
+      <th>310</th>
+      <td>1988</td>
+      <td>Literature</td>
+      <td>Naguib Mahfouz</td>
+    </tr>
+    <tr>
+      <th>322</th>
+      <td>1987</td>
+      <td>Literature</td>
+      <td>Joseph Brodsky</td>
+    </tr>
+    <tr>
+      <th>331</th>
+      <td>1986</td>
+      <td>Literature</td>
+      <td>Wole Soyinka</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>1985</td>
+      <td>Literature</td>
+      <td>Claude Simon</td>
+    </tr>
+    <tr>
+      <th>347</th>
+      <td>1984</td>
+      <td>Literature</td>
+      <td>Jaroslav Seifert</td>
+    </tr>
+    <tr>
+      <th>356</th>
+      <td>1983</td>
+      <td>Literature</td>
+      <td>William Golding</td>
+    </tr>
+    <tr>
+      <th>363</th>
+      <td>1982</td>
+      <td>Literature</td>
+      <td>Gabriel García Márquez</td>
+    </tr>
+    <tr>
+      <th>373</th>
+      <td>1981</td>
+      <td>Literature</td>
+      <td>Elias Canetti</td>
+    </tr>
+    <tr>
+      <th>384</th>
+      <td>1980</td>
+      <td>Literature</td>
+      <td>Czeslaw Milosz</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="6-顯示總統獲勝者的所有細節："><a href="#6-顯示總統獲勝者的所有細節：" class="headerlink" title="6.顯示總統獲勝者的所有細節："></a>6.顯示總統獲勝者的所有細節：</h2><ul>
+<li>西奧多•羅斯福 Theodore Roosevelt</li>
+<li>伍德羅•威爾遜 Woodrow Wilson</li>
+<li>吉米•卡特 Jimmy Carter<h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3></li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT * FROM nobel\</span><br><span class="line"> WHERE winner IN (<span class="hljs-string">'Theodore Roosevelt'</span>, <span class="hljs-string">'Woodrow Wilson'</span>, <span class="hljs-string">'Jimmy Carter'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>2002</td>
+        <td>Peace</td>
+        <td>Jimmy Carter</td>
+    </tr>
+    <tr>
+        <td>1919</td>
+        <td>Peace</td>
+        <td>Woodrow Wilson</td>
+    </tr>
+    <tr>
+        <td>1906</td>
+        <td>Peace</td>
+        <td>Theodore Roosevelt</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-4"><a href="#pandas-4" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"winner in ('Theodore Roosevelt', 'Woodrow Wilson', 'Jimmy Carter')"</span>) <span class="hljs-comment"># query()里面可以用in</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>160</th>
+      <td>2002</td>
+      <td>Peace</td>
+      <td>Jimmy Carter</td>
+    </tr>
+    <tr>
+      <th>800</th>
+      <td>1919</td>
+      <td>Peace</td>
+      <td>Woodrow Wilson</td>
+    </tr>
+    <tr>
+      <th>862</th>
+      <td>1906</td>
+      <td>Peace</td>
+      <td>Theodore Roosevelt</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="7-顯示名字為John-的得獎者。"><a href="#7-顯示名字為John-的得獎者。" class="headerlink" title="7.顯示名字為John 的得獎者。"></a>7.顯示名字為John 的得獎者。</h2><p>(注意:外國人名字(First name)在前，姓氏(Last name)在後)</p>
+<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT winner FROM nobel WHERE winner LIKE <span class="hljs-string">'John%'</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+26 rows affected.</code></pre><table>
+    <tr>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>John O&#x27;Keefe</td>
+    </tr>
+    <tr>
+        <td>John B. Gurdon</td>
+    </tr>
+    <tr>
+        <td>John C. Mather</td>
+    </tr>
+    <tr>
+        <td>John L. Hall</td>
+    </tr>
+    <tr>
+        <td>John B. Fenn</td>
+    </tr>
+    <tr>
+        <td>John E. Sulston</td>
+    </tr>
+    <tr>
+        <td>John Pople</td>
+    </tr>
+    <tr>
+        <td>John Hume</td>
+    </tr>
+    <tr>
+        <td>John E. Walker</td>
+    </tr>
+    <tr>
+        <td>John C. Harsanyi</td>
+    </tr>
+    <tr>
+        <td>John F. Nash Jr.</td>
+    </tr>
+    <tr>
+        <td>John C. Polanyi</td>
+    </tr>
+    <tr>
+        <td>John R. Vane</td>
+    </tr>
+    <tr>
+        <td>John H. van Vleck</td>
+    </tr>
+    <tr>
+        <td>John Cornforth</td>
+    </tr>
+    <tr>
+        <td>John R. Hicks</td>
+    </tr>
+    <tr>
+        <td>John Bardeen</td>
+    </tr>
+    <tr>
+        <td>John C. Kendrew</td>
+    </tr>
+    <tr>
+        <td>John Steinbeck</td>
+    </tr>
+    <tr>
+        <td>John Bardeen</td>
+    </tr>
+    <tr>
+        <td>John F. Enders</td>
+    </tr>
+    <tr>
+        <td>John Cockcroft</td>
+    </tr>
+    <tr>
+        <td>John H. Northrop</td>
+    </tr>
+    <tr>
+        <td>John R. Mott</td>
+    </tr>
+    <tr>
+        <td>John Galsworthy</td>
+    </tr>
+    <tr>
+        <td>John Macleod</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-5"><a href="#pandas-5" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel[nobel.winner.str.startswith(<span class="hljs-string">'John'</span>)][[<span class="hljs-string">"winner"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>John O'Keefe</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>John B. Gurdon</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>John C. Mather</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>John L. Hall</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td>John B. Fenn</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>John E. Sulston</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>John Pople</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>John Hume</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>John E. Walker</td>
+    </tr>
+    <tr>
+      <th>249</th>
+      <td>John C. Harsanyi</td>
+    </tr>
+    <tr>
+      <th>250</th>
+      <td>John F. Nash Jr.</td>
+    </tr>
+    <tr>
+      <th>329</th>
+      <td>John C. Polanyi</td>
+    </tr>
+    <tr>
+      <th>366</th>
+      <td>John R. Vane</td>
+    </tr>
+    <tr>
+      <th>423</th>
+      <td>John H. van Vleck</td>
+    </tr>
+    <tr>
+      <th>433</th>
+      <td>John Cornforth</td>
+    </tr>
+    <tr>
+      <th>473</th>
+      <td>John R. Hicks</td>
+    </tr>
+    <tr>
+      <th>477</th>
+      <td>John Bardeen</td>
+    </tr>
+    <tr>
+      <th>554</th>
+      <td>John C. Kendrew</td>
+    </tr>
+    <tr>
+      <th>556</th>
+      <td>John Steinbeck</td>
+    </tr>
+    <tr>
+      <th>602</th>
+      <td>John Bardeen</td>
+    </tr>
+    <tr>
+      <th>612</th>
+      <td>John F. Enders</td>
+    </tr>
+    <tr>
+      <th>635</th>
+      <td>John Cockcroft</td>
+    </tr>
+    <tr>
+      <th>663</th>
+      <td>John H. Northrop</td>
+    </tr>
+    <tr>
+      <th>669</th>
+      <td>John R. Mott</td>
+    </tr>
+    <tr>
+      <th>729</th>
+      <td>John Galsworthy</td>
+    </tr>
+    <tr>
+      <th>780</th>
+      <td>John Macleod</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="8-顯示1980年物理學-physics-獲獎者，及1984年化學獎-chemistry-獲得者。"><a href="#8-顯示1980年物理學-physics-獲獎者，及1984年化學獎-chemistry-獲得者。" class="headerlink" title="8. 顯示1980年物理學(physics)獲獎者，及1984年化學獎(chemistry)獲得者。"></a>8. 顯示1980年物理學(physics)獲獎者，及1984年化學獎(chemistry)獲得者。</h2><h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT * FROM nobel WHERE (yr=<span class="hljs-number">1980</span> AND subject=<span class="hljs-string">'physics'</span>) OR (yr=<span class="hljs-number">1984</span> AND subject=<span class="hljs-string">'chemistry'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>1984</td>
+        <td>Chemistry</td>
+        <td>Bruce Merrifield</td>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Physics</td>
+        <td>James Cronin</td>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Physics</td>
+        <td>Val Fitch</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-6"><a href="#pandas-6" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"(yr==1980 and subject=='Physics') or (yr==1984 and subject=='Chemistry')"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>345</th>
+      <td>1984</td>
+      <td>Chemistry</td>
+      <td>Bruce Merrifield</td>
+    </tr>
+    <tr>
+      <th>389</th>
+      <td>1980</td>
+      <td>Physics</td>
+      <td>James Cronin</td>
+    </tr>
+    <tr>
+      <th>390</th>
+      <td>1980</td>
+      <td>Physics</td>
+      <td>Val Fitch</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>在mysql里默认对大小写不敏感，因此<code>subject=&#39;physics&#39;</code>能够得到结果。</li>
+<li>而python的语句是对大小写敏感的，所以必须是<code>subject==&#39;Physics&#39;</code>.</li>
+</ul>
+<h2 id="9-查看1980年獲獎者，但不包括化學獎-Chemistry-和醫學獎-Medicine-。"><a href="#9-查看1980年獲獎者，但不包括化學獎-Chemistry-和醫學獎-Medicine-。" class="headerlink" title="9.查看1980年獲獎者，但不包括化學獎(Chemistry)和醫學獎(Medicine)。"></a>9.查看1980年獲獎者，但不包括化學獎(Chemistry)和醫學獎(Medicine)。</h2><h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT * FROM nobel WHERE subject NOT IN (<span class="hljs-string">'Chemistry'</span>, <span class="hljs-string">'Medicine'</span>)  AND  yr=<span class="hljs-number">1980</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Economics</td>
+        <td>Lawrence R. Klein</td>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Literature</td>
+        <td>Czeslaw Milosz</td>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Peace</td>
+        <td>Adolfo Pérez Esquivel</td>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Physics</td>
+        <td>James Cronin</td>
+    </tr>
+    <tr>
+        <td>1980</td>
+        <td>Physics</td>
+        <td>Val Fitch</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-7"><a href="#pandas-7" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"subject not in ('Chemistry', 'Medicine')  and  yr==1980"</span>) <span class="hljs-comment"># not in 也是可以用在query()里</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>383</th>
+      <td>1980</td>
+      <td>Economics</td>
+      <td>Lawrence R. Klein</td>
+    </tr>
+    <tr>
+      <th>384</th>
+      <td>1980</td>
+      <td>Literature</td>
+      <td>Czeslaw Milosz</td>
+    </tr>
+    <tr>
+      <th>388</th>
+      <td>1980</td>
+      <td>Peace</td>
+      <td>Adolfo Pérez Esquivel</td>
+    </tr>
+    <tr>
+      <th>389</th>
+      <td>1980</td>
+      <td>Physics</td>
+      <td>James Cronin</td>
+    </tr>
+    <tr>
+      <th>390</th>
+      <td>1980</td>
+      <td>Physics</td>
+      <td>Val Fitch</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="10-顯示早期的醫學獎-Medicine-得獎者（1910之前，不包括1910），及近年文學獎-Literature-得獎者（2004年以後，包括2004年）。"><a href="#10-顯示早期的醫學獎-Medicine-得獎者（1910之前，不包括1910），及近年文學獎-Literature-得獎者（2004年以後，包括2004年）。" class="headerlink" title="10. 顯示早期的醫學獎(Medicine)得獎者（1910之前，不包括1910），及近年文學獎(Literature)得獎者（2004年以後，包括2004年）。"></a>10. 顯示早期的醫學獎(Medicine)得獎者（1910之前，不包括1910），及近年文學獎(Literature)得獎者（2004年以後，包括2004年）。</h2><h3 id="mysql-9"><a href="#mysql-9" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT * FROM nobel WHERE (subject=<span class="hljs-string">'Medicine'</span> AND yr &lt; <span class="hljs-number">1910</span>) OR (subject=<span class="hljs-string">'Literature'</span> AND yr &gt;= <span class="hljs-number">2004</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+23 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>2015</td>
+        <td>Literature</td>
+        <td>Svetlana Alexievich</td>
+    </tr>
+    <tr>
+        <td>2014</td>
+        <td>Literature</td>
+        <td>Patrick Modiano</td>
+    </tr>
+    <tr>
+        <td>2013</td>
+        <td>Literature</td>
+        <td>Alice Munro</td>
+    </tr>
+    <tr>
+        <td>2012</td>
+        <td>Literature</td>
+        <td>Mo Yan</td>
+    </tr>
+    <tr>
+        <td>2011</td>
+        <td>Literature</td>
+        <td>Tomas Tranströmer</td>
+    </tr>
+    <tr>
+        <td>2010</td>
+        <td>Literature</td>
+        <td>Mario Vargas Llosa</td>
+    </tr>
+    <tr>
+        <td>2009</td>
+        <td>Literature</td>
+        <td>Herta Müller</td>
+    </tr>
+    <tr>
+        <td>2008</td>
+        <td>Literature</td>
+        <td>Jean-Marie Gustave Le Clézio</td>
+    </tr>
+    <tr>
+        <td>2007</td>
+        <td>Literature</td>
+        <td>Doris Lessing</td>
+    </tr>
+    <tr>
+        <td>2006</td>
+        <td>Literature</td>
+        <td>Orhan Pamuk</td>
+    </tr>
+    <tr>
+        <td>2005</td>
+        <td>Literature</td>
+        <td>Harold Pinter</td>
+    </tr>
+    <tr>
+        <td>2004</td>
+        <td>Literature</td>
+        <td>Elfriede Jelinek</td>
+    </tr>
+    <tr>
+        <td>1909</td>
+        <td>Medicine</td>
+        <td>Theodor Kocher</td>
+    </tr>
+    <tr>
+        <td>1908</td>
+        <td>Medicine</td>
+        <td>Paul Ehrlich</td>
+    </tr>
+    <tr>
+        <td>1908</td>
+        <td>Medicine</td>
+        <td>Ilya Mechnikov</td>
+    </tr>
+    <tr>
+        <td>1907</td>
+        <td>Medicine</td>
+        <td>Alphonse Laveran</td>
+    </tr>
+    <tr>
+        <td>1906</td>
+        <td>Medicine</td>
+        <td>Camillo Golgi</td>
+    </tr>
+    <tr>
+        <td>1906</td>
+        <td>Medicine</td>
+        <td>Santiago Ramón y Cajal</td>
+    </tr>
+    <tr>
+        <td>1905</td>
+        <td>Medicine</td>
+        <td>Robert Koch</td>
+    </tr>
+    <tr>
+        <td>1904</td>
+        <td>Medicine</td>
+        <td>Ivan Pavlov</td>
+    </tr>
+    <tr>
+        <td>1903</td>
+        <td>Medicine</td>
+        <td>Niels Ryberg Finsen</td>
+    </tr>
+    <tr>
+        <td>1902</td>
+        <td>Medicine</td>
+        <td>Ronald Ross</td>
+    </tr>
+    <tr>
+        <td>1901</td>
+        <td>Medicine</td>
+        <td>Emil von Behring</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-8"><a href="#pandas-8" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"(subject=='Medicine' and yr &lt; 1910) or (subject=='Literature' and yr &gt;= 2004)"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>2015</td>
+      <td>Literature</td>
+      <td>Svetlana Alexievich</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2014</td>
+      <td>Literature</td>
+      <td>Patrick Modiano</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2013</td>
+      <td>Literature</td>
+      <td>Alice Munro</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>2012</td>
+      <td>Literature</td>
+      <td>Mo Yan</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>2011</td>
+      <td>Literature</td>
+      <td>Tomas Tranströmer</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>2010</td>
+      <td>Literature</td>
+      <td>Mario Vargas Llosa</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>2009</td>
+      <td>Literature</td>
+      <td>Herta Müller</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>2008</td>
+      <td>Literature</td>
+      <td>Jean-Marie Gustave Le Clézio</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>2007</td>
+      <td>Literature</td>
+      <td>Doris Lessing</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>2006</td>
+      <td>Literature</td>
+      <td>Orhan Pamuk</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>2005</td>
+      <td>Literature</td>
+      <td>Harold Pinter</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>2004</td>
+      <td>Literature</td>
+      <td>Elfriede Jelinek</td>
+    </tr>
+    <tr>
+      <th>840</th>
+      <td>1909</td>
+      <td>Medicine</td>
+      <td>Theodor Kocher</td>
+    </tr>
+    <tr>
+      <th>847</th>
+      <td>1908</td>
+      <td>Medicine</td>
+      <td>Paul Ehrlich</td>
+    </tr>
+    <tr>
+      <th>848</th>
+      <td>1908</td>
+      <td>Medicine</td>
+      <td>Ilya Mechnikov</td>
+    </tr>
+    <tr>
+      <th>854</th>
+      <td>1907</td>
+      <td>Medicine</td>
+      <td>Alphonse Laveran</td>
+    </tr>
+    <tr>
+      <th>860</th>
+      <td>1906</td>
+      <td>Medicine</td>
+      <td>Camillo Golgi</td>
+    </tr>
+    <tr>
+      <th>861</th>
+      <td>1906</td>
+      <td>Medicine</td>
+      <td>Santiago Ramón y Cajal</td>
+    </tr>
+    <tr>
+      <th>866</th>
+      <td>1905</td>
+      <td>Medicine</td>
+      <td>Robert Koch</td>
+    </tr>
+    <tr>
+      <th>872</th>
+      <td>1904</td>
+      <td>Medicine</td>
+      <td>Ivan Pavlov</td>
+    </tr>
+    <tr>
+      <th>877</th>
+      <td>1903</td>
+      <td>Medicine</td>
+      <td>Niels Ryberg Finsen</td>
+    </tr>
+    <tr>
+      <th>884</th>
+      <td>1902</td>
+      <td>Medicine</td>
+      <td>Ronald Ross</td>
+    </tr>
+    <tr>
+      <th>891</th>
+      <td>1901</td>
+      <td>Medicine</td>
+      <td>Emil von Behring</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="Harder-Questions"><a href="#Harder-Questions" class="headerlink" title="Harder Questions"></a>Harder Questions</h2><h2 id="11-Find-all-details-of-the-prize-won-by-PETER-GRUNBERG"><a href="#11-Find-all-details-of-the-prize-won-by-PETER-GRUNBERG" class="headerlink" title="11. Find all details of the prize won by PETER GRÜNBERG"></a>11. Find all details of the prize won by PETER GRÜNBERG</h2><blockquote>
+<p>Non-ASCII characters
+The u in his name has an umlaut. You may find this link useful <a href="https://en.wikipedia.org/wiki/%C3%9C#Keyboarding" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/%C3%9C#Keyboarding</a></p>
+</blockquote>
+<h3 id="mysql-10"><a href="#mysql-10" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT * FROM nobel WHERE winner=<span class="hljs-string">'PETER GRÜNBERG'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>2007</td>
+        <td>Physics</td>
+        <td>Peter Grünberg</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-9"><a href="#pandas-9" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel.query(<span class="hljs-string">"winner=='Peter Grünberg'"</span>) <span class="hljs-comment"># 大小写问题在第8题里已经写明，但题目给的姓名是全大写，这样改动有些欠妥</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>105</th>
+      <td>2007</td>
+      <td>Physics</td>
+      <td>Peter Grünberg</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 应该使用下面的代码来执行查询</span></span><br><span class="line">nobel[nobel.winner.str.upper() == <span class="hljs-string">"PETER GRÜNBERG"</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>105</th>
+      <td>2007</td>
+      <td>Physics</td>
+      <td>Peter Grünberg</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="12-查找尤金•奧尼爾EUGENE-O’NEILL得獎的所有細節-Find-all-details-of-the-prize-won-by-EUGENE-O’NEILL"><a href="#12-查找尤金•奧尼爾EUGENE-O’NEILL得獎的所有細節-Find-all-details-of-the-prize-won-by-EUGENE-O’NEILL" class="headerlink" title="12. 查找尤金•奧尼爾EUGENE O’NEILL得獎的所有細節 Find all details of the prize won by EUGENE O’NEILL"></a>12. 查找尤金•奧尼爾EUGENE O’NEILL得獎的所有細節 Find all details of the prize won by EUGENE O’NEILL</h2><blockquote>
+<p>跳脫字符:單引號
+你不能把一個單引號直接的放在字符串中。但您可連續使用兩個單引號在字符串中當作一個單引號。</p>
+</blockquote>
+<h3 id="mysql-11"><a href="#mysql-11" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT * FROM nobel WHERE winner=<span class="hljs-string">'EUGENE O'</span><span class="hljs-string">'NEILL'</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+        <th>subject</th>
+        <th>winner</th>
+    </tr>
+    <tr>
+        <td>1936</td>
+        <td>Literature</td>
+        <td>Eugene O&#x27;Neill</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-10"><a href="#pandas-10" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel[nobel.winner.str.upper() == <span class="hljs-string">"EUGENE O'NEILL"</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>706</th>
+      <td>1936</td>
+      <td>Literature</td>
+      <td>Eugene O'Neill</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="13-騎士列隊-Knights-in-order"><a href="#13-騎士列隊-Knights-in-order" class="headerlink" title="13. 騎士列隊 Knights in order"></a>13. 騎士列隊 Knights in order</h2><p><strong>列出爵士的獲獎者、年份、獎頁(爵士的名字以Sir開始)。先顯示最新獲獎者，然後同年再按名稱順序排列。</strong></p>
+<h3 id="mysql-12"><a href="#mysql-12" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT winner, yr, subject FROM nobel WHERE winner LIKE <span class="hljs-string">'Sir%'</span> ORDER BY yr DESC, winner ASC;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+21 rows affected.</code></pre><table>
+    <tr>
+        <th>winner</th>
+        <th>yr</th>
+        <th>subject</th>
+    </tr>
+    <tr>
+        <td>Sir Martin J. Evans</td>
+        <td>2007</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Peter Mansfield</td>
+        <td>2003</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Paul Nurse</td>
+        <td>2001</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Harold Kroto</td>
+        <td>1996</td>
+        <td>Chemistry</td>
+    </tr>
+    <tr>
+        <td>Sir James W. Black</td>
+        <td>1988</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Arthur Lewis</td>
+        <td>1979</td>
+        <td>Economics</td>
+    </tr>
+    <tr>
+        <td>Sir Nevill F. Mott</td>
+        <td>1977</td>
+        <td>Physics</td>
+    </tr>
+    <tr>
+        <td>Sir Bernard Katz</td>
+        <td>1970</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir John Eccles</td>
+        <td>1963</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Frank Macfarlane Burnet</td>
+        <td>1960</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Cyril Hinshelwood</td>
+        <td>1956</td>
+        <td>Chemistry</td>
+    </tr>
+    <tr>
+        <td>Sir Robert Robinson</td>
+        <td>1947</td>
+        <td>Chemistry</td>
+    </tr>
+    <tr>
+        <td>Sir Alexander Fleming</td>
+        <td>1945</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Howard Florey</td>
+        <td>1945</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Henry Dale</td>
+        <td>1936</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Norman Angell</td>
+        <td>1933</td>
+        <td>Peace</td>
+    </tr>
+    <tr>
+        <td>Sir Charles Sherrington</td>
+        <td>1932</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Venkata Raman</td>
+        <td>1930</td>
+        <td>Physics</td>
+    </tr>
+    <tr>
+        <td>Sir Frederick Hopkins</td>
+        <td>1929</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Sir Austen Chamberlain</td>
+        <td>1925</td>
+        <td>Peace</td>
+    </tr>
+    <tr>
+        <td>Sir William Ramsay</td>
+        <td>1904</td>
+        <td>Chemistry</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-11"><a href="#pandas-11" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobel[nobel.winner.str.startswith(<span class="hljs-string">"Sir"</span>)][[<span class="hljs-string">"winner"</span>, <span class="hljs-string">"yr"</span>, <span class="hljs-string">"subject"</span>]].sort_values(<span class="hljs-string">"winner"</span>).sort_values(<span class="hljs-string">"yr"</span>, ascending=<span class="hljs-literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>winner</th>
+      <th>yr</th>
+      <th>subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100</th>
+      <td>Sir Martin J. Evans</td>
+      <td>2007</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>Sir Peter Mansfield</td>
+      <td>2003</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>Sir Paul Nurse</td>
+      <td>2001</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>Sir Harold Kroto</td>
+      <td>1996</td>
+      <td>Chemistry</td>
+    </tr>
+    <tr>
+      <th>311</th>
+      <td>Sir James W. Black</td>
+      <td>1988</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>393</th>
+      <td>Sir Arthur Lewis</td>
+      <td>1979</td>
+      <td>Economics</td>
+    </tr>
+    <tr>
+      <th>422</th>
+      <td>Sir Nevill F. Mott</td>
+      <td>1977</td>
+      <td>Physics</td>
+    </tr>
+    <tr>
+      <th>490</th>
+      <td>Sir Bernard Katz</td>
+      <td>1970</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>546</th>
+      <td>Sir John Eccles</td>
+      <td>1963</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>570</th>
+      <td>Sir Frank Macfarlane Burnet</td>
+      <td>1960</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>596</th>
+      <td>Sir Cyril Hinshelwood</td>
+      <td>1956</td>
+      <td>Chemistry</td>
+    </tr>
+    <tr>
+      <th>655</th>
+      <td>Sir Robert Robinson</td>
+      <td>1947</td>
+      <td>Chemistry</td>
+    </tr>
+    <tr>
+      <th>674</th>
+      <td>Sir Alexander Fleming</td>
+      <td>1945</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>675</th>
+      <td>Sir Howard Florey</td>
+      <td>1945</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>707</th>
+      <td>Sir Henry Dale</td>
+      <td>1936</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>725</th>
+      <td>Sir Norman Angell</td>
+      <td>1933</td>
+      <td>Peace</td>
+    </tr>
+    <tr>
+      <th>731</th>
+      <td>Sir Charles Sherrington</td>
+      <td>1932</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>743</th>
+      <td>Sir Venkata Raman</td>
+      <td>1930</td>
+      <td>Physics</td>
+    </tr>
+    <tr>
+      <th>748</th>
+      <td>Sir Frederick Hopkins</td>
+      <td>1929</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>770</th>
+      <td>Sir Austen Chamberlain</td>
+      <td>1925</td>
+      <td>Peace</td>
+    </tr>
+    <tr>
+      <th>869</th>
+      <td>Sir William Ramsay</td>
+      <td>1904</td>
+      <td>Chemistry</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>mysql里的<code>order by</code>与pandas里的<code>sort_values()</code>的排序字段顺序完全不同</li>
+</ul>
+<h2 id="14"><a href="#14" class="headerlink" title="14."></a>14.</h2><p>The expression <strong>subject IN (‘Chemistry’,’Physics’)</strong> can be used as a value - it will be <strong>0 or 1</strong>.</p>
+<p><strong>Show the 1984 winners and subject ordered by subject and winner name; but list Chemistry and Physics last.</strong></p>
+<h3 id="本题的提示"><a href="#本题的提示" class="headerlink" title="本题的提示"></a>本题的提示</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT winner, subject, subject IN (<span class="hljs-string">'Physics'</span>,<span class="hljs-string">'Chemistry'</span>)\</span><br><span class="line">  FROM nobel\</span><br><span class="line"> WHERE yr=<span class="hljs-number">1984</span>\</span><br><span class="line"> ORDER BY subject,winner</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+9 rows affected.</code></pre><table>
+    <tr>
+        <th>winner</th>
+        <th>subject</th>
+        <th>subject IN (&#x27;Physics&#x27;,&#x27;Chemistry&#x27;)</th>
+    </tr>
+    <tr>
+        <td>Bruce Merrifield</td>
+        <td>Chemistry</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Richard Stone</td>
+        <td>Economics</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>Jaroslav Seifert</td>
+        <td>Literature</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>César Milstein</td>
+        <td>Medicine</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>Georges J.F. Köhler</td>
+        <td>Medicine</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>Niels K. Jerne</td>
+        <td>Medicine</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>Desmond Tutu</td>
+        <td>Peace</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>Carlo Rubbia</td>
+        <td>Physics</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Simon van der Meer</td>
+        <td>Physics</td>
+        <td>1</td>
+    </tr>
+</table>
+
+
+
+<h3 id="mysql-13"><a href="#mysql-13" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT winner, subject\</span><br><span class="line">  FROM nobel\</span><br><span class="line"> WHERE yr=<span class="hljs-number">1984</span>\</span><br><span class="line"> ORDER BY subject IN (<span class="hljs-string">'Physics'</span>,<span class="hljs-string">'Chemistry'</span>),subject,winner</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+9 rows affected.</code></pre><table>
+    <tr>
+        <th>winner</th>
+        <th>subject</th>
+    </tr>
+    <tr>
+        <td>Richard Stone</td>
+        <td>Economics</td>
+    </tr>
+    <tr>
+        <td>Jaroslav Seifert</td>
+        <td>Literature</td>
+    </tr>
+    <tr>
+        <td>César Milstein</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Georges J.F. Köhler</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Niels K. Jerne</td>
+        <td>Medicine</td>
+    </tr>
+    <tr>
+        <td>Desmond Tutu</td>
+        <td>Peace</td>
+    </tr>
+    <tr>
+        <td>Bruce Merrifield</td>
+        <td>Chemistry</td>
+    </tr>
+    <tr>
+        <td>Carlo Rubbia</td>
+        <td>Physics</td>
+    </tr>
+    <tr>
+        <td>Simon van der Meer</td>
+        <td>Physics</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-12"><a href="#pandas-12" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = nobel[nobel.yr==<span class="hljs-number">1984</span>].copy()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="hljs-string">"new"</span>] = df.subject.isin([<span class="hljs-string">'Physics'</span>,<span class="hljs-string">'Chemistry'</span>]).astype(np.int8) <span class="hljs-comment"># 也可以不转换类型，转不转结果一样</span></span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+      <th>subject</th>
+      <th>winner</th>
+      <th>new</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>345</th>
+      <td>1984</td>
+      <td>Chemistry</td>
+      <td>Bruce Merrifield</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>346</th>
+      <td>1984</td>
+      <td>Economics</td>
+      <td>Richard Stone</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>347</th>
+      <td>1984</td>
+      <td>Literature</td>
+      <td>Jaroslav Seifert</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>348</th>
+      <td>1984</td>
+      <td>Medicine</td>
+      <td>Niels K. Jerne</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>349</th>
+      <td>1984</td>
+      <td>Medicine</td>
+      <td>Georges J.F. Köhler</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>350</th>
+      <td>1984</td>
+      <td>Medicine</td>
+      <td>César Milstein</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>351</th>
+      <td>1984</td>
+      <td>Peace</td>
+      <td>Desmond Tutu</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>352</th>
+      <td>1984</td>
+      <td>Physics</td>
+      <td>Carlo Rubbia</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>353</th>
+      <td>1984</td>
+      <td>Physics</td>
+      <td>Simon van der Meer</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.sort_values(<span class="hljs-string">"winner"</span>).sort_values(<span class="hljs-string">"subject"</span>).sort_values(<span class="hljs-string">"new"</span>)[[<span class="hljs-string">"winner"</span>, <span class="hljs-string">"subject"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>winner</th>
+      <th>subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>346</th>
+      <td>Richard Stone</td>
+      <td>Economics</td>
+    </tr>
+    <tr>
+      <th>347</th>
+      <td>Jaroslav Seifert</td>
+      <td>Literature</td>
+    </tr>
+    <tr>
+      <th>350</th>
+      <td>César Milstein</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>349</th>
+      <td>Georges J.F. Köhler</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>348</th>
+      <td>Niels K. Jerne</td>
+      <td>Medicine</td>
+    </tr>
+    <tr>
+      <th>351</th>
+      <td>Desmond Tutu</td>
+      <td>Peace</td>
+    </tr>
+    <tr>
+      <th>345</th>
+      <td>Bruce Merrifield</td>
+      <td>Chemistry</td>
+    </tr>
+    <tr>
+      <th>352</th>
+      <td>Carlo Rubbia</td>
+      <td>Physics</td>
+    </tr>
+    <tr>
+      <th>353</th>
+      <td>Simon van der Meer</td>
+      <td>Physics</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/23/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-4/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">mysql与pandas对照学习(4)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/21/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-2/">
+                <span class="level-item">mysql与pandas对照学习(2)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#SELECT-from-Nobel-Tutorial-zh">
+        <span class="has-mr-6">1</span>
+        <span>SELECT from Nobel Tutorial/zh</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#nobel-諾貝爾獎得獎者">
+        <span class="has-mr-6">1.1</span>
+        <span>nobel 諾貝爾獎得獎者</span>
+        </a></li><li>
+        <a class="is-flex" href="#練習">
+        <span class="has-mr-6">1.2</span>
+        <span>練習</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1-更改查詢以顯示1950年諾貝爾獎的獎項資料。">
+        <span class="has-mr-6">2</span>
+        <span>1.更改查詢以顯示1950年諾貝爾獎的獎項資料。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql">
+        <span class="has-mr-6">2.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">2.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-顯示誰贏得了1962年文學獎-Literature-。">
+        <span class="has-mr-6">3</span>
+        <span>2.顯示誰贏得了1962年文學獎(Literature)。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-1">
+        <span class="has-mr-6">3.1</span>
+        <span>mysql</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-顯示“愛因斯坦”-‘Albert-Einstein’-的獲獎年份和獎項。">
+        <span class="has-mr-6">4</span>
+        <span>3.顯示“愛因斯坦”(‘Albert Einstein’) 的獲獎年份和獎項。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-2">
+        <span class="has-mr-6">4.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-1">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4-顯示2000年及以後的和平獎-‘Peace’-得獎者。">
+        <span class="has-mr-6">5</span>
+        <span>4.顯示2000年及以後的和平獎(‘Peace’)得獎者。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-3">
+        <span class="has-mr-6">5.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-2">
+        <span class="has-mr-6">5.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5-顯示1980年至1989年-包含首尾-的文學獎-Literature-獲獎者所有細節（年，主題，獲獎者）。">
+        <span class="has-mr-6">6</span>
+        <span>5.顯示1980年至1989年(包含首尾)的文學獎(Literature)獲獎者所有細節（年，主題，獲獎者）。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-4">
+        <span class="has-mr-6">6.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-3">
+        <span class="has-mr-6">6.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6-顯示總統獲勝者的所有細節：">
+        <span class="has-mr-6">7</span>
+        <span>6.顯示總統獲勝者的所有細節：</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-5">
+        <span class="has-mr-6">7.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">7.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#7-顯示名字為John-的得獎者。">
+        <span class="has-mr-6">8</span>
+        <span>7.顯示名字為John 的得獎者。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-6">
+        <span class="has-mr-6">8.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-5">
+        <span class="has-mr-6">8.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#8-顯示1980年物理學-physics-獲獎者，及1984年化學獎-chemistry-獲得者。">
+        <span class="has-mr-6">9</span>
+        <span>8. 顯示1980年物理學(physics)獲獎者，及1984年化學獎(chemistry)獲得者。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-7">
+        <span class="has-mr-6">9.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-6">
+        <span class="has-mr-6">9.2</span>
+        <span>pandas</span>
+        </a></li><li>
+        <a class="is-flex" href="#注意事项">
+        <span class="has-mr-6">9.3</span>
+        <span>注意事项</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#9-查看1980年獲獎者，但不包括化學獎-Chemistry-和醫學獎-Medicine-。">
+        <span class="has-mr-6">10</span>
+        <span>9.查看1980年獲獎者，但不包括化學獎(Chemistry)和醫學獎(Medicine)。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-8">
+        <span class="has-mr-6">10.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-7">
+        <span class="has-mr-6">10.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#10-顯示早期的醫學獎-Medicine-得獎者（1910之前，不包括1910），及近年文學獎-Literature-得獎者（2004年以後，包括2004年）。">
+        <span class="has-mr-6">11</span>
+        <span>10. 顯示早期的醫學獎(Medicine)得獎者（1910之前，不包括1910），及近年文學獎(Literature)得獎者（2004年以後，包括2004年）。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-9">
+        <span class="has-mr-6">11.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-8">
+        <span class="has-mr-6">11.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Harder-Questions">
+        <span class="has-mr-6">12</span>
+        <span>Harder Questions</span>
+        </a></li><li>
+        <a class="is-flex" href="#11-Find-all-details-of-the-prize-won-by-PETER-GRUNBERG">
+        <span class="has-mr-6">13</span>
+        <span>11. Find all details of the prize won by PETER GRÜNBERG</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-10">
+        <span class="has-mr-6">13.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-9">
+        <span class="has-mr-6">13.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#12-查找尤金•奧尼爾EUGENE-O’NEILL得獎的所有細節-Find-all-details-of-the-prize-won-by-EUGENE-O’NEILL">
+        <span class="has-mr-6">14</span>
+        <span>12. 查找尤金•奧尼爾EUGENE O’NEILL得獎的所有細節 Find all details of the prize won by EUGENE O’NEILL</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-11">
+        <span class="has-mr-6">14.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-10">
+        <span class="has-mr-6">14.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#13-騎士列隊-Knights-in-order">
+        <span class="has-mr-6">15</span>
+        <span>13. 騎士列隊 Knights in order</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-12">
+        <span class="has-mr-6">15.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-11">
+        <span class="has-mr-6">15.2</span>
+        <span>pandas</span>
+        </a></li><li>
+        <a class="is-flex" href="#注意事项-1">
+        <span class="has-mr-6">15.3</span>
+        <span>注意事项</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#14">
+        <span class="has-mr-6">16</span>
+        <span>14.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#本题的提示">
+        <span class="has-mr-6">16.1</span>
+        <span>本题的提示</span>
+        </a></li><li>
+        <a class="is-flex" href="#mysql-13">
+        <span class="has-mr-6">16.2</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-12">
+        <span class="has-mr-6">16.3</span>
+        <span>pandas</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time></div>
+                    <a href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(9)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time></div>
+                    <a href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(8)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time></div>
+                    <a href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(7)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time></div>
+                    <a href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(6)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="mysql与pandas对照学习(3)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

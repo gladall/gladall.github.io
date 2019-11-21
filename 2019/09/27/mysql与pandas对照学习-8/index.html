@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>mysql与pandas对照学习(8) - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="Using NullUsing Null    id dept name phone mobile    101 1 Shrivell 2753 07986 555 1234   102 1 Throd 2754 07122 555 1920   103 1 Splint 2293    104  Spiregrain 3287    105 2 Cutflower 3212 07996 555">
+<meta name="keywords" content="数据分析,mysql,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql与pandas对照学习(8)">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;27&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="Using NullUsing Null    id dept name phone mobile    101 1 Shrivell 2753 07986 555 1234   102 1 Throd 2754 07122 555 1920   103 1 Splint 2293    104  Spiregrain 3287    105 2 Cutflower 3212 07996 555">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-20T12:39:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="mysql与pandas对照学习(8)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1390 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                mysql与pandas对照学习(8)
+            
+        </h1>
+        <div class="content">
+            <h2 id="Using-Null"><a href="#Using-Null" class="headerlink" title="Using Null"></a>Using Null</h2><p><a href="https://sqlzoo.net/wiki/Using_Null" target="_blank" rel="noopener">Using Null</a></p>
+<table>
+<thead>
+<tr>
+<th align="left">id</th>
+<th align="left">dept</th>
+<th align="left">name</th>
+<th align="left">phone</th>
+<th align="left">mobile</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">101</td>
+<td align="left">1</td>
+<td align="left">Shrivell</td>
+<td align="left">2753</td>
+<td align="left">07986 555 1234</td>
+</tr>
+<tr>
+<td align="left">102</td>
+<td align="left">1</td>
+<td align="left">Throd</td>
+<td align="left">2754</td>
+<td align="left">07122 555 1920</td>
+</tr>
+<tr>
+<td align="left">103</td>
+<td align="left">1</td>
+<td align="left">Splint</td>
+<td align="left">2293</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">104</td>
+<td align="left"></td>
+<td align="left">Spiregrain</td>
+<td align="left">3287</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">105</td>
+<td align="left">2</td>
+<td align="left">Cutflower</td>
+<td align="left">3212</td>
+<td align="left">07996 555 6574</td>
+</tr>
+<tr>
+<td align="left">106</td>
+<td align="left"></td>
+<td align="left">Deadyawn</td>
+<td align="left">3345</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">id</th>
+<th align="left">name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">Computing</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">Design</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">Engineering</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="Teachers-and-Departments"><a href="#Teachers-and-Departments" class="headerlink" title="Teachers and Departments"></a>Teachers and Departments</h2><h3 id="The-school-includes-many-departments-Most-teachers-work-exclusively-for-a-single-department-Some-teachers-have-no-department"><a href="#The-school-includes-many-departments-Most-teachers-work-exclusively-for-a-single-department-Some-teachers-have-no-department" class="headerlink" title="The school includes many departments. Most teachers work exclusively for a single department. Some teachers have no department."></a>The school includes many departments. Most teachers work exclusively for a single department. Some teachers have no department.</h3><p><a href="https://sqlzoo.net/wiki/Selecting_NULL_values." target="_blank" rel="noopener">Selecting NULL values.</a></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sql</span><br><span class="line">%sql mysql+pymysql://root:lanhoo@localhost/dbs</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> sqlalchemy</span><br><span class="line">engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://root:lanhoo@localhost/dbs"</span>)</span><br><span class="line">teacher = pd.read_sql_table(<span class="hljs-string">"teacher"</span>, engine)</span><br><span class="line">dept = pd.read_sql_table(<span class="hljs-string">"dept"</span>, engine)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="1-List-the-teachers-who-have-NULL-for-their-department"><a href="#1-List-the-teachers-who-have-NULL-for-their-department" class="headerlink" title="1.List the teachers who have NULL for their department."></a>1.List the teachers who have NULL for their department.</h2><p>Why we cannot use =</p>
+<blockquote>
+<p>You might think that the phrase dept=NULL would work here but it doesn’t - you can use the phrase <code>dept IS NULL</code>
+That’s not a proper explanation.
+No it’s not, but you can read a better explanation at Wikipedia:<a href="http://en.wikipedia.org/wiki/Null_%28SQL%29" target="_blank" rel="noopener">NULL.</a></p>
+</blockquote>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql select name <span class="hljs-keyword">from</span> teacher where dept IS NULL</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+2 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+    </tr>
+    <tr>
+        <td>Spiregrain</td>
+    </tr>
+    <tr>
+        <td>Deadyawn</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher[teacher.dept.isnull()][[<span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>Spiregrain</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Deadyawn</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="2-Note-the-INNER-JOIN-misses-the-teachers-with-no-department-and-the-departments-with-no-teacher"><a href="#2-Note-the-INNER-JOIN-misses-the-teachers-with-no-department-and-the-departments-with-no-teacher" class="headerlink" title="2. Note the INNER JOIN misses the teachers with no department and the departments with no teacher."></a>2. Note the INNER JOIN misses the teachers with no department and the departments with no teacher.</h2><h3 id="mysql-1"><a href="#mysql-1" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT teacher.name t_name, dept.name d_name\</span><br><span class="line">    FROM teacher INNER JOIN dept ON (teacher.dept=dept.id)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+4 rows affected.</code></pre><table>
+    <tr>
+        <th>t_name</th>
+        <th>d_name</th>
+    </tr>
+    <tr>
+        <td>Shrivell</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Throd</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Splint</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Cutflower</td>
+        <td>Design</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher.merge(dept, left_on=<span class="hljs-string">"dept"</span>, right_on=<span class="hljs-string">"id"</span>)[[<span class="hljs-string">"name_x"</span>, <span class="hljs-string">"name_y"</span>]] <span class="hljs-comment"># pandas会自动给重名的加上后缀_x, _y</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name_x</th>
+      <th>name_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Cutflower</td>
+      <td>Design</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">temp = teacher.merge(dept, left_on=<span class="hljs-string">"dept"</span>, right_on=<span class="hljs-string">"id"</span>)[[<span class="hljs-string">"name_x"</span>, <span class="hljs-string">"name_y"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">temp.columns = [<span class="hljs-string">"t_name"</span>, <span class="hljs-string">"d_name"</span>]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">temp</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>t_name</th>
+      <th>d_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Cutflower</td>
+      <td>Design</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="3-Use-a-different-JOIN-so-that-all-teachers-are-listed"><a href="#3-Use-a-different-JOIN-so-that-all-teachers-are-listed" class="headerlink" title="3. Use a different JOIN so that all teachers are listed."></a>3. Use a different JOIN so that all teachers are listed.</h2><h3 id="mysql-2"><a href="#mysql-2" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql select teacher.name, dept.name <span class="hljs-keyword">from</span> teacher left join dept \</span><br><span class="line">  on (teacher.dept = dept.id)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+6 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>name_1</th>
+    </tr>
+    <tr>
+        <td>Shrivell</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Throd</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Splint</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Cutflower</td>
+        <td>Design</td>
+    </tr>
+    <tr>
+        <td>Spiregrain</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>Deadyawn</td>
+        <td>None</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher.merge(dept, left_on=<span class="hljs-string">"dept"</span>, right_on=<span class="hljs-string">"id"</span>, how=<span class="hljs-string">"left"</span>)[[<span class="hljs-string">"name_x"</span>, <span class="hljs-string">"name_y"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name_x</th>
+      <th>name_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Spiregrain</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cutflower</td>
+      <td>Design</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Deadyawn</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="4-Use-a-different-JOIN-so-that-all-departments-are-listed"><a href="#4-Use-a-different-JOIN-so-that-all-departments-are-listed" class="headerlink" title="4. Use a different JOIN so that all departments are listed."></a>4. Use a different JOIN so that all departments are listed.</h2><h3 id="mysql-3"><a href="#mysql-3" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql select teacher.name, dept.name <span class="hljs-keyword">from</span> teacher right join dept \</span><br><span class="line">  on (teacher.dept = dept.id)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+5 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>name_1</th>
+    </tr>
+    <tr>
+        <td>Shrivell</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Throd</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Splint</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Cutflower</td>
+        <td>Design</td>
+    </tr>
+    <tr>
+        <td>None</td>
+        <td>Engineering</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-3"><a href="#pandas-3" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher.merge(dept, left_on=<span class="hljs-string">"dept"</span>, right_on=<span class="hljs-string">"id"</span>, how=<span class="hljs-string">"right"</span>)[[<span class="hljs-string">"name_x"</span>, <span class="hljs-string">"name_y"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name_x</th>
+      <th>name_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Cutflower</td>
+      <td>Design</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NaN</td>
+      <td>Engineering</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<hr>
+<ul>
+<li>Using the <a href="https://sqlzoo.net/wiki/COALESCE" target="_blank" rel="noopener" title="COALESCE">COALESCE</a> function</li>
+</ul>
+<h2 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h2><p>Use COALESCE to print the mobile number. Use the number ‘07986 444 2266’ if there is no number given. <strong>Show teacher name and mobile number or ‘07986 444 2266’</strong></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql select name, COALESCE(mobile, <span class="hljs-string">'07986 444 2266'</span>) <span class="hljs-keyword">from</span> teacher</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+6 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>COALESCE(mobile, &#x27;07986 444 2266&#x27;)</th>
+    </tr>
+    <tr>
+        <td>Shrivell</td>
+        <td>07986 555 1234</td>
+    </tr>
+    <tr>
+        <td>Throd</td>
+        <td>07122 555 1920</td>
+    </tr>
+    <tr>
+        <td>Splint</td>
+        <td>07986 444 2266</td>
+    </tr>
+    <tr>
+        <td>Spiregrain</td>
+        <td>07986 444 2266</td>
+    </tr>
+    <tr>
+        <td>Cutflower</td>
+        <td>07996 555 6574</td>
+    </tr>
+    <tr>
+        <td>Deadyawn</td>
+        <td>07986 444 2266</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-4"><a href="#pandas-4" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"mobile"</span>]].fillna(<span class="hljs-string">"07986 444 2266"</span>) <span class="hljs-comment"># 使用DataFrame.fillna()方法可以填充空值</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>mobile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>07986 555 1234</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>07122 555 1920</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>07986 444 2266</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Spiregrain</td>
+      <td>07986 444 2266</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cutflower</td>
+      <td>07996 555 6574</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Deadyawn</td>
+      <td>07986 444 2266</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h2><p><strong>Use the COALESCE function and a LEFT JOIN to print the teacher name and department name. Use the string ‘None’ where there is no department.</strong></p>
+<h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT teacher.name, COALESCE(dept.name, <span class="hljs-string">'None'</span>) \</span><br><span class="line">FROM teacher LEFT JOIN dept ON (teacher.dept = dept.id)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+6 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>COALESCE(dept.name, &#x27;None&#x27;)</th>
+    </tr>
+    <tr>
+        <td>Shrivell</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Throd</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Splint</td>
+        <td>Computing</td>
+    </tr>
+    <tr>
+        <td>Cutflower</td>
+        <td>Design</td>
+    </tr>
+    <tr>
+        <td>Spiregrain</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>Deadyawn</td>
+        <td>None</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-5"><a href="#pandas-5" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher.merge(dept, left_on=<span class="hljs-string">"dept"</span>, right_on=<span class="hljs-string">"id"</span>, how=<span class="hljs-string">"left"</span>)[[<span class="hljs-string">"name_x"</span>, <span class="hljs-string">"name_y"</span>]].fillna(<span class="hljs-string">"None"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name_x</th>
+      <th>name_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>Computing</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Spiregrain</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cutflower</td>
+      <td>Design</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Deadyawn</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h2><p><strong>Use COUNT to show the number of teachers and the number of mobile phones.</strong></p>
+<h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql select count(name), count(mobile) <span class="hljs-keyword">from</span> teacher</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>count(name)</th>
+        <th>count(mobile)</th>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>3</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-6"><a href="#pandas-6" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"mobile"</span>]].count()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>name      6
+mobile    3
+dtype: int64</code></pre><h3 id="mysql的COUNT-跟pandas的count-都是对非空值进行计数"><a href="#mysql的COUNT-跟pandas的count-都是对非空值进行计数" class="headerlink" title="mysql的COUNT()跟pandas的count()都是对非空值进行计数"></a>mysql的<code>COUNT()</code>跟pandas的<code>count()</code>都是对非空值进行计数</h3><h2 id="8"><a href="#8" class="headerlink" title="8."></a>8.</h2><p><strong>Use COUNT and GROUP BY dept.name to show each department and the number of staff. Use a RIGHT JOIN to ensure that the Engineering department is listed.</strong></p>
+<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql select dept.name,  count(teacher.id) <span class="hljs-keyword">from</span> teacher right join dept \</span><br><span class="line">on teacher.dept = dept.id group by dept.name</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>count(teacher.id)</th>
+    </tr>
+    <tr>
+        <td>Computing</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Design</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Engineering</td>
+        <td>0</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-7"><a href="#pandas-7" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 后缀"_x"是代表teacher表，"_y"是代表dept表</span></span><br><span class="line">teacher.merge(dept, left_on=<span class="hljs-string">"dept"</span>, right_on=<span class="hljs-string">"id"</span>, how=<span class="hljs-string">"right"</span>).groupby(<span class="hljs-string">"name_y"</span>)[[<span class="hljs-string">"id_x"</span>]].count()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id_x</th>
+    </tr>
+    <tr>
+      <th>name_y</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Computing</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Design</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Engineering</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<hr>
+<p>Using <a href="https://sqlzoo.net/wiki/CASE" target="_blank" rel="noopener" title="CASE">CASE</a></p>
+<h2 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h2><p>Use CASE to show the <strong>name</strong> of each teacher followed by ‘Sci’ if the teacher is in <strong>dept</strong> 1 or 2 and ‘Art’ otherwise.</p>
+<h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql select teacher.name, \</span><br><span class="line">                case when (teacher.dept = <span class="hljs-number">1</span> <span class="hljs-keyword">or</span> teacher.dept = <span class="hljs-number">2</span>) then <span class="hljs-string">'Sci'</span> \</span><br><span class="line">                    <span class="hljs-keyword">else</span> <span class="hljs-string">'Art'</span> end \</span><br><span class="line">            <span class="hljs-keyword">from</span> teacher</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+6 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>case when (teacher.dept = 1 or teacher.dept = 2) then &#x27;Sci&#x27;                      else &#x27;Art&#x27; end</th>
+    </tr>
+    <tr>
+        <td>Shrivell</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Throd</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Splint</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Spiregrain</td>
+        <td>Art</td>
+    </tr>
+    <tr>
+        <td>Cutflower</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Deadyawn</td>
+        <td>Art</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-8"><a href="#pandas-8" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher9 = teacher.copy() <span class="hljs-comment"># 下面要对数据进行新增一列，为了不修改原数据，这里就复制了一份</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher9[<span class="hljs-string">"new_dept"</span>] = np.where((teacher.dept == <span class="hljs-number">1</span>) | (teacher.dept == <span class="hljs-number">2</span>), <span class="hljs-string">"Sci"</span>, <span class="hljs-string">"Art"</span>) <span class="hljs-comment"># 这里只能用"|",而不能用"or"</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher9[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"new_dept"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>new_dept</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Spiregrain</td>
+      <td>Art</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cutflower</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Deadyawn</td>
+      <td>Art</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="10"><a href="#10" class="headerlink" title="10."></a>10.</h2><p><strong>Use CASE to show the name of each teacher followed by ‘Sci’ if the teacher is in dept 1 or 2, show ‘Art’ if the teacher’s dept is 3 and ‘None’ otherwise.</strong></p>
+<h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql <span class="hljs-keyword">select</span> teacher.name, \</span><br><span class="line">        <span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> (teacher.dept = <span class="hljs-number">1</span> <span class="hljs-keyword">or</span> teacher.dept = <span class="hljs-number">2</span>) <span class="hljs-keyword">then</span> <span class="hljs-string">'Sci'</span> \</span><br><span class="line">             <span class="hljs-keyword">when</span> teacher.dept = <span class="hljs-number">3</span> <span class="hljs-keyword">then</span> <span class="hljs-string">'Art'</span> \</span><br><span class="line">             <span class="hljs-keyword">else</span> <span class="hljs-string">'None'</span> \</span><br><span class="line">         <span class="hljs-keyword">end</span> <span class="hljs-keyword">as</span> new_dept \</span><br><span class="line">    <span class="hljs-keyword">from</span> teacher</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+6 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+        <th>new_dept</th>
+    </tr>
+    <tr>
+        <td>Shrivell</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Throd</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Splint</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Spiregrain</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>Cutflower</td>
+        <td>Sci</td>
+    </tr>
+    <tr>
+        <td>Deadyawn</td>
+        <td>None</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-9"><a href="#pandas-9" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 不能np.where()，因为它有三种情况,但可以使用apply()</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(x)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">if</span> x == <span class="hljs-number">1</span> <span class="hljs-keyword">or</span> x==<span class="hljs-number">2</span>:</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"Sci"</span></span><br><span class="line">    <span class="hljs-keyword">elif</span> x == <span class="hljs-number">3</span>:</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"Art"</span></span><br><span class="line">    <span class="hljs-keyword">else</span>:</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"None"</span></span><br><span class="line">teacher10 = teacher.copy()</span><br><span class="line">teacher10[<span class="hljs-string">"new_dept"</span>] = teacher.dept.apply(func)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teacher10[[<span class="hljs-string">"name"</span>, <span class="hljs-string">"new_dept"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>new_dept</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Shrivell</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Throd</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Splint</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Spiregrain</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cutflower</td>
+      <td>Sci</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Deadyawn</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">mysql与pandas对照学习(9)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/">
+                <span class="level-item">mysql与pandas对照学习(7)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Using-Null">
+        <span class="has-mr-6">1</span>
+        <span>Using Null</span>
+        </a></li><li>
+        <a class="is-flex" href="#Teachers-and-Departments">
+        <span class="has-mr-6">2</span>
+        <span>Teachers and Departments</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#The-school-includes-many-departments-Most-teachers-work-exclusively-for-a-single-department-Some-teachers-have-no-department">
+        <span class="has-mr-6">2.1</span>
+        <span>The school includes many departments. Most teachers work exclusively for a single department. Some teachers have no department.</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1-List-the-teachers-who-have-NULL-for-their-department">
+        <span class="has-mr-6">3</span>
+        <span>1.List the teachers who have NULL for their department.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql">
+        <span class="has-mr-6">3.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">3.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-Note-the-INNER-JOIN-misses-the-teachers-with-no-department-and-the-departments-with-no-teacher">
+        <span class="has-mr-6">4</span>
+        <span>2. Note the INNER JOIN misses the teachers with no department and the departments with no teacher.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-1">
+        <span class="has-mr-6">4.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-1">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-Use-a-different-JOIN-so-that-all-teachers-are-listed">
+        <span class="has-mr-6">5</span>
+        <span>3. Use a different JOIN so that all teachers are listed.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-2">
+        <span class="has-mr-6">5.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-2">
+        <span class="has-mr-6">5.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4-Use-a-different-JOIN-so-that-all-departments-are-listed">
+        <span class="has-mr-6">6</span>
+        <span>4. Use a different JOIN so that all departments are listed.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-3">
+        <span class="has-mr-6">6.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-3">
+        <span class="has-mr-6">6.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5">
+        <span class="has-mr-6">7</span>
+        <span>5.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">7.1</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6">
+        <span class="has-mr-6">8</span>
+        <span>6.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-4">
+        <span class="has-mr-6">8.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-5">
+        <span class="has-mr-6">8.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#7">
+        <span class="has-mr-6">9</span>
+        <span>7.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-5">
+        <span class="has-mr-6">9.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-6">
+        <span class="has-mr-6">9.2</span>
+        <span>pandas</span>
+        </a></li><li>
+        <a class="is-flex" href="#mysql的COUNT-跟pandas的count-都是对非空值进行计数">
+        <span class="has-mr-6">9.3</span>
+        <span>mysql的COUNT()跟pandas的count()都是对非空值进行计数</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#8">
+        <span class="has-mr-6">10</span>
+        <span>8.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-6">
+        <span class="has-mr-6">10.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-7">
+        <span class="has-mr-6">10.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#9">
+        <span class="has-mr-6">11</span>
+        <span>9.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-7">
+        <span class="has-mr-6">11.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-8">
+        <span class="has-mr-6">11.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#10">
+        <span class="has-mr-6">12</span>
+        <span>10.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-8">
+        <span class="has-mr-6">12.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-9">
+        <span class="has-mr-6">12.2</span>
+        <span>pandas</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time></div>
+                    <a href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(9)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time></div>
+                    <a href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(8)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time></div>
+                    <a href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(7)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time></div>
+                    <a href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(6)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="mysql与pandas对照学习(8)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

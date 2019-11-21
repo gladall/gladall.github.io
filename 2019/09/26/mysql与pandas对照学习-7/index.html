@@ -1,0 +1,5328 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>mysql与pandas对照学习(7) - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="More JOIN operations&#x2F;zhMore JOIN operations&#x2F;zh  关于下面使用ipython-sql模块，查询报错的情况说明：sql语句是没有错误的，可以在终端里进入mysql里运行，只是当有三个表联表查询时，这个模块会运行不下去，卡住。  電影數據庫此教程練習表格合拼。數據庫有三個表格 movie電影(id編號, title電影名稱, yr首影年份, directo">
+<meta name="keywords" content="数据分析,mysql,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql与pandas对照学习(7)">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;26&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="More JOIN operations&#x2F;zhMore JOIN operations&#x2F;zh  关于下面使用ipython-sql模块，查询报错的情况说明：sql语句是没有错误的，可以在终端里进入mysql里运行，只是当有三个表联表查询时，这个模块会运行不下去，卡住。  電影數據庫此教程練習表格合拼。數據庫有三個表格 movie電影(id編號, title電影名稱, yr首影年份, directo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-20T12:39:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="mysql与pandas对照学习(7)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 小时 读完 (大约 8287 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                mysql与pandas对照学习(7)
+            
+        </h1>
+        <div class="content">
+            <h2 id="More-JOIN-operations-zh"><a href="#More-JOIN-operations-zh" class="headerlink" title="More JOIN operations/zh"></a>More JOIN operations/zh</h2><p><a href="https://sqlzoo.net/wiki/More_JOIN_operations/zh" target="_blank" rel="noopener">More JOIN operations/zh</a></p>
+<blockquote>
+<p>关于下面使用<code>ipython-sql</code>模块，查询报错的情况说明：sql语句是没有错误的，可以在终端里进入mysql里运行，只是当有三个表联表查询时，这个模块会运行不下去，卡住。</p>
+</blockquote>
+<h3 id="電影數據庫"><a href="#電影數據庫" class="headerlink" title="電影數據庫"></a>電影數據庫</h3><p>此教程練習表格合拼。數據庫有三個表格
+<code>movie電影(id編號, title電影名稱, yr首影年份, director導演, budget製作費, gross票房收入)</code>
+<code>actor演員(id編號, name姓名)</code>
+<code>casting角色(movieid電影編號, actorid演員編號, ord角色次序)</code>
+角色次序代表第1主角是1, 第2主角是2…如此類推.</p>
+<p><a href="https://sqlzoo.net/wiki/More_details_about_the_database." target="_blank" rel="noopener" title="More details about the database.">More details about the database.</a></p>
+<a id="more"></a>
+
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95glvnf1dj30ji0c0dgf.jpg" alt="databases"></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sql</span><br><span class="line">%sql mysql+pymysql://root:lanhoo@localhost/dbs</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> sqlalchemy</span><br><span class="line">engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://root:lanhoo@localhost/dbs"</span>)</span><br><span class="line">movie = pd.read_sql_table(<span class="hljs-string">"movie"</span>, engine)</span><br><span class="line">actor = pd.read_sql_table(<span class="hljs-string">"actor"</span>, engine)</span><br><span class="line">casting = pd.read_sql_table(<span class="hljs-string">"casting"</span>, engine)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="1-列出1962年首影的電影，-顯示-id-title"><a href="#1-列出1962年首影的電影，-顯示-id-title" class="headerlink" title="1. 列出1962年首影的電影， [顯示 id, title]"></a>1. 列出1962年首影的電影， [顯示 <strong>id</strong>, <strong>title</strong>]</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql <span class="hljs-keyword">SELECT</span>  <span class="hljs-keyword">id</span>, title\</span><br><span class="line"> <span class="hljs-keyword">FROM</span> movie\</span><br><span class="line"> <span class="hljs-keyword">WHERE</span> yr=<span class="hljs-number">1962</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+86 rows affected.</code></pre><table>
+    <tr>
+        <th>id</th>
+        <th>title</th>
+    </tr>
+    <tr>
+        <td>10212</td>
+        <td>A Kind of Loving</td>
+    </tr>
+    <tr>
+        <td>10329</td>
+        <td>A Symposium on Popular Songs</td>
+    </tr>
+    <tr>
+        <td>10347</td>
+        <td>A Very Private Affair (Vie PrivÃ©e)</td>
+    </tr>
+    <tr>
+        <td>10648</td>
+        <td>An Autumn Afternoon</td>
+    </tr>
+    <tr>
+        <td>10868</td>
+        <td>Atraco a las tres</td>
+    </tr>
+    <tr>
+        <td>11006</td>
+        <td>Barabbas</td>
+    </tr>
+    <tr>
+        <td>11053</td>
+        <td>Battle Beyond the Sun (ÐÐµÐ±Ð¾ Ð·Ð¾Ð²ÐµÑ‚)</td>
+    </tr>
+    <tr>
+        <td>11199</td>
+        <td>Big and Little Wong Tin Bar</td>
+    </tr>
+    <tr>
+        <td>11230</td>
+        <td>Billy Budd</td>
+    </tr>
+    <tr>
+        <td>11234</td>
+        <td>Billy Rose&#x27;s Jumbo</td>
+    </tr>
+    <tr>
+        <td>11242</td>
+        <td>Birdman of Alcatraz</td>
+    </tr>
+    <tr>
+        <td>11373</td>
+        <td>Boccaccio &#x27;70</td>
+    </tr>
+    <tr>
+        <td>11391</td>
+        <td>Bon Voyage!</td>
+    </tr>
+    <tr>
+        <td>11439</td>
+        <td>Boys&#x27; Night Out</td>
+    </tr>
+    <tr>
+        <td>11692</td>
+        <td>Cape Fear</td>
+    </tr>
+    <tr>
+        <td>11735</td>
+        <td>Carnival of Souls</td>
+    </tr>
+    <tr>
+        <td>11753</td>
+        <td>Carry On Cruising</td>
+    </tr>
+    <tr>
+        <td>12368</td>
+        <td>David and Lisa</td>
+    </tr>
+    <tr>
+        <td>12384</td>
+        <td>Days of Wine and Roses</td>
+    </tr>
+    <tr>
+        <td>12710</td>
+        <td>Dr. No</td>
+    </tr>
+    <tr>
+        <td>12817</td>
+        <td>L&#x27;Eclisse</td>
+    </tr>
+    <tr>
+        <td>12967</td>
+        <td>Tutti a casa</td>
+    </tr>
+    <tr>
+        <td>12992</td>
+        <td>Experiment in Terror</td>
+    </tr>
+    <tr>
+        <td>13010</td>
+        <td>Eyes Without a Face</td>
+    </tr>
+    <tr>
+        <td>13484</td>
+        <td>Gay Purr-ee</td>
+    </tr>
+    <tr>
+        <td>13534</td>
+        <td>Gigot</td>
+    </tr>
+    <tr>
+        <td>13641</td>
+        <td>Gorath</td>
+    </tr>
+    <tr>
+        <td>13727</td>
+        <td>Gypsy</td>
+    </tr>
+    <tr>
+        <td>13741</td>
+        <td>Half Ticket</td>
+    </tr>
+    <tr>
+        <td>13798</td>
+        <td>Harakiri</td>
+    </tr>
+    <tr>
+        <td>14317</td>
+        <td>In Search of the Castaways</td>
+    </tr>
+    <tr>
+        <td>14454</td>
+        <td>It&#x27;s Only Money</td>
+    </tr>
+    <tr>
+        <td>14550</td>
+        <td>Jigsaw</td>
+    </tr>
+    <tr>
+        <td>14718</td>
+        <td>Kid Galahad</td>
+    </tr>
+    <tr>
+        <td>14860</td>
+        <td>La commare secca</td>
+    </tr>
+    <tr>
+        <td>14873</td>
+        <td>La notte</td>
+    </tr>
+    <tr>
+        <td>14972</td>
+        <td>Lawrence of Arabia</td>
+    </tr>
+    <tr>
+        <td>15088</td>
+        <td>Life for Ruth</td>
+    </tr>
+    <tr>
+        <td>15173</td>
+        <td>Lolita</td>
+    </tr>
+    <tr>
+        <td>15182</td>
+        <td>Long Day&#x27;s Journey into Night</td>
+    </tr>
+    <tr>
+        <td>15247</td>
+        <td>Love at Twenty</td>
+    </tr>
+    <tr>
+        <td>15297</td>
+        <td>Lycanthropus</td>
+    </tr>
+    <tr>
+        <td>15397</td>
+        <td>Mamma Roma</td>
+    </tr>
+    <tr>
+        <td>15564</td>
+        <td>Merrill&#x27;s Marauders</td>
+    </tr>
+    <tr>
+        <td>15752</td>
+        <td>Mother Joan of the Angels</td>
+    </tr>
+    <tr>
+        <td>15779</td>
+        <td>Mr. Hobbs Takes a Vacation</td>
+    </tr>
+    <tr>
+        <td>15840</td>
+        <td>Mutiny on the Bounty</td>
+    </tr>
+    <tr>
+        <td>16203</td>
+        <td>On the Beat</td>
+    </tr>
+    <tr>
+        <td>16295</td>
+        <td>Os Cafajestes</td>
+    </tr>
+    <tr>
+        <td>16367</td>
+        <td>Panic in Year Zero!</td>
+    </tr>
+    <tr>
+        <td>16462</td>
+        <td>Period of Adjustment</td>
+    </tr>
+    <tr>
+        <td>16485</td>
+        <td>Phaedra</td>
+    </tr>
+    <tr>
+        <td>16533</td>
+        <td>Pitfall</td>
+    </tr>
+    <tr>
+        <td>16622</td>
+        <td>Pressure Point</td>
+    </tr>
+    <tr>
+        <td>16661</td>
+        <td>Prison</td>
+    </tr>
+    <tr>
+        <td>16675</td>
+        <td>Professor</td>
+    </tr>
+    <tr>
+        <td>16945</td>
+        <td>Ride the High Country</td>
+    </tr>
+    <tr>
+        <td>17148</td>
+        <td>Salvatore Giuliano</td>
+    </tr>
+    <tr>
+        <td>17296</td>
+        <td>Sergeants 3</td>
+    </tr>
+    <tr>
+        <td>17804</td>
+        <td>State Fair</td>
+    </tr>
+    <tr>
+        <td>17944</td>
+        <td>Sundays and Cybele</td>
+    </tr>
+    <tr>
+        <td>18001</td>
+        <td>Sweet Bird of Youth (film)</td>
+    </tr>
+    <tr>
+        <td>18127</td>
+        <td>Term of Trial</td>
+    </tr>
+    <tr>
+        <td>18171</td>
+        <td>That Touch of Mink</td>
+    </tr>
+    <tr>
+        <td>18177</td>
+        <td>The 300 Spartans</td>
+    </tr>
+    <tr>
+        <td>18730</td>
+        <td>The Counterfeit Traitor</td>
+    </tr>
+    <tr>
+        <td>18941</td>
+        <td>The Exterminating Angel</td>
+    </tr>
+    <tr>
+        <td>19034</td>
+        <td>The Four Days of Naples</td>
+    </tr>
+    <tr>
+        <td>19430</td>
+        <td>The Intruder</td>
+    </tr>
+    <tr>
+        <td>19520</td>
+        <td>The L-Shaped Room</td>
+    </tr>
+    <tr>
+        <td>19679</td>
+        <td>The Loneliness of the Long Distance Runner</td>
+    </tr>
+    <tr>
+        <td>19694</td>
+        <td>The Longest Day</td>
+    </tr>
+    <tr>
+        <td>19795</td>
+        <td>The Man Who Shot Liberty Valance</td>
+    </tr>
+    <tr>
+        <td>19808</td>
+        <td>The Manchurian Candidate</td>
+    </tr>
+    <tr>
+        <td>19933</td>
+        <td>The Music Man</td>
+    </tr>
+    <tr>
+        <td>20114</td>
+        <td>The Phantom of the Opera</td>
+    </tr>
+    <tr>
+        <td>20161</td>
+        <td>The Premature Burial</td>
+    </tr>
+    <tr>
+        <td>20730</td>
+        <td>The Trial</td>
+    </tr>
+    <tr>
+        <td>21051</td>
+        <td>Through a Glass Darkly</td>
+    </tr>
+    <tr>
+        <td>21110</td>
+        <td>To Kill a Mockingbird</td>
+    </tr>
+    <tr>
+        <td>21189</td>
+        <td>Tower of London</td>
+    </tr>
+    <tr>
+        <td>21324</td>
+        <td>Two Half Times in Hell</td>
+    </tr>
+    <tr>
+        <td>21462</td>
+        <td>Varan the Unbelievable</td>
+    </tr>
+    <tr>
+        <td>21494</td>
+        <td>Village of Daughters</td>
+    </tr>
+    <tr>
+        <td>21673</td>
+        <td>What Ever Happened to Baby Jane?</td>
+    </tr>
+    <tr>
+        <td>21761</td>
+        <td>Who&#x27;s Got the Action?</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movie[movie.yr==<span class="hljs-number">1962</span>][[<span class="hljs-string">"id"</span>, <span class="hljs-string">"title"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>211</th>
+      <td>10212</td>
+      <td>A Kind of Loving</td>
+    </tr>
+    <tr>
+      <th>328</th>
+      <td>10329</td>
+      <td>A Symposium on Popular Songs</td>
+    </tr>
+    <tr>
+      <th>346</th>
+      <td>10347</td>
+      <td>A Very Private Affair (Vie PrivÃ©e)</td>
+    </tr>
+    <tr>
+      <th>647</th>
+      <td>10648</td>
+      <td>An Autumn Afternoon</td>
+    </tr>
+    <tr>
+      <th>867</th>
+      <td>10868</td>
+      <td>Atraco a las tres</td>
+    </tr>
+    <tr>
+      <th>1005</th>
+      <td>11006</td>
+      <td>Barabbas</td>
+    </tr>
+    <tr>
+      <th>1052</th>
+      <td>11053</td>
+      <td>Battle Beyond the Sun (ÐÐµÐ±Ð¾ Ð·Ð¾Ð²ÐµÑ‚)</td>
+    </tr>
+    <tr>
+      <th>1198</th>
+      <td>11199</td>
+      <td>Big and Little Wong Tin Bar</td>
+    </tr>
+    <tr>
+      <th>1229</th>
+      <td>11230</td>
+      <td>Billy Budd</td>
+    </tr>
+    <tr>
+      <th>1233</th>
+      <td>11234</td>
+      <td>Billy Rose's Jumbo</td>
+    </tr>
+    <tr>
+      <th>1241</th>
+      <td>11242</td>
+      <td>Birdman of Alcatraz</td>
+    </tr>
+    <tr>
+      <th>1372</th>
+      <td>11373</td>
+      <td>Boccaccio '70</td>
+    </tr>
+    <tr>
+      <th>1390</th>
+      <td>11391</td>
+      <td>Bon Voyage!</td>
+    </tr>
+    <tr>
+      <th>1438</th>
+      <td>11439</td>
+      <td>Boys' Night Out</td>
+    </tr>
+    <tr>
+      <th>1691</th>
+      <td>11692</td>
+      <td>Cape Fear</td>
+    </tr>
+    <tr>
+      <th>1734</th>
+      <td>11735</td>
+      <td>Carnival of Souls</td>
+    </tr>
+    <tr>
+      <th>1752</th>
+      <td>11753</td>
+      <td>Carry On Cruising</td>
+    </tr>
+    <tr>
+      <th>2367</th>
+      <td>12368</td>
+      <td>David and Lisa</td>
+    </tr>
+    <tr>
+      <th>2383</th>
+      <td>12384</td>
+      <td>Days of Wine and Roses</td>
+    </tr>
+    <tr>
+      <th>2709</th>
+      <td>12710</td>
+      <td>Dr. No</td>
+    </tr>
+    <tr>
+      <th>2816</th>
+      <td>12817</td>
+      <td>L'Eclisse</td>
+    </tr>
+    <tr>
+      <th>2966</th>
+      <td>12967</td>
+      <td>Tutti a casa</td>
+    </tr>
+    <tr>
+      <th>2991</th>
+      <td>12992</td>
+      <td>Experiment in Terror</td>
+    </tr>
+    <tr>
+      <th>3009</th>
+      <td>13010</td>
+      <td>Eyes Without a Face</td>
+    </tr>
+    <tr>
+      <th>3483</th>
+      <td>13484</td>
+      <td>Gay Purr-ee</td>
+    </tr>
+    <tr>
+      <th>3533</th>
+      <td>13534</td>
+      <td>Gigot</td>
+    </tr>
+    <tr>
+      <th>3640</th>
+      <td>13641</td>
+      <td>Gorath</td>
+    </tr>
+    <tr>
+      <th>3726</th>
+      <td>13727</td>
+      <td>Gypsy</td>
+    </tr>
+    <tr>
+      <th>3740</th>
+      <td>13741</td>
+      <td>Half Ticket</td>
+    </tr>
+    <tr>
+      <th>3797</th>
+      <td>13798</td>
+      <td>Harakiri</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6944</th>
+      <td>16945</td>
+      <td>Ride the High Country</td>
+    </tr>
+    <tr>
+      <th>7147</th>
+      <td>17148</td>
+      <td>Salvatore Giuliano</td>
+    </tr>
+    <tr>
+      <th>7295</th>
+      <td>17296</td>
+      <td>Sergeants 3</td>
+    </tr>
+    <tr>
+      <th>7803</th>
+      <td>17804</td>
+      <td>State Fair</td>
+    </tr>
+    <tr>
+      <th>7943</th>
+      <td>17944</td>
+      <td>Sundays and Cybele</td>
+    </tr>
+    <tr>
+      <th>8000</th>
+      <td>18001</td>
+      <td>Sweet Bird of Youth (film)</td>
+    </tr>
+    <tr>
+      <th>8126</th>
+      <td>18127</td>
+      <td>Term of Trial</td>
+    </tr>
+    <tr>
+      <th>8170</th>
+      <td>18171</td>
+      <td>That Touch of Mink</td>
+    </tr>
+    <tr>
+      <th>8176</th>
+      <td>18177</td>
+      <td>The 300 Spartans</td>
+    </tr>
+    <tr>
+      <th>8729</th>
+      <td>18730</td>
+      <td>The Counterfeit Traitor</td>
+    </tr>
+    <tr>
+      <th>8940</th>
+      <td>18941</td>
+      <td>The Exterminating Angel</td>
+    </tr>
+    <tr>
+      <th>9033</th>
+      <td>19034</td>
+      <td>The Four Days of Naples</td>
+    </tr>
+    <tr>
+      <th>9429</th>
+      <td>19430</td>
+      <td>The Intruder</td>
+    </tr>
+    <tr>
+      <th>9519</th>
+      <td>19520</td>
+      <td>The L-Shaped Room</td>
+    </tr>
+    <tr>
+      <th>9678</th>
+      <td>19679</td>
+      <td>The Loneliness of the Long Distance Runner</td>
+    </tr>
+    <tr>
+      <th>9693</th>
+      <td>19694</td>
+      <td>The Longest Day</td>
+    </tr>
+    <tr>
+      <th>9794</th>
+      <td>19795</td>
+      <td>The Man Who Shot Liberty Valance</td>
+    </tr>
+    <tr>
+      <th>9807</th>
+      <td>19808</td>
+      <td>The Manchurian Candidate</td>
+    </tr>
+    <tr>
+      <th>9932</th>
+      <td>19933</td>
+      <td>The Music Man</td>
+    </tr>
+    <tr>
+      <th>10113</th>
+      <td>20114</td>
+      <td>The Phantom of the Opera</td>
+    </tr>
+    <tr>
+      <th>10160</th>
+      <td>20161</td>
+      <td>The Premature Burial</td>
+    </tr>
+    <tr>
+      <th>10729</th>
+      <td>20730</td>
+      <td>The Trial</td>
+    </tr>
+    <tr>
+      <th>11050</th>
+      <td>21051</td>
+      <td>Through a Glass Darkly</td>
+    </tr>
+    <tr>
+      <th>11109</th>
+      <td>21110</td>
+      <td>To Kill a Mockingbird</td>
+    </tr>
+    <tr>
+      <th>11188</th>
+      <td>21189</td>
+      <td>Tower of London</td>
+    </tr>
+    <tr>
+      <th>11323</th>
+      <td>21324</td>
+      <td>Two Half Times in Hell</td>
+    </tr>
+    <tr>
+      <th>11461</th>
+      <td>21462</td>
+      <td>Varan the Unbelievable</td>
+    </tr>
+    <tr>
+      <th>11493</th>
+      <td>21494</td>
+      <td>Village of Daughters</td>
+    </tr>
+    <tr>
+      <th>11672</th>
+      <td>21673</td>
+      <td>What Ever Happened to Baby Jane?</td>
+    </tr>
+    <tr>
+      <th>11760</th>
+      <td>21761</td>
+      <td>Who's Got the Action?</td>
+    </tr>
+  </tbody>
+</table>
+<p>86 rows × 2 columns</p>
+</div>
+
+
+
+<h2 id="2-電影大國民-‘Citizen-Kane’-的首影年份。"><a href="#2-電影大國民-‘Citizen-Kane’-的首影年份。" class="headerlink" title="2. 電影大國民 ‘Citizen Kane’ 的首影年份。"></a>2. 電影大國民 ‘Citizen Kane’ 的首影年份。</h2><h3 id="mysql-1"><a href="#mysql-1" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql <span class="hljs-keyword">SELECT</span> yr <span class="hljs-keyword">FROM</span> movie <span class="hljs-keyword">WHERE</span> title = <span class="hljs-string">'Citizen Kane'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>yr</th>
+    </tr>
+    <tr>
+        <td>1941</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movie[movie.title == <span class="hljs-string">'Citizen Kane'</span>][[<span class="hljs-string">"yr"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1954</th>
+      <td>1941</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="3-列出全部Star-Trek星空奇遇記系列的電影，包括id-title-和-yr-此系統電影都以Star-Trek為電影名稱的開首-。按年份順序排列。"><a href="#3-列出全部Star-Trek星空奇遇記系列的電影，包括id-title-和-yr-此系統電影都以Star-Trek為電影名稱的開首-。按年份順序排列。" class="headerlink" title="3. 列出全部Star Trek星空奇遇記系列的電影，包括id, title 和 yr(此系統電影都以Star Trek為電影名稱的開首)。按年份順序排列。"></a>3. 列出全部Star Trek星空奇遇記系列的電影，包括id, title 和 yr(此系統電影都以Star Trek為電影名稱的開首)。按年份順序排列。</h2><h3 id="mysql-2"><a href="#mysql-2" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT id, title, yr FROM movie WHERE title LIKE <span class="hljs-string">'Star Trek%'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+11 rows affected.</code></pre><table>
+    <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>yr</th>
+    </tr>
+    <tr>
+        <td>17770</td>
+        <td>Star Trek: First Contact</td>
+        <td>1996</td>
+    </tr>
+    <tr>
+        <td>17771</td>
+        <td>Star Trek: Insurrection</td>
+        <td>1998</td>
+    </tr>
+    <tr>
+        <td>17772</td>
+        <td>Star Trek: The Motion Picture</td>
+        <td>1979</td>
+    </tr>
+    <tr>
+        <td>17773</td>
+        <td>Star Trek</td>
+        <td>2009</td>
+    </tr>
+    <tr>
+        <td>17774</td>
+        <td>Star Trek Generations</td>
+        <td>1994</td>
+    </tr>
+    <tr>
+        <td>17775</td>
+        <td>Star Trek II: The Wrath of Khan</td>
+        <td>1982</td>
+    </tr>
+    <tr>
+        <td>17776</td>
+        <td>Star Trek III: The Search for Spock</td>
+        <td>1984</td>
+    </tr>
+    <tr>
+        <td>17777</td>
+        <td>Star Trek IV: The Voyage Home</td>
+        <td>1986</td>
+    </tr>
+    <tr>
+        <td>17778</td>
+        <td>Star Trek Nemesis</td>
+        <td>2002</td>
+    </tr>
+    <tr>
+        <td>17779</td>
+        <td>Star Trek V: The Final Frontier</td>
+        <td>1989</td>
+    </tr>
+    <tr>
+        <td>17780</td>
+        <td>Star Trek VI: The Undiscovered Country</td>
+        <td>1991</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movie[movie.title.notnull() &amp; movie.title.str.startswith(<span class="hljs-string">"Star Trek"</span>)][[<span class="hljs-string">"id"</span>, <span class="hljs-string">"title"</span>, <span class="hljs-string">"yr"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>title</th>
+      <th>yr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7769</th>
+      <td>17770</td>
+      <td>Star Trek: First Contact</td>
+      <td>1996</td>
+    </tr>
+    <tr>
+      <th>7770</th>
+      <td>17771</td>
+      <td>Star Trek: Insurrection</td>
+      <td>1998</td>
+    </tr>
+    <tr>
+      <th>7771</th>
+      <td>17772</td>
+      <td>Star Trek: The Motion Picture</td>
+      <td>1979</td>
+    </tr>
+    <tr>
+      <th>7772</th>
+      <td>17773</td>
+      <td>Star Trek</td>
+      <td>2009</td>
+    </tr>
+    <tr>
+      <th>7773</th>
+      <td>17774</td>
+      <td>Star Trek Generations</td>
+      <td>1994</td>
+    </tr>
+    <tr>
+      <th>7774</th>
+      <td>17775</td>
+      <td>Star Trek II: The Wrath of Khan</td>
+      <td>1982</td>
+    </tr>
+    <tr>
+      <th>7775</th>
+      <td>17776</td>
+      <td>Star Trek III: The Search for Spock</td>
+      <td>1984</td>
+    </tr>
+    <tr>
+      <th>7776</th>
+      <td>17777</td>
+      <td>Star Trek IV: The Voyage Home</td>
+      <td>1986</td>
+    </tr>
+    <tr>
+      <th>7777</th>
+      <td>17778</td>
+      <td>Star Trek Nemesis</td>
+      <td>2002</td>
+    </tr>
+    <tr>
+      <th>7778</th>
+      <td>17779</td>
+      <td>Star Trek V: The Final Frontier</td>
+      <td>1989</td>
+    </tr>
+    <tr>
+      <th>7779</th>
+      <td>17780</td>
+      <td>Star Trek VI: The Undiscovered Country</td>
+      <td>1991</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h3><p>由于<code>title</code>列有空值，当直接用<code>movie.title.str.startswith()</code>判断时会报错，因此它前面加了非空的判断：<code>movie.title.notnull()</code><br>用<code>&amp;</code>来连接，可以当title非空时才进行第二步的判断，因此可以得出所要的结果</p>
+<h2 id="4-id是-11768-11955-21191-的電影是什麼名稱"><a href="#4-id是-11768-11955-21191-的電影是什麼名稱" class="headerlink" title="4. id是 11768, 11955, 21191 的電影是什麼名稱?"></a>4. id是 11768, 11955, 21191 的電影是什麼名稱?</h2><h3 id="mysql-3"><a href="#mysql-3" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT title FROM movie WHERE id IN (<span class="hljs-number">11768</span>, <span class="hljs-number">11955</span>, <span class="hljs-number">21191</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+3 rows affected.</code></pre><table>
+    <tr>
+        <th>title</th>
+    </tr>
+    <tr>
+        <td>Casablanca</td>
+    </tr>
+    <tr>
+        <td>Citizen Kane</td>
+    </tr>
+    <tr>
+        <td>Toy Story</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-3"><a href="#pandas-3" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movie[movie[<span class="hljs-string">"id"</span>].isin([<span class="hljs-number">11768</span>, <span class="hljs-number">11955</span>, <span class="hljs-number">21191</span>])][[<span class="hljs-string">"title"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1767</th>
+      <td>Casablanca</td>
+    </tr>
+    <tr>
+      <th>1954</th>
+      <td>Citizen Kane</td>
+    </tr>
+    <tr>
+      <th>11190</th>
+      <td>Toy Story</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="5-女演員’Glenn-Close’的編號-id是什麼"><a href="#5-女演員’Glenn-Close’的編號-id是什麼" class="headerlink" title="5. 女演員’Glenn Close’的編號 id是什麼?"></a>5. 女演員’Glenn Close’的編號 id是什麼?</h2><h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT id FROM actor WHERE name = <span class="hljs-string">'Glenn Close'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>id</th>
+    </tr>
+    <tr>
+        <td>140</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-4"><a href="#pandas-4" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">actor.query(<span class="hljs-string">"name == 'Glenn Close'"</span>)[[<span class="hljs-string">"id"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16181</th>
+      <td>140</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="6-電影北非諜影’Casablanca’-的編號-id是什麼"><a href="#6-電影北非諜影’Casablanca’-的編號-id是什麼" class="headerlink" title="6. 電影北非諜影’Casablanca’ 的編號 id是什麼?"></a>6. 電影北非諜影’Casablanca’ 的編號 id是什麼?</h2><h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT id FROM movie WHERE title = <span class="hljs-string">'Casablanca'</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>id</th>
+    </tr>
+    <tr>
+        <td>11768</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-5"><a href="#pandas-5" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movie[movie.title == <span class="hljs-string">"Casablanca"</span>][[<span class="hljs-string">"id"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1767</th>
+      <td>11768</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="合拼語法"><a href="#合拼語法" class="headerlink" title="合拼語法"></a><a href="https://sqlzoo.net/wiki/Get_to_the_point" target="_blank" rel="noopener" title="Get to the point">合拼語法</a></h2><h2 id="7-列出電影北非諜影-‘Casablanca’的演員名單。"><a href="#7-列出電影北非諜影-‘Casablanca’的演員名單。" class="headerlink" title="7. 列出電影北非諜影 ‘Casablanca’的演員名單。"></a>7. 列出電影北非諜影 ‘Casablanca’的演員名單。</h2><p>什麼是演員名單?</p>
+<p>演員名單,即是電影中各演員的真實姓名清單。</p>
+<p>使用 <strong>movieid=11768</strong>, 這是你上一題得到的結果。</p>
+<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name FROM actor WHERE id IN \</span><br><span class="line"> (SELECT actorid FROM casting WHERE movieid = \</span><br><span class="line">(SELECT id FROM movie WHERE title = <span class="hljs-string">'Casablanca'</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+33 rows affected.</code></pre><table>
+    <tr>
+        <th>name</th>
+    </tr>
+    <tr>
+        <td>Claude Rains</td>
+    </tr>
+    <tr>
+        <td>Conrad Veidt</td>
+    </tr>
+    <tr>
+        <td>Curt Bois</td>
+    </tr>
+    <tr>
+        <td>Dan Seymour</td>
+    </tr>
+    <tr>
+        <td>Dooley Wilson</td>
+    </tr>
+    <tr>
+        <td>Georges Renavent</td>
+    </tr>
+    <tr>
+        <td>Gregory Gaye</td>
+    </tr>
+    <tr>
+        <td>Hans Twardowski</td>
+    </tr>
+    <tr>
+        <td>Helmut Dantine</td>
+    </tr>
+    <tr>
+        <td>Humphrey Bogart</td>
+    </tr>
+    <tr>
+        <td>Ilka GrÃ¼nig</td>
+    </tr>
+    <tr>
+        <td>Ingrid Bergman</td>
+    </tr>
+    <tr>
+        <td>Jack Benny</td>
+    </tr>
+    <tr>
+        <td>Jean Del Val</td>
+    </tr>
+    <tr>
+        <td>John Qualen</td>
+    </tr>
+    <tr>
+        <td>Joy Page</td>
+    </tr>
+    <tr>
+        <td>Leo White</td>
+    </tr>
+    <tr>
+        <td>Leon Belasco</td>
+    </tr>
+    <tr>
+        <td>Leonid Kinskey</td>
+    </tr>
+    <tr>
+        <td>Louis V. Arco</td>
+    </tr>
+    <tr>
+        <td>Ludwig StÃ¶ssel</td>
+    </tr>
+    <tr>
+        <td>Madeleine LeBeau</td>
+    </tr>
+    <tr>
+        <td>Marcel Dalio</td>
+    </tr>
+    <tr>
+        <td>Norma Varden</td>
+    </tr>
+    <tr>
+        <td>Paul Henreid</td>
+    </tr>
+    <tr>
+        <td>Peter Lorre</td>
+    </tr>
+    <tr>
+        <td>Richard Ryen</td>
+    </tr>
+    <tr>
+        <td>S. Z. Sakall</td>
+    </tr>
+    <tr>
+        <td>Sydney Greenstreet</td>
+    </tr>
+    <tr>
+        <td>Torben Meyer</td>
+    </tr>
+    <tr>
+        <td>Trude Berliner</td>
+    </tr>
+    <tr>
+        <td>William Edmunds</td>
+    </tr>
+    <tr>
+        <td>Wolfgang Zilzer</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-6"><a href="#pandas-6" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">temp = movie.query(<span class="hljs-string">"title == 'Casablanca'"</span>)[<span class="hljs-string">"id"</span>].values[<span class="hljs-number">0</span>]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">actor[actor.id.isin(casting[casting.movieid == temp][<span class="hljs-string">"actorid"</span>].values)][[<span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8178</th>
+      <td>Claude Rains</td>
+    </tr>
+    <tr>
+      <th>8562</th>
+      <td>Conrad Veidt</td>
+    </tr>
+    <tr>
+      <th>8810</th>
+      <td>Curt Bois</td>
+    </tr>
+    <tr>
+      <th>9142</th>
+      <td>Dan Seymour</td>
+    </tr>
+    <tr>
+      <th>11293</th>
+      <td>Dooley Wilson</td>
+    </tr>
+    <tr>
+      <th>15702</th>
+      <td>Georges Renavent</td>
+    </tr>
+    <tr>
+      <th>16562</th>
+      <td>Gregory Gaye</td>
+    </tr>
+    <tr>
+      <th>17057</th>
+      <td>Hans Twardowski</td>
+    </tr>
+    <tr>
+      <th>17686</th>
+      <td>Helmut Dantine</td>
+    </tr>
+    <tr>
+      <th>18366</th>
+      <td>Humphrey Bogart</td>
+    </tr>
+    <tr>
+      <th>18577</th>
+      <td>Ilka GrÃ¼nig</td>
+    </tr>
+    <tr>
+      <th>18653</th>
+      <td>Ingrid Bergman</td>
+    </tr>
+    <tr>
+      <th>19143</th>
+      <td>Jack Benny</td>
+    </tr>
+    <tr>
+      <th>20684</th>
+      <td>Jean Del Val</td>
+    </tr>
+    <tr>
+      <th>23026</th>
+      <td>John Qualen</td>
+    </tr>
+    <tr>
+      <th>23937</th>
+      <td>Joy Page</td>
+    </tr>
+    <tr>
+      <th>27227</th>
+      <td>Leo White</td>
+    </tr>
+    <tr>
+      <th>27235</th>
+      <td>Leon Belasco</td>
+    </tr>
+    <tr>
+      <th>27322</th>
+      <td>Leonid Kinskey</td>
+    </tr>
+    <tr>
+      <th>28339</th>
+      <td>Louis V. Arco</td>
+    </tr>
+    <tr>
+      <th>28555</th>
+      <td>Ludwig StÃ¶ssel</td>
+    </tr>
+    <tr>
+      <th>28852</th>
+      <td>Madeleine LeBeau</td>
+    </tr>
+    <tr>
+      <th>29282</th>
+      <td>Marcel Dalio</td>
+    </tr>
+    <tr>
+      <th>34248</th>
+      <td>Norma Varden</td>
+    </tr>
+    <tr>
+      <th>35443</th>
+      <td>Paul Henreid</td>
+    </tr>
+    <tr>
+      <th>36163</th>
+      <td>Peter Lorre</td>
+    </tr>
+    <tr>
+      <th>38179</th>
+      <td>Richard Ryen</td>
+    </tr>
+    <tr>
+      <th>40095</th>
+      <td>S. Z. Sakall</td>
+    </tr>
+    <tr>
+      <th>43086</th>
+      <td>Sydney Greenstreet</td>
+    </tr>
+    <tr>
+      <th>44900</th>
+      <td>Torben Meyer</td>
+    </tr>
+    <tr>
+      <th>45104</th>
+      <td>Trude Berliner</td>
+    </tr>
+    <tr>
+      <th>46804</th>
+      <td>William Edmunds</td>
+    </tr>
+    <tr>
+      <th>47131</th>
+      <td>Wolfgang Zilzer</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="8-顯示電影異型’Alien’-的演員清單。"><a href="#8-顯示電影異型’Alien’-的演員清單。" class="headerlink" title="8.顯示電影異型’Alien’ 的演員清單。"></a>8.顯示電影異型’Alien’ 的演員清單。</h2><h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT name FROM actor WHERE id IN (\</span><br><span class="line">           SELECT actorid FROM casting JOIN movie ON movie.id = casting.movieid WHERE title = <span class="hljs-string">'Alien'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+
+
+
+---------------------------------------------------------------------------
+
+KeyboardInterrupt                         Traceback (most recent call last)
+
+&lt;ipython-input-2-580ce70945d3&gt; in &lt;module&gt;
+----&gt; 1 get_ipython().run_line_magic(&apos;sql&apos;, &quot;SELECT name FROM actor WHERE id IN (            SELECT actorid FROM casting JOIN movie ON movie.id = casting.movieid WHERE title = &apos;Alien&apos;)&quot;)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py in run_line_magic(self, magic_name, line, _stack_depth)
+   2285                 kwargs[&apos;local_ns&apos;] = sys._getframe(stack_depth).f_locals
+   2286             with self.builtin_trap:
+-&gt; 2287                 result = fn(*args,**kwargs)
+   2288             return result
+   2289 
+
+
+&lt;decorator-gen-126&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+&lt;decorator-gen-125&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/magic.py in execute(self, line, cell, local_ns)
+     93 
+     94         try:
+---&gt; 95             result = sql.run.run(conn, parsed[&apos;sql&apos;], self, user_ns)
+     96 
+     97             if result is not None and not isinstance(result, str) and self.column_local_vars:
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/run.py in run(conn, sql, config, user_namespace)
+    338             else:
+    339                 txt = sqlalchemy.sql.text(statement)
+--&gt; 340                 result = conn.session.execute(txt, user_namespace)
+    341             _commit(conn=conn, config=config)
+    342             if result and config.feedback:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in execute(self, object, *multiparams, **params)
+    946             raise exc.ObjectNotExecutableError(object)
+    947         else:
+--&gt; 948             return meth(self, multiparams, params)
+    949 
+    950     def _execute_function(self, func, multiparams, params):
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/sql/elements.py in _execute_on_connection(self, connection, multiparams, params)
+    267     def _execute_on_connection(self, connection, multiparams, params):
+    268         if self.supports_execution:
+--&gt; 269             return connection._execute_clauseelement(self, multiparams, params)
+    270         else:
+    271             raise exc.ObjectNotExecutableError(self)
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_clauseelement(self, elem, multiparams, params)
+   1058             compiled_sql,
+   1059             distilled_params,
+-&gt; 1060             compiled_sql, distilled_params
+   1061         )
+   1062         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1198                 parameters,
+   1199                 cursor,
+-&gt; 1200                 context)
+   1201 
+   1202         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _handle_dbapi_exception(self, e, statement, parameters, cursor, context)
+   1414                 )
+   1415             else:
+-&gt; 1416                 util.reraise(*exc_info)
+   1417 
+   1418         finally:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/util/compat.py in reraise(tp, value, tb, cause)
+    247         if value.__traceback__ is not tb:
+    248             raise value.with_traceback(tb)
+--&gt; 249         raise value
+    250 
+    251 else:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1191                         statement,
+   1192                         parameters,
+-&gt; 1193                         context)
+   1194         except BaseException as e:
+   1195             self._handle_dbapi_exception(
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/default.py in do_execute(self, cursor, statement, parameters, context)
+    507 
+    508     def do_execute(self, cursor, statement, parameters, context=None):
+--&gt; 509         cursor.execute(statement, parameters)
+    510 
+    511     def do_execute_no_params(self, cursor, statement, context=None):
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in execute(self, query, args)
+    168         query = self.mogrify(query, args)
+    169 
+--&gt; 170         result = self._query(query)
+    171         self._executed = query
+    172         return result
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in _query(self, q)
+    326         self._last_executed = q
+    327         self._clear_result()
+--&gt; 328         conn.query(q)
+    329         self._do_get_result()
+    330         return self.rowcount
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in query(self, sql, unbuffered)
+    515                 sql = sql.encode(self.encoding, &apos;surrogateescape&apos;)
+    516         self._execute_command(COMMAND.COM_QUERY, sql)
+--&gt; 517         self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+    518         return self._affected_rows
+    519 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_query_result(self, unbuffered)
+    730         else:
+    731             result = MySQLResult(self)
+--&gt; 732             result.read()
+    733         self._result = result
+    734         if result.server_status is not None:
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in read(self)
+   1073     def read(self):
+   1074         try:
+-&gt; 1075             first_packet = self.connection._read_packet()
+   1076 
+   1077             if first_packet.is_ok_packet():
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_packet(self, packet_type)
+    655         buff = b&apos;&apos;
+    656         while True:
+--&gt; 657             packet_header = self._read_bytes(4)
+    658             #if DEBUG: dump_packet(packet_header)
+    659 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_bytes(self, num_bytes)
+    689         while True:
+    690             try:
+--&gt; 691                 data = self._rfile.read(num_bytes)
+    692                 break
+    693             except (IOError, OSError) as e:
+
+
+~/anaconda3/lib/python3.7/socket.py in readinto(self, b)
+    587         while True:
+    588             try:
+--&gt; 589                 return self._sock.recv_into(b)
+    590             except timeout:
+    591                 self._timeout_occurred = True
+
+
+KeyboardInterrupt: </code></pre><h3 id="pandas-7"><a href="#pandas-7" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">actorids = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>).query(<span class="hljs-string">"title == 'Alien'"</span>)[<span class="hljs-string">"actorid"</span>]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">actor[actor.id.isin(actorids)][[<span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>17234</th>
+      <td>Harry Dean Stanton</td>
+    </tr>
+    <tr>
+      <th>18439</th>
+      <td>Ian Holm</td>
+    </tr>
+    <tr>
+      <th>22800</th>
+      <td>John Hurt</td>
+    </tr>
+    <tr>
+      <th>41695</th>
+      <td>Sigourney Weaver</td>
+    </tr>
+    <tr>
+      <th>44591</th>
+      <td>Tom Skerritt</td>
+    </tr>
+    <tr>
+      <th>45615</th>
+      <td>Veronica Cartwright</td>
+    </tr>
+    <tr>
+      <th>47246</th>
+      <td>Yaphet Kotto</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="9-列出演員夏里遜福-‘Harrison-Ford’-曾演出的電影。"><a href="#9-列出演員夏里遜福-‘Harrison-Ford’-曾演出的電影。" class="headerlink" title="9. 列出演員夏里遜福 ‘Harrison Ford’ 曾演出的電影。"></a>9. 列出演員夏里遜福 ‘Harrison Ford’ 曾演出的電影。</h2><h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT title FROM movie \</span><br><span class="line">JOIN casting ON movieid = id WHERE actorid = \</span><br><span class="line">(SELECT id FROM actor WHERE name = <span class="hljs-string">'Harrison Ford'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+42 rows affected.</code></pre><table>
+    <tr>
+        <th>title</th>
+    </tr>
+    <tr>
+        <td>A Hundred and One Nights</td>
+    </tr>
+    <tr>
+        <td>Air Force One</td>
+    </tr>
+    <tr>
+        <td>American Graffiti</td>
+    </tr>
+    <tr>
+        <td>Apocalypse Now</td>
+    </tr>
+    <tr>
+        <td>Clear and Present Danger</td>
+    </tr>
+    <tr>
+        <td>Cowboys &amp; Aliens</td>
+    </tr>
+    <tr>
+        <td>Crossing Over</td>
+    </tr>
+    <tr>
+        <td>Dead Heat on a Merry-Go-Round</td>
+    </tr>
+    <tr>
+        <td>Extraordinary Measures</td>
+    </tr>
+    <tr>
+        <td>Firewall</td>
+    </tr>
+    <tr>
+        <td>Force 10 From Navarone</td>
+    </tr>
+    <tr>
+        <td>Hanover Street</td>
+    </tr>
+    <tr>
+        <td>Hawthorne of the U.S.A.</td>
+    </tr>
+    <tr>
+        <td>Hollywood Homicide</td>
+    </tr>
+    <tr>
+        <td>Indiana Jones and the Kingdom of the Crystal Skull</td>
+    </tr>
+    <tr>
+        <td>Indiana Jones and the Last Crusade</td>
+    </tr>
+    <tr>
+        <td>Indiana Jones and the Temple of Doom</td>
+    </tr>
+    <tr>
+        <td>Jimmy Hollywood</td>
+    </tr>
+    <tr>
+        <td>K-19: The Widowmaker</td>
+    </tr>
+    <tr>
+        <td>More American Graffiti</td>
+    </tr>
+    <tr>
+        <td>Morning Glory</td>
+    </tr>
+    <tr>
+        <td>Patriot Games</td>
+    </tr>
+    <tr>
+        <td>Presumed Innocent</td>
+    </tr>
+    <tr>
+        <td>Raiders of the Lost Ark</td>
+    </tr>
+    <tr>
+        <td>Random Hearts</td>
+    </tr>
+    <tr>
+        <td>Regarding Henry</td>
+    </tr>
+    <tr>
+        <td>Sabrina</td>
+    </tr>
+    <tr>
+        <td>Sally of the Sawdust</td>
+    </tr>
+    <tr>
+        <td>Shadows</td>
+    </tr>
+    <tr>
+        <td>Six Days Seven Nights</td>
+    </tr>
+    <tr>
+        <td>Smilin&#x27; Through</td>
+    </tr>
+    <tr>
+        <td>Star Wars Episode IV: A New Hope</td>
+    </tr>
+    <tr>
+        <td>Star Wars Episode V: The Empire Strikes Back</td>
+    </tr>
+    <tr>
+        <td>Star Wars Episode VI: Return of the Jedi</td>
+    </tr>
+    <tr>
+        <td>The Conversation</td>
+    </tr>
+    <tr>
+        <td>The Devil&#x27;s Own</td>
+    </tr>
+    <tr>
+        <td>The Fugitive</td>
+    </tr>
+    <tr>
+        <td>The Mosquito Coast</td>
+    </tr>
+    <tr>
+        <td>The Star Wars Holiday Special</td>
+    </tr>
+    <tr>
+        <td>What Lies Beneath</td>
+    </tr>
+    <tr>
+        <td>Witness</td>
+    </tr>
+    <tr>
+        <td>Working Girl</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-8"><a href="#pandas-8" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aid = actor.query(<span class="hljs-string">"name == 'Harrison Ford'"</span>).id.values[<span class="hljs-number">0</span>]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m = movie.merge(casting, left_on=<span class="hljs-string">'id'</span>, right_on=<span class="hljs-string">"movieid"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[m[<span class="hljs-string">"actorid"</span>] == aid][[<span class="hljs-string">"title"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2127</th>
+      <td>A Hundred and One Nights</td>
+    </tr>
+    <tr>
+      <th>4875</th>
+      <td>Air Force One</td>
+    </tr>
+    <tr>
+      <th>6343</th>
+      <td>American Graffiti</td>
+    </tr>
+    <tr>
+      <th>7996</th>
+      <td>Apocalypse Now</td>
+    </tr>
+    <tr>
+      <th>20249</th>
+      <td>Clear and Present Danger</td>
+    </tr>
+    <tr>
+      <th>22196</th>
+      <td>Cowboys &amp; Aliens</td>
+    </tr>
+    <tr>
+      <th>22778</th>
+      <td>Crossing Over</td>
+    </tr>
+    <tr>
+      <th>24360</th>
+      <td>Dead Heat on a Merry-Go-Round</td>
+    </tr>
+    <tr>
+      <th>30111</th>
+      <td>Extraordinary Measures</td>
+    </tr>
+    <tr>
+      <th>31793</th>
+      <td>Firewall</td>
+    </tr>
+    <tr>
+      <th>33030</th>
+      <td>Force 10 From Navarone</td>
+    </tr>
+    <tr>
+      <th>38020</th>
+      <td>Hanover Street</td>
+    </tr>
+    <tr>
+      <th>38750</th>
+      <td>Hawthorne of the U.S.A.</td>
+    </tr>
+    <tr>
+      <th>40538</th>
+      <td>Hollywood Homicide</td>
+    </tr>
+    <tr>
+      <th>43810</th>
+      <td>Indiana Jones and the Kingdom of the Crystal S...</td>
+    </tr>
+    <tr>
+      <th>43815</th>
+      <td>Indiana Jones and the Last Crusade</td>
+    </tr>
+    <tr>
+      <th>43827</th>
+      <td>Indiana Jones and the Temple of Doom</td>
+    </tr>
+    <tr>
+      <th>45930</th>
+      <td>Jimmy Hollywood</td>
+    </tr>
+    <tr>
+      <th>47124</th>
+      <td>K-19: The Widowmaker</td>
+    </tr>
+    <tr>
+      <th>57125</th>
+      <td>More American Graffiti</td>
+    </tr>
+    <tr>
+      <th>57189</th>
+      <td>Morning Glory</td>
+    </tr>
+    <tr>
+      <th>63919</th>
+      <td>Patriot Games</td>
+    </tr>
+    <tr>
+      <th>66046</th>
+      <td>Presumed Innocent</td>
+    </tr>
+    <tr>
+      <th>67543</th>
+      <td>Raiders of the Lost Ark</td>
+    </tr>
+    <tr>
+      <th>67733</th>
+      <td>Random Hearts</td>
+    </tr>
+    <tr>
+      <th>68354</th>
+      <td>Regarding Henry</td>
+    </tr>
+    <tr>
+      <th>71019</th>
+      <td>Sabrina</td>
+    </tr>
+    <tr>
+      <th>71139</th>
+      <td>Sally of the Sawdust</td>
+    </tr>
+    <tr>
+      <th>73163</th>
+      <td>Shadows</td>
+    </tr>
+    <tr>
+      <th>74963</th>
+      <td>Six Days Seven Nights</td>
+    </tr>
+    <tr>
+      <th>75647</th>
+      <td>Smilin' Through</td>
+    </tr>
+    <tr>
+      <th>77779</th>
+      <td>Star Wars Episode IV: A New Hope</td>
+    </tr>
+    <tr>
+      <th>77787</th>
+      <td>Star Wars Episode V: The Empire Strikes Back</td>
+    </tr>
+    <tr>
+      <th>77800</th>
+      <td>Star Wars Episode VI: Return of the Jedi</td>
+    </tr>
+    <tr>
+      <th>86833</th>
+      <td>The Conversation</td>
+    </tr>
+    <tr>
+      <th>88239</th>
+      <td>The Devil's Own</td>
+    </tr>
+    <tr>
+      <th>90242</th>
+      <td>The Fugitive</td>
+    </tr>
+    <tr>
+      <th>98698</th>
+      <td>The Mosquito Coast</td>
+    </tr>
+    <tr>
+      <th>105131</th>
+      <td>The Star Wars Holiday Special</td>
+    </tr>
+    <tr>
+      <th>116607</th>
+      <td>What Lies Beneath</td>
+    </tr>
+    <tr>
+      <th>118407</th>
+      <td>Witness</td>
+    </tr>
+    <tr>
+      <th>118684</th>
+      <td>Working Girl</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="10-列出演員夏里遜福-‘Harrison-Ford’-曾演出的電影，但他不是第1主角。"><a href="#10-列出演員夏里遜福-‘Harrison-Ford’-曾演出的電影，但他不是第1主角。" class="headerlink" title="10. 列出演員夏里遜福 ‘Harrison Ford’ 曾演出的電影，但他不是第1主角。"></a>10. 列出演員夏里遜福 ‘Harrison Ford’ 曾演出的電影，但他不是第1主角。</h2><h3 id="mysql-9"><a href="#mysql-9" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT title FROM movie JOIN casting ON movieid = id WHERE actorid = \</span><br><span class="line">(SELECT id FROM actor WHERE name = <span class="hljs-string">'Harrison Ford'</span>) AND ord != <span class="hljs-number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+19 rows affected.</code></pre><table>
+    <tr>
+        <th>title</th>
+    </tr>
+    <tr>
+        <td>A Hundred and One Nights</td>
+    </tr>
+    <tr>
+        <td>American Graffiti</td>
+    </tr>
+    <tr>
+        <td>Apocalypse Now</td>
+    </tr>
+    <tr>
+        <td>Cowboys &amp; Aliens</td>
+    </tr>
+    <tr>
+        <td>Dead Heat on a Merry-Go-Round</td>
+    </tr>
+    <tr>
+        <td>Extraordinary Measures</td>
+    </tr>
+    <tr>
+        <td>Force 10 From Navarone</td>
+    </tr>
+    <tr>
+        <td>Hawthorne of the U.S.A.</td>
+    </tr>
+    <tr>
+        <td>Jimmy Hollywood</td>
+    </tr>
+    <tr>
+        <td>More American Graffiti</td>
+    </tr>
+    <tr>
+        <td>Morning Glory</td>
+    </tr>
+    <tr>
+        <td>Sally of the Sawdust</td>
+    </tr>
+    <tr>
+        <td>Shadows</td>
+    </tr>
+    <tr>
+        <td>Smilin&#x27; Through</td>
+    </tr>
+    <tr>
+        <td>Star Wars Episode IV: A New Hope</td>
+    </tr>
+    <tr>
+        <td>Star Wars Episode V: The Empire Strikes Back</td>
+    </tr>
+    <tr>
+        <td>Star Wars Episode VI: Return of the Jedi</td>
+    </tr>
+    <tr>
+        <td>The Conversation</td>
+    </tr>
+    <tr>
+        <td>Working Girl</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-9"><a href="#pandas-9" class="headerlink" title="pandas"></a>pandas</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aid = actor.query(<span class="hljs-string">"name == 'Harrison Ford'"</span>)[<span class="hljs-string">"id"</span>].values[<span class="hljs-number">0</span>]</span><br><span class="line">aid</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>2216</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[(m[<span class="hljs-string">"actorid"</span>] == aid) &amp; (m[<span class="hljs-string">"ord"</span>] != <span class="hljs-number">1</span>)][[<span class="hljs-string">"title"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2127</th>
+      <td>A Hundred and One Nights</td>
+    </tr>
+    <tr>
+      <th>6343</th>
+      <td>American Graffiti</td>
+    </tr>
+    <tr>
+      <th>7996</th>
+      <td>Apocalypse Now</td>
+    </tr>
+    <tr>
+      <th>22196</th>
+      <td>Cowboys &amp; Aliens</td>
+    </tr>
+    <tr>
+      <th>24360</th>
+      <td>Dead Heat on a Merry-Go-Round</td>
+    </tr>
+    <tr>
+      <th>30111</th>
+      <td>Extraordinary Measures</td>
+    </tr>
+    <tr>
+      <th>33030</th>
+      <td>Force 10 From Navarone</td>
+    </tr>
+    <tr>
+      <th>38750</th>
+      <td>Hawthorne of the U.S.A.</td>
+    </tr>
+    <tr>
+      <th>45930</th>
+      <td>Jimmy Hollywood</td>
+    </tr>
+    <tr>
+      <th>57125</th>
+      <td>More American Graffiti</td>
+    </tr>
+    <tr>
+      <th>57189</th>
+      <td>Morning Glory</td>
+    </tr>
+    <tr>
+      <th>71139</th>
+      <td>Sally of the Sawdust</td>
+    </tr>
+    <tr>
+      <th>73163</th>
+      <td>Shadows</td>
+    </tr>
+    <tr>
+      <th>75647</th>
+      <td>Smilin' Through</td>
+    </tr>
+    <tr>
+      <th>77779</th>
+      <td>Star Wars Episode IV: A New Hope</td>
+    </tr>
+    <tr>
+      <th>77787</th>
+      <td>Star Wars Episode V: The Empire Strikes Back</td>
+    </tr>
+    <tr>
+      <th>77800</th>
+      <td>Star Wars Episode VI: Return of the Jedi</td>
+    </tr>
+    <tr>
+      <th>86833</th>
+      <td>The Conversation</td>
+    </tr>
+    <tr>
+      <th>118684</th>
+      <td>Working Girl</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m2 = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">actor_name = <span class="hljs-string">"Harrison Ford"</span></span><br><span class="line">aid = actor[actor.name == actor_name][<span class="hljs-string">"id"</span>].values[<span class="hljs-number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_movie</span><span class="hljs-params">(x, actor_id)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> x[<span class="hljs-string">"actorid"</span>] == actor_id <span class="hljs-keyword">and</span> x[<span class="hljs-string">"ord"</span>] != <span class="hljs-number">1</span></span><br><span class="line"></span><br><span class="line">m2[m2.apply(get_movie, args=(aid,) ,axis=<span class="hljs-string">"columns"</span>)][[<span class="hljs-string">"title"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2127</th>
+      <td>A Hundred and One Nights</td>
+    </tr>
+    <tr>
+      <th>6343</th>
+      <td>American Graffiti</td>
+    </tr>
+    <tr>
+      <th>7996</th>
+      <td>Apocalypse Now</td>
+    </tr>
+    <tr>
+      <th>22196</th>
+      <td>Cowboys &amp; Aliens</td>
+    </tr>
+    <tr>
+      <th>24360</th>
+      <td>Dead Heat on a Merry-Go-Round</td>
+    </tr>
+    <tr>
+      <th>30111</th>
+      <td>Extraordinary Measures</td>
+    </tr>
+    <tr>
+      <th>33030</th>
+      <td>Force 10 From Navarone</td>
+    </tr>
+    <tr>
+      <th>38750</th>
+      <td>Hawthorne of the U.S.A.</td>
+    </tr>
+    <tr>
+      <th>45930</th>
+      <td>Jimmy Hollywood</td>
+    </tr>
+    <tr>
+      <th>57125</th>
+      <td>More American Graffiti</td>
+    </tr>
+    <tr>
+      <th>57189</th>
+      <td>Morning Glory</td>
+    </tr>
+    <tr>
+      <th>71139</th>
+      <td>Sally of the Sawdust</td>
+    </tr>
+    <tr>
+      <th>73163</th>
+      <td>Shadows</td>
+    </tr>
+    <tr>
+      <th>75647</th>
+      <td>Smilin' Through</td>
+    </tr>
+    <tr>
+      <th>77779</th>
+      <td>Star Wars Episode IV: A New Hope</td>
+    </tr>
+    <tr>
+      <th>77787</th>
+      <td>Star Wars Episode V: The Empire Strikes Back</td>
+    </tr>
+    <tr>
+      <th>77800</th>
+      <td>Star Wars Episode VI: Return of the Jedi</td>
+    </tr>
+    <tr>
+      <th>86833</th>
+      <td>The Conversation</td>
+    </tr>
+    <tr>
+      <th>118684</th>
+      <td>Working Girl</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="11-列出1962年首影的電影及它的第1主角。"><a href="#11-列出1962年首影的電影及它的第1主角。" class="headerlink" title="11. 列出1962年首影的電影及它的第1主角。"></a>11. 列出1962年首影的電影及它的第1主角。</h2><h3 id="mysql-10"><a href="#mysql-10" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT title, name FROM movie JOIN casting ON id = movieid \</span><br><span class="line">        JOIN actor ON actor.id = actorid \</span><br><span class="line">            WHERE yr = <span class="hljs-number">1962</span> AND ord = <span class="hljs-number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+
+
+
+---------------------------------------------------------------------------
+
+KeyboardInterrupt                         Traceback (most recent call last)
+
+&lt;ipython-input-2-8cb2419986ef&gt; in &lt;module&gt;
+----&gt; 1 get_ipython().run_line_magic(&apos;sql&apos;, &apos;SELECT title, name FROM movie JOIN casting ON id = movieid          JOIN actor ON actor.id = actorid              WHERE yr = 1962 AND ord = 1;&apos;)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py in run_line_magic(self, magic_name, line, _stack_depth)
+   2285                 kwargs[&apos;local_ns&apos;] = sys._getframe(stack_depth).f_locals
+   2286             with self.builtin_trap:
+-&gt; 2287                 result = fn(*args,**kwargs)
+   2288             return result
+   2289 
+
+
+&lt;decorator-gen-126&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+&lt;decorator-gen-125&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/magic.py in execute(self, line, cell, local_ns)
+     93 
+     94         try:
+---&gt; 95             result = sql.run.run(conn, parsed[&apos;sql&apos;], self, user_ns)
+     96 
+     97             if result is not None and not isinstance(result, str) and self.column_local_vars:
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/run.py in run(conn, sql, config, user_namespace)
+    338             else:
+    339                 txt = sqlalchemy.sql.text(statement)
+--&gt; 340                 result = conn.session.execute(txt, user_namespace)
+    341             _commit(conn=conn, config=config)
+    342             if result and config.feedback:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in execute(self, object, *multiparams, **params)
+    946             raise exc.ObjectNotExecutableError(object)
+    947         else:
+--&gt; 948             return meth(self, multiparams, params)
+    949 
+    950     def _execute_function(self, func, multiparams, params):
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/sql/elements.py in _execute_on_connection(self, connection, multiparams, params)
+    267     def _execute_on_connection(self, connection, multiparams, params):
+    268         if self.supports_execution:
+--&gt; 269             return connection._execute_clauseelement(self, multiparams, params)
+    270         else:
+    271             raise exc.ObjectNotExecutableError(self)
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_clauseelement(self, elem, multiparams, params)
+   1058             compiled_sql,
+   1059             distilled_params,
+-&gt; 1060             compiled_sql, distilled_params
+   1061         )
+   1062         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1198                 parameters,
+   1199                 cursor,
+-&gt; 1200                 context)
+   1201 
+   1202         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _handle_dbapi_exception(self, e, statement, parameters, cursor, context)
+   1414                 )
+   1415             else:
+-&gt; 1416                 util.reraise(*exc_info)
+   1417 
+   1418         finally:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/util/compat.py in reraise(tp, value, tb, cause)
+    247         if value.__traceback__ is not tb:
+    248             raise value.with_traceback(tb)
+--&gt; 249         raise value
+    250 
+    251 else:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1191                         statement,
+   1192                         parameters,
+-&gt; 1193                         context)
+   1194         except BaseException as e:
+   1195             self._handle_dbapi_exception(
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/default.py in do_execute(self, cursor, statement, parameters, context)
+    507 
+    508     def do_execute(self, cursor, statement, parameters, context=None):
+--&gt; 509         cursor.execute(statement, parameters)
+    510 
+    511     def do_execute_no_params(self, cursor, statement, context=None):
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in execute(self, query, args)
+    168         query = self.mogrify(query, args)
+    169 
+--&gt; 170         result = self._query(query)
+    171         self._executed = query
+    172         return result
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in _query(self, q)
+    326         self._last_executed = q
+    327         self._clear_result()
+--&gt; 328         conn.query(q)
+    329         self._do_get_result()
+    330         return self.rowcount
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in query(self, sql, unbuffered)
+    515                 sql = sql.encode(self.encoding, &apos;surrogateescape&apos;)
+    516         self._execute_command(COMMAND.COM_QUERY, sql)
+--&gt; 517         self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+    518         return self._affected_rows
+    519 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_query_result(self, unbuffered)
+    730         else:
+    731             result = MySQLResult(self)
+--&gt; 732             result.read()
+    733         self._result = result
+    734         if result.server_status is not None:
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in read(self)
+   1073     def read(self):
+   1074         try:
+-&gt; 1075             first_packet = self.connection._read_packet()
+   1076 
+   1077             if first_packet.is_ok_packet():
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_packet(self, packet_type)
+    655         buff = b&apos;&apos;
+    656         while True:
+--&gt; 657             packet_header = self._read_bytes(4)
+    658             #if DEBUG: dump_packet(packet_header)
+    659 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_bytes(self, num_bytes)
+    689         while True:
+    690             try:
+--&gt; 691                 data = self._rfile.read(num_bytes)
+    692                 break
+    693             except (IOError, OSError) as e:
+
+
+~/anaconda3/lib/python3.7/socket.py in readinto(self, b)
+    587         while True:
+    588             try:
+--&gt; 589                 return self._sock.recv_into(b)
+    590             except timeout:
+    591                 self._timeout_occurred = True
+
+
+KeyboardInterrupt: </code></pre><h3 id="pandas-10"><a href="#pandas-10" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>)\</span><br><span class="line">    .merge(actor, left_on=<span class="hljs-string">"actorid"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"yr == 1962 and ord == 1"</span>)\</span><br><span class="line">    [[<span class="hljs-string">"title"</span>, <span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3654</th>
+      <td>Birdman of Alcatraz</td>
+      <td>Burt Lancaster</td>
+    </tr>
+    <tr>
+      <th>4052</th>
+      <td>Lolita</td>
+      <td>James Mason</td>
+    </tr>
+    <tr>
+      <th>4273</th>
+      <td>What Ever Happened to Baby Jane?</td>
+      <td>Bette Davis</td>
+    </tr>
+    <tr>
+      <th>4332</th>
+      <td>David and Lisa</td>
+      <td>Keir Dullea</td>
+    </tr>
+    <tr>
+      <th>6367</th>
+      <td>Experiment in Terror</td>
+      <td>Glenn Ford</td>
+    </tr>
+    <tr>
+      <th>7084</th>
+      <td>Who's Got the Action?</td>
+      <td>Dean Martin</td>
+    </tr>
+    <tr>
+      <th>7096</th>
+      <td>It's Only Money</td>
+      <td>Jerry Lewis</td>
+    </tr>
+    <tr>
+      <th>8097</th>
+      <td>Term of Trial</td>
+      <td>Laurence Olivier</td>
+    </tr>
+    <tr>
+      <th>8943</th>
+      <td>Boys' Night Out</td>
+      <td>Kim Novak</td>
+    </tr>
+    <tr>
+      <th>9578</th>
+      <td>La notte</td>
+      <td>Marcello Mastroianni</td>
+    </tr>
+    <tr>
+      <th>11622</th>
+      <td>Long Day's Journey into Night</td>
+      <td>Katharine Hepburn</td>
+    </tr>
+    <tr>
+      <th>12225</th>
+      <td>Gay Purr-ee</td>
+      <td>Judy Garland</td>
+    </tr>
+    <tr>
+      <th>13768</th>
+      <td>Mutiny on the Bounty</td>
+      <td>Marlon Brando</td>
+    </tr>
+    <tr>
+      <th>14196</th>
+      <td>A Kind of Loving</td>
+      <td>Alan Bates</td>
+    </tr>
+    <tr>
+      <th>14264</th>
+      <td>Tutti a casa</td>
+      <td>Alberto Sordi</td>
+    </tr>
+    <tr>
+      <th>14778</th>
+      <td>Period of Adjustment</td>
+      <td>Anthony Franciosa</td>
+    </tr>
+    <tr>
+      <th>16468</th>
+      <td>An Autumn Afternoon</td>
+      <td>Chishu Ryu</td>
+    </tr>
+    <tr>
+      <th>16496</th>
+      <td>Sergeants 3</td>
+      <td>Frank Sinatra</td>
+    </tr>
+    <tr>
+      <th>16506</th>
+      <td>The Manchurian Candidate</td>
+      <td>Frank Sinatra</td>
+    </tr>
+    <tr>
+      <th>16709</th>
+      <td>L'Eclisse</td>
+      <td>Alain Delon</td>
+    </tr>
+    <tr>
+      <th>16966</th>
+      <td>Love at Twenty</td>
+      <td>Jean-Pierre LÃ©aud</td>
+    </tr>
+    <tr>
+      <th>17919</th>
+      <td>Panic in Year Zero!</td>
+      <td>Ray Milland</td>
+    </tr>
+    <tr>
+      <th>17930</th>
+      <td>The Premature Burial</td>
+      <td>Ray Milland</td>
+    </tr>
+    <tr>
+      <th>20163</th>
+      <td>Sweet Bird of Youth (film)</td>
+      <td>Paul Newman</td>
+    </tr>
+    <tr>
+      <th>20619</th>
+      <td>Dr. No</td>
+      <td>Sean Connery</td>
+    </tr>
+    <tr>
+      <th>21004</th>
+      <td>Pressure Point</td>
+      <td>Sidney Poitier</td>
+    </tr>
+    <tr>
+      <th>22183</th>
+      <td>Tower of London</td>
+      <td>Vincent Price</td>
+    </tr>
+    <tr>
+      <th>22529</th>
+      <td>The Phantom of the Opera</td>
+      <td>Herbert Lom</td>
+    </tr>
+    <tr>
+      <th>23739</th>
+      <td>A Symposium on Popular Songs</td>
+      <td>Paul Frees</td>
+    </tr>
+    <tr>
+      <th>24838</th>
+      <td>In Search of the Castaways</td>
+      <td>Hayley Mills</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>57936</th>
+      <td>That Touch of Mink</td>
+      <td>Doris Day</td>
+    </tr>
+    <tr>
+      <th>59064</th>
+      <td>The 300 Spartans</td>
+      <td>Richard Egan</td>
+    </tr>
+    <tr>
+      <th>60632</th>
+      <td>Kid Galahad</td>
+      <td>Elvis Presley</td>
+    </tr>
+    <tr>
+      <th>61054</th>
+      <td>La commare secca</td>
+      <td>Marisa Solinas</td>
+    </tr>
+    <tr>
+      <th>64327</th>
+      <td>Merrill's Marauders</td>
+      <td>Jeff Chandler</td>
+    </tr>
+    <tr>
+      <th>68288</th>
+      <td>Carnival of Souls</td>
+      <td>Candace Hilligoss</td>
+    </tr>
+    <tr>
+      <th>68502</th>
+      <td>Carry On Cruising</td>
+      <td>Sid James</td>
+    </tr>
+    <tr>
+      <th>70166</th>
+      <td>Half Ticket</td>
+      <td>Kishore Kumar</td>
+    </tr>
+    <tr>
+      <th>71385</th>
+      <td>Eyes Without a Face</td>
+      <td>Pierre Brasseur</td>
+    </tr>
+    <tr>
+      <th>75605</th>
+      <td>Through a Glass Darkly</td>
+      <td>Harriet Andersson</td>
+    </tr>
+    <tr>
+      <th>75713</th>
+      <td>The Trial</td>
+      <td>Anthony Perkins</td>
+    </tr>
+    <tr>
+      <th>79853</th>
+      <td>Professor</td>
+      <td>Shammi Kapoor</td>
+    </tr>
+    <tr>
+      <th>84409</th>
+      <td>Salvatore Giuliano</td>
+      <td>Salvo Randone</td>
+    </tr>
+    <tr>
+      <th>86275</th>
+      <td>On the Beat</td>
+      <td>Norman Wisdom</td>
+    </tr>
+    <tr>
+      <th>87929</th>
+      <td>Harakiri</td>
+      <td>Tatsuya Nakadai</td>
+    </tr>
+    <tr>
+      <th>88858</th>
+      <td>Gigot</td>
+      <td>Jackie Gleason</td>
+    </tr>
+    <tr>
+      <th>91127</th>
+      <td>Phaedra</td>
+      <td>Melina Mercouri</td>
+    </tr>
+    <tr>
+      <th>91338</th>
+      <td>Village of Daughters</td>
+      <td>Eric Sykes</td>
+    </tr>
+    <tr>
+      <th>93041</th>
+      <td>Jigsaw</td>
+      <td>Jack Warner</td>
+    </tr>
+    <tr>
+      <th>96345</th>
+      <td>Pitfall</td>
+      <td>Hisashi Igawa</td>
+    </tr>
+    <tr>
+      <th>96653</th>
+      <td>The Loneliness of the Long Distance Runner</td>
+      <td>Tom Courtenay</td>
+    </tr>
+    <tr>
+      <th>96889</th>
+      <td>Mother Joan of the Angels</td>
+      <td>Lucyna Winnicka</td>
+    </tr>
+    <tr>
+      <th>98314</th>
+      <td>Life for Ruth</td>
+      <td>Michael Craig</td>
+    </tr>
+    <tr>
+      <th>103757</th>
+      <td>Os Cafajestes</td>
+      <td>Daniel Filho</td>
+    </tr>
+    <tr>
+      <th>105150</th>
+      <td>Prison</td>
+      <td>Doris Svedlund</td>
+    </tr>
+    <tr>
+      <th>112764</th>
+      <td>The Exterminating Angel</td>
+      <td>Silvia Pinal</td>
+    </tr>
+    <tr>
+      <th>113028</th>
+      <td>The Four Days of Naples</td>
+      <td>Regina Bianchi</td>
+    </tr>
+    <tr>
+      <th>114722</th>
+      <td>The Longest Day</td>
+      <td>John Wayne&lt;br /&gt;</td>
+    </tr>
+    <tr>
+      <th>118480</th>
+      <td>Two Half Times in Hell</td>
+      <td>Imre Sinkovits</td>
+    </tr>
+    <tr>
+      <th>118902</th>
+      <td>Varan the Unbelievable</td>
+      <td>KÃ´zÃ´ Nomura</td>
+    </tr>
+  </tbody>
+</table>
+<p>85 rows × 2 columns</p>
+</div>
+
+
+
+<h2 id="困難的題目"><a href="#困難的題目" class="headerlink" title="困難的題目"></a>困難的題目</h2><h2 id="12"><a href="#12" class="headerlink" title="12."></a>12.</h2><p><strong>尊·特拉華達’John Travolta’最忙是哪一年? 顯示年份和該年的電影數目。</strong></p>
+<h3 id="mysql-11"><a href="#mysql-11" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT yr,COUNT(title) FROM \</span><br><span class="line">  movie JOIN casting ON movie.id=movieid \</span><br><span class="line">         JOIN actor ON actorid=actor.id \</span><br><span class="line">WHERE name=<span class="hljs-string">'John Travolta'</span> \</span><br><span class="line">GROUP BY yr \</span><br><span class="line">HAVING COUNT(title)=(SELECT MAX(c) FROM \</span><br><span class="line">(SELECT yr,COUNT(title) AS c FROM \</span><br><span class="line">   movie JOIN casting ON movie.id=movieid \</span><br><span class="line">         JOIN actor   ON actorid=actor.id \</span><br><span class="line"> WHERE name=<span class="hljs-string">'John Travolta'</span> \</span><br><span class="line"> GROUP BY yr) AS t)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+
+
+
+---------------------------------------------------------------------------
+
+KeyboardInterrupt                         Traceback (most recent call last)
+
+&lt;ipython-input-5-4243d433212e&gt; in &lt;module&gt;
+----&gt; 1 get_ipython().run_line_magic(&apos;sql&apos;, &quot;SELECT yr,COUNT(title) FROM    movie JOIN casting ON movie.id=movieid           JOIN actor ON actorid=actor.id  WHERE name=&apos;John Travolta&apos;  GROUP BY yr  HAVING COUNT(title)=(SELECT MAX(c) FROM  (SELECT yr,COUNT(title) AS c FROM     movie JOIN casting ON movie.id=movieid           JOIN actor   ON actorid=actor.id   WHERE name=&apos;John Travolta&apos;   GROUP BY yr) AS t)&quot;)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py in run_line_magic(self, magic_name, line, _stack_depth)
+   2285                 kwargs[&apos;local_ns&apos;] = sys._getframe(stack_depth).f_locals
+   2286             with self.builtin_trap:
+-&gt; 2287                 result = fn(*args,**kwargs)
+   2288             return result
+   2289 
+
+
+&lt;decorator-gen-126&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+&lt;decorator-gen-125&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/magic.py in execute(self, line, cell, local_ns)
+     93 
+     94         try:
+---&gt; 95             result = sql.run.run(conn, parsed[&apos;sql&apos;], self, user_ns)
+     96 
+     97             if result is not None and not isinstance(result, str) and self.column_local_vars:
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/run.py in run(conn, sql, config, user_namespace)
+    338             else:
+    339                 txt = sqlalchemy.sql.text(statement)
+--&gt; 340                 result = conn.session.execute(txt, user_namespace)
+    341             _commit(conn=conn, config=config)
+    342             if result and config.feedback:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in execute(self, object, *multiparams, **params)
+    946             raise exc.ObjectNotExecutableError(object)
+    947         else:
+--&gt; 948             return meth(self, multiparams, params)
+    949 
+    950     def _execute_function(self, func, multiparams, params):
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/sql/elements.py in _execute_on_connection(self, connection, multiparams, params)
+    267     def _execute_on_connection(self, connection, multiparams, params):
+    268         if self.supports_execution:
+--&gt; 269             return connection._execute_clauseelement(self, multiparams, params)
+    270         else:
+    271             raise exc.ObjectNotExecutableError(self)
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_clauseelement(self, elem, multiparams, params)
+   1058             compiled_sql,
+   1059             distilled_params,
+-&gt; 1060             compiled_sql, distilled_params
+   1061         )
+   1062         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1198                 parameters,
+   1199                 cursor,
+-&gt; 1200                 context)
+   1201 
+   1202         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _handle_dbapi_exception(self, e, statement, parameters, cursor, context)
+   1414                 )
+   1415             else:
+-&gt; 1416                 util.reraise(*exc_info)
+   1417 
+   1418         finally:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/util/compat.py in reraise(tp, value, tb, cause)
+    247         if value.__traceback__ is not tb:
+    248             raise value.with_traceback(tb)
+--&gt; 249         raise value
+    250 
+    251 else:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1191                         statement,
+   1192                         parameters,
+-&gt; 1193                         context)
+   1194         except BaseException as e:
+   1195             self._handle_dbapi_exception(
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/default.py in do_execute(self, cursor, statement, parameters, context)
+    507 
+    508     def do_execute(self, cursor, statement, parameters, context=None):
+--&gt; 509         cursor.execute(statement, parameters)
+    510 
+    511     def do_execute_no_params(self, cursor, statement, context=None):
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in execute(self, query, args)
+    168         query = self.mogrify(query, args)
+    169 
+--&gt; 170         result = self._query(query)
+    171         self._executed = query
+    172         return result
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in _query(self, q)
+    326         self._last_executed = q
+    327         self._clear_result()
+--&gt; 328         conn.query(q)
+    329         self._do_get_result()
+    330         return self.rowcount
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in query(self, sql, unbuffered)
+    515                 sql = sql.encode(self.encoding, &apos;surrogateescape&apos;)
+    516         self._execute_command(COMMAND.COM_QUERY, sql)
+--&gt; 517         self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+    518         return self._affected_rows
+    519 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_query_result(self, unbuffered)
+    730         else:
+    731             result = MySQLResult(self)
+--&gt; 732             result.read()
+    733         self._result = result
+    734         if result.server_status is not None:
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in read(self)
+   1073     def read(self):
+   1074         try:
+-&gt; 1075             first_packet = self.connection._read_packet()
+   1076 
+   1077             if first_packet.is_ok_packet():
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_packet(self, packet_type)
+    655         buff = b&apos;&apos;
+    656         while True:
+--&gt; 657             packet_header = self._read_bytes(4)
+    658             #if DEBUG: dump_packet(packet_header)
+    659 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_bytes(self, num_bytes)
+    689         while True:
+    690             try:
+--&gt; 691                 data = self._rfile.read(num_bytes)
+    692                 break
+    693             except (IOError, OSError) as e:
+
+
+~/anaconda3/lib/python3.7/socket.py in readinto(self, b)
+    587         while True:
+    588             try:
+--&gt; 589                 return self._sock.recv_into(b)
+    590             except timeout:
+    591                 self._timeout_occurred = True
+
+
+KeyboardInterrupt: </code></pre><h3 id="pandas-11"><a href="#pandas-11" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>)\</span><br><span class="line">    .merge(actor, left_on=<span class="hljs-string">"actorid"</span>, right_on=<span class="hljs-string">"id"</span>)\</span><br><span class="line">    .query(<span class="hljs-string">"name == 'John Travolta'"</span>)\</span><br><span class="line">    .groupby([<span class="hljs-string">"yr"</span>, <span class="hljs-string">"name"</span>])[[<span class="hljs-string">"name"</span>]].agg(<span class="hljs-string">"count"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[m[<span class="hljs-string">"name"</span>] == m.name.max()]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>name</th>
+    </tr>
+    <tr>
+      <th>yr</th>
+      <th>name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1998</th>
+      <th>John Travolta</th>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="13"><a href="#13" class="headerlink" title="13."></a>13.</h2><p><strong>列出演員茱莉·安德絲’Julie Andrews’曾參與的電影名稱及其第1主角。</strong></p>
+<p>是否列了電影 “Little Miss Marker”兩次?
+她於1980再參與此電影Little Miss Marker. 原作於1934年,她也有參與。 電影名稱不是獨一的。在子查詢中使用電影編號。</p>
+<h3 id="mysql-12"><a href="#mysql-12" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%sql select title, name <span class="hljs-keyword">from</span> movie \</span><br><span class="line">join casting on movie.id = movieid \</span><br><span class="line">join actor on actorid = actor.id \</span><br><span class="line">where ord = <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> movieid <span class="hljs-keyword">in</span> \</span><br><span class="line">(SELECT movieid FROM casting \</span><br><span class="line">WHERE actorid IN ( \</span><br><span class="line">  SELECT id FROM actor \</span><br><span class="line">  WHERE name=<span class="hljs-string">'Julie Andrews'</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+
+
+
+---------------------------------------------------------------------------
+
+KeyboardInterrupt                         Traceback (most recent call last)
+
+&lt;ipython-input-10-fb64f659c6d5&gt; in &lt;module&gt;
+----&gt; 1 get_ipython().run_line_magic(&apos;sql&apos;, &quot;select title, name from movie  join casting on movie.id = movieid  join actor on actorid = actor.id  where ord = 1 and movieid in  (SELECT movieid FROM casting  WHERE actorid IN (    SELECT id FROM actor    WHERE name=&apos;Julie Andrews&apos;))&quot;)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py in run_line_magic(self, magic_name, line, _stack_depth)
+   2285                 kwargs[&apos;local_ns&apos;] = sys._getframe(stack_depth).f_locals
+   2286             with self.builtin_trap:
+-&gt; 2287                 result = fn(*args,**kwargs)
+   2288             return result
+   2289 
+
+
+&lt;decorator-gen-126&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+&lt;decorator-gen-125&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/magic.py in execute(self, line, cell, local_ns)
+     93 
+     94         try:
+---&gt; 95             result = sql.run.run(conn, parsed[&apos;sql&apos;], self, user_ns)
+     96 
+     97             if result is not None and not isinstance(result, str) and self.column_local_vars:
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/run.py in run(conn, sql, config, user_namespace)
+    338             else:
+    339                 txt = sqlalchemy.sql.text(statement)
+--&gt; 340                 result = conn.session.execute(txt, user_namespace)
+    341             _commit(conn=conn, config=config)
+    342             if result and config.feedback:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in execute(self, object, *multiparams, **params)
+    946             raise exc.ObjectNotExecutableError(object)
+    947         else:
+--&gt; 948             return meth(self, multiparams, params)
+    949 
+    950     def _execute_function(self, func, multiparams, params):
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/sql/elements.py in _execute_on_connection(self, connection, multiparams, params)
+    267     def _execute_on_connection(self, connection, multiparams, params):
+    268         if self.supports_execution:
+--&gt; 269             return connection._execute_clauseelement(self, multiparams, params)
+    270         else:
+    271             raise exc.ObjectNotExecutableError(self)
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_clauseelement(self, elem, multiparams, params)
+   1058             compiled_sql,
+   1059             distilled_params,
+-&gt; 1060             compiled_sql, distilled_params
+   1061         )
+   1062         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1198                 parameters,
+   1199                 cursor,
+-&gt; 1200                 context)
+   1201 
+   1202         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _handle_dbapi_exception(self, e, statement, parameters, cursor, context)
+   1414                 )
+   1415             else:
+-&gt; 1416                 util.reraise(*exc_info)
+   1417 
+   1418         finally:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/util/compat.py in reraise(tp, value, tb, cause)
+    247         if value.__traceback__ is not tb:
+    248             raise value.with_traceback(tb)
+--&gt; 249         raise value
+    250 
+    251 else:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1191                         statement,
+   1192                         parameters,
+-&gt; 1193                         context)
+   1194         except BaseException as e:
+   1195             self._handle_dbapi_exception(
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/default.py in do_execute(self, cursor, statement, parameters, context)
+    507 
+    508     def do_execute(self, cursor, statement, parameters, context=None):
+--&gt; 509         cursor.execute(statement, parameters)
+    510 
+    511     def do_execute_no_params(self, cursor, statement, context=None):
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in execute(self, query, args)
+    168         query = self.mogrify(query, args)
+    169 
+--&gt; 170         result = self._query(query)
+    171         self._executed = query
+    172         return result
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in _query(self, q)
+    326         self._last_executed = q
+    327         self._clear_result()
+--&gt; 328         conn.query(q)
+    329         self._do_get_result()
+    330         return self.rowcount
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in query(self, sql, unbuffered)
+    515                 sql = sql.encode(self.encoding, &apos;surrogateescape&apos;)
+    516         self._execute_command(COMMAND.COM_QUERY, sql)
+--&gt; 517         self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+    518         return self._affected_rows
+    519 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_query_result(self, unbuffered)
+    730         else:
+    731             result = MySQLResult(self)
+--&gt; 732             result.read()
+    733         self._result = result
+    734         if result.server_status is not None:
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in read(self)
+   1073     def read(self):
+   1074         try:
+-&gt; 1075             first_packet = self.connection._read_packet()
+   1076 
+   1077             if first_packet.is_ok_packet():
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_packet(self, packet_type)
+    655         buff = b&apos;&apos;
+    656         while True:
+--&gt; 657             packet_header = self._read_bytes(4)
+    658             #if DEBUG: dump_packet(packet_header)
+    659 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_bytes(self, num_bytes)
+    689         while True:
+    690             try:
+--&gt; 691                 data = self._rfile.read(num_bytes)
+    692                 break
+    693             except (IOError, OSError) as e:
+
+
+~/anaconda3/lib/python3.7/socket.py in readinto(self, b)
+    587         while True:
+    588             try:
+--&gt; 589                 return self._sock.recv_into(b)
+    590             except timeout:
+    591                 self._timeout_occurred = True
+
+
+KeyboardInterrupt: </code></pre><h3 id="pandas-12"><a href="#pandas-12" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aid = actor[actor.name == <span class="hljs-string">"Julie Andrews"</span>][<span class="hljs-string">"id"</span>].values[<span class="hljs-number">0</span>]</span><br><span class="line">aid</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>179</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movieids = casting[casting.actorid == aid][<span class="hljs-string">"movieid"</span>].values</span><br><span class="line">movieids</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([10016, 12354, 12497, 12766, 13846, 15145, 15476, 16870, 17117,
+       17445, 17765, 18270, 20136, 20136, 20180, 20181, 20509, 20627,
+       21023, 21154, 21171, 21483])</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>)\</span><br><span class="line">    .merge(actor, left_on=<span class="hljs-string">"actorid"</span>, right_on=<span class="hljs-string">"id"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[m[<span class="hljs-string">"ord"</span>] == <span class="hljs-number">1</span> &amp; m[<span class="hljs-string">"movieid"</span>].isin(movieids)][[<span class="hljs-string">"title"</span>, <span class="hljs-string">"name"</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1256</th>
+      <td>10</td>
+      <td>Dudley Moore</td>
+    </tr>
+    <tr>
+      <th>1267</th>
+      <td>Darling Lili</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1269</th>
+      <td>Duet for One</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1270</th>
+      <td>Hawaii</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1272</th>
+      <td>Mary Poppins</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1273</th>
+      <td>Relative Values</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1274</th>
+      <td>S.O.B.</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1276</th>
+      <td>Star!</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1282</th>
+      <td>The Sound of Music</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1283</th>
+      <td>The Tamarind Seed</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1284</th>
+      <td>Thoroughly Modern Millie</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>1287</th>
+      <td>Victor Victoria</td>
+      <td>Julie Andrews</td>
+    </tr>
+    <tr>
+      <th>8518</th>
+      <td>Shrek the Third</td>
+      <td>Mike Myers</td>
+    </tr>
+    <tr>
+      <th>14805</th>
+      <td>Little Miss Marker</td>
+      <td>Walter Matthau</td>
+    </tr>
+    <tr>
+      <th>20178</th>
+      <td>Torn Curtain</td>
+      <td>Paul Newman</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>The Pink Panther Strikes Again</td>
+      <td>Peter Sellers</td>
+    </tr>
+    <tr>
+      <th>35148</th>
+      <td>The Princess Diaries</td>
+      <td>Anne Hathaway</td>
+    </tr>
+    <tr>
+      <th>35149</th>
+      <td>The Princess Diaries 2: Royal Engagement</td>
+      <td>Anne Hathaway</td>
+    </tr>
+    <tr>
+      <th>41739</th>
+      <td>Despicable Me</td>
+      <td>Steve Carell</td>
+    </tr>
+    <tr>
+      <th>48122</th>
+      <td>The Americanization of Emily</td>
+      <td>James Garner</td>
+    </tr>
+    <tr>
+      <th>54026</th>
+      <td>Tooth Fairy</td>
+      <td>Dwayne Johnson</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="14-列出按字母順序，列出哪一演員曾作30次第1主角。"><a href="#14-列出按字母順序，列出哪一演員曾作30次第1主角。" class="headerlink" title="14. 列出按字母順序，列出哪一演員曾作30次第1主角。"></a>14. 列出按字母順序，列出哪一演員曾作30次第1主角。</h2><h3 id="mysql-13"><a href="#mysql-13" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%sql select name <span class="hljs-keyword">from</span> movie \</span><br><span class="line">join casting on movie.id =  movieid <span class="hljs-keyword">and</span> ord = <span class="hljs-number">1</span> \</span><br><span class="line">join actor on actor.id = actorid \</span><br><span class="line">group by actorid, name \</span><br><span class="line">having count(actorid) &gt;= <span class="hljs-number">30</span> order by name</span><br></pre></td></tr></table></figure>
+
+<pre><code>* mysql+pymysql://root:***@localhost/dbs</code></pre><h3 id="pandas-13"><a href="#pandas-13" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>).query(<span class="hljs-string">"ord == 1"</span>)\</span><br><span class="line">    .merge(actor, left_on=<span class="hljs-string">"actorid"</span>, right_on=<span class="hljs-string">"id"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.groupby([<span class="hljs-string">"actorid"</span>, <span class="hljs-string">"name"</span>]).agg(&#123;<span class="hljs-string">"actorid"</span>: <span class="hljs-string">'count'</span>&#125;).query(<span class="hljs-string">"actorid &gt;= 30"</span>).sort_values(<span class="hljs-string">"name"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>actorid</th>
+    </tr>
+    <tr>
+      <th>actorid</th>
+      <th>name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>561</th>
+      <th>Bette Davis</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>274</th>
+      <th>Bruce Willis</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>468</th>
+      <th>Burt Lancaster</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>1962</th>
+      <th>Gary Cooper</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>4830</th>
+      <th>James Stewart</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>871</th>
+      <th>John Wayne</th>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>2697</th>
+      <th>Paul Newman</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>560</th>
+      <th>Spencer Tracy</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>2685</th>
+      <th>William Garwood</th>
+      <td>38</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h2 id="15"><a href="#15" class="headerlink" title="15."></a>15.</h2><p><strong>列出1978年首影的電影名稱及角色數目，按此數目由多至少排列。</strong></p>
+<h3 id="mysql-14"><a href="#mysql-14" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%sql select  title, count(actorid) <span class="hljs-keyword">as</span> c <span class="hljs-keyword">from</span> movie \</span><br><span class="line">join casting on movie.id = movieid <span class="hljs-keyword">and</span> yr = <span class="hljs-number">1978</span> \</span><br><span class="line">group by title \</span><br><span class="line">order by  c desc, title</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+108 rows affected.</code></pre><table>
+    <tr>
+        <th>title</th>
+        <th>c</th>
+    </tr>
+    <tr>
+        <td>The Bad News Bears Go to Japan</td>
+        <td>50</td>
+    </tr>
+    <tr>
+        <td>The Swarm</td>
+        <td>37</td>
+    </tr>
+    <tr>
+        <td>Grease</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>American Hot Wax</td>
+        <td>27</td>
+    </tr>
+    <tr>
+        <td>The Boys from Brazil</td>
+        <td>26</td>
+    </tr>
+    <tr>
+        <td>Heaven Can Wait</td>
+        <td>25</td>
+    </tr>
+    <tr>
+        <td>Big Wednesday</td>
+        <td>21</td>
+    </tr>
+    <tr>
+        <td>A Night Full of Rain</td>
+        <td>19</td>
+    </tr>
+    <tr>
+        <td>A Wedding</td>
+        <td>19</td>
+    </tr>
+    <tr>
+        <td>Orchestra Rehearsal</td>
+        <td>19</td>
+    </tr>
+    <tr>
+        <td>The Cheap Detective</td>
+        <td>19</td>
+    </tr>
+    <tr>
+        <td>Go Tell the Spartans</td>
+        <td>18</td>
+    </tr>
+    <tr>
+        <td>Death on the Nile</td>
+        <td>17</td>
+    </tr>
+    <tr>
+        <td>Movie Movie</td>
+        <td>17</td>
+    </tr>
+    <tr>
+        <td>Superman</td>
+        <td>17</td>
+    </tr>
+    <tr>
+        <td>The Cat from Outer Space</td>
+        <td>17</td>
+    </tr>
+    <tr>
+        <td>The Driver</td>
+        <td>17</td>
+    </tr>
+    <tr>
+        <td>The Star Wars Holiday Special</td>
+        <td>17</td>
+    </tr>
+    <tr>
+        <td>Blue Collar</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>Ice Castles</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>International Velvet</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>J.R.R. Tolkien&#x27;s The Lord of the Rings</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>Alexandria... Why?</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Bye Bye Monkey</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Coming Home</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>David</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Gray Lady Down</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Occupation in 26 Pictures</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Revenge of the Pink Panther</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>The Brink&#x27;s Job</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>The Chant of Jimmie Blacksmith</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>The Water Babies</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Violette NoziÃ¨re</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Who&#x27;ll Stop The Rain</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Without Anesthesia</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Bread and Chocolate</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>Closed Circuit</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>Damien: Omen II</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>I Wanna Hold Your Hand</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>The Empire of Passion</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>Almost Summer</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>An Unmarried Woman</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>Foul Play</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>Goin&#x27; South</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>The Left-Handed Woman</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>California Suite</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Force 10 From Navarone</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>In Praise of Older Women</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Jaws 2</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Midnight Express</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Piranha</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>The End</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Autumn Sonata</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Comes a Horseman</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Days of Heaven</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Don</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Sgt. Pepper&#x27;s Lonely Hearts Club Band</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Up in Smoke</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Eyes of Laura Mars</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Invasion of the Body Snatchers</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Muqaddar Ka Sikandar</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>National Lampoon&#x27;s Animal House</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Zero to Sixty</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>Fingers</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>FM</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>Shogun&#x27;s Samurai</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>The Boys in Company C</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>The Shout</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>The Wiz</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td>Fedora</td>
+        <td>8</td>
+    </tr>
+    <tr>
+        <td>The Ascent</td>
+        <td>8</td>
+    </tr>
+    <tr>
+        <td>Attack of the Killer Tomatoes</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>Hooper</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>Kondura (Anugraham in Telugu)</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>The Big Fix</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>The Fury</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>Girlfriends</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>The Small One</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>Watership Down</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>House Calls</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>La Cage aux Folles</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Rabbit Test</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Rockers</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Snake in the Eagle&#x27;s Shadow</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>The Buddy Holly Story</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>The Deer Hunter</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>The Herd</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>The Last Waltz</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>You Are Not Alone</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Drunken Master</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Get Out Your Handkerchiefs</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Halloween</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Hot Lead and Cold Feet</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Passion Flower Hotel</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>American Boy: A Profile of Steven Prince</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Coup de GrÃ¢ce</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Lady on the Bus</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Pretty Baby</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Renaldo and Clara</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>The King of the Street Cleaners</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>The One and Only</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Enter the Fat Dragon</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Lies My Father Told Me</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Same Time, Next Year</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Somebody Killed Her Husband</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Thank God It&#x27;s Friday</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>That&#x27;s Carry On!</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>The 36th Chamber of Shaolin</td>
+        <td>2</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-14"><a href="#pandas-14" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>).query(<span class="hljs-string">"yr == 1978"</span>)\</span><br><span class="line">    .merge(actor, left_on=<span class="hljs-string">"actorid"</span>, right_on=<span class="hljs-string">"id"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.groupby(<span class="hljs-string">"title"</span>).agg(&#123;<span class="hljs-string">"actorid"</span>: <span class="hljs-string">"count"</span>&#125;).sort_values(<span class="hljs-string">"title"</span>).sort_values(<span class="hljs-string">"actorid"</span>, ascending=<span class="hljs-literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>actorid</th>
+    </tr>
+    <tr>
+      <th>title</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>The Bad News Bears Go to Japan</th>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>The Swarm</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>Grease</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>American Hot Wax</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>The Boys from Brazil</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>Heaven Can Wait</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>Big Wednesday</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>A Wedding</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>Orchestra Rehearsal</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>A Night Full of Rain</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>The Cheap Detective</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>Go Tell the Spartans</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>Death on the Nile</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>Superman</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>The Cat from Outer Space</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>The Driver</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>The Star Wars Holiday Special</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>Movie Movie</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>Ice Castles</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>International Velvet</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>J.R.R. Tolkien's The Lord of the Rings</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Blue Collar</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Occupation in 26 Pictures</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Bye Bye Monkey</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Gray Lady Down</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>The Brink's Job</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Coming Home</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Alexandria... Why?</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>The Water Babies</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Violette NoziÃ¨re</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>The Small One</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>You Are Not Alone</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>The Deer Hunter</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>Rabbit Test</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>La Cage aux Folles</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>The Buddy Holly Story</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>Snake in the Eagle's Shadow</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>The Herd</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>Rockers</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>The Last Waltz</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>House Calls</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>Passion Flower Hotel</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Drunken Master</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Get Out Your Handkerchiefs</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Hot Lead and Cold Feet</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Halloween</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>The King of the Street Cleaners</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>The One and Only</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>American Boy: A Profile of Steven Prince</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Lady on the Bus</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Coup de GrÃ¢ce</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Pretty Baby</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Renaldo and Clara</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>The 36th Chamber of Shaolin</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>That's Carry On!</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Thank God It's Friday</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Somebody Killed Her Husband</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Enter the Fat Dragon</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Same Time, Next Year</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Lies My Father Told Me</th>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>108 rows × 1 columns</p>
+</div>
+
+
+
+<h2 id="16-列出曾與演員亞特·葛芬柯’Art-Garfunkel’合作過的演員姓名。"><a href="#16-列出曾與演員亞特·葛芬柯’Art-Garfunkel’合作過的演員姓名。" class="headerlink" title="16. 列出曾與演員亞特·葛芬柯’Art Garfunkel’合作過的演員姓名。"></a>16. 列出曾與演員亞特·葛芬柯’Art Garfunkel’合作過的演員姓名。</h2><h3 id="mysql-15"><a href="#mysql-15" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%sql select name destinct <span class="hljs-keyword">from</span> movie \</span><br><span class="line">join casting on movieid = movie.id \</span><br><span class="line">join actor on actorid = actor.id  \</span><br><span class="line">where name != <span class="hljs-string">'Art Garfunkel'</span> <span class="hljs-keyword">and</span> movieid <span class="hljs-keyword">in</span> \</span><br><span class="line">  (select movieid <span class="hljs-keyword">from</span> movie \</span><br><span class="line">   join casting on movieid = movie.id \</span><br><span class="line">  join actor on actorid = actor.id  <span class="hljs-keyword">and</span> name = <span class="hljs-string">'Art Garfunkel'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+
+
+
+---------------------------------------------------------------------------
+
+KeyboardInterrupt                         Traceback (most recent call last)
+
+&lt;ipython-input-43-d50fa87e7b41&gt; in &lt;module&gt;
+----&gt; 1 get_ipython().run_line_magic(&apos;sql&apos;, &quot;select name destinct from movie  join casting on movieid = movie.id  join actor on actorid = actor.id   where name != &apos;Art Garfunkel&apos; and movieid in    (select movieid from movie     join casting on movieid = movie.id    join actor on actorid = actor.id  and name = &apos;Art Garfunkel&apos;) &quot;)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py in run_line_magic(self, magic_name, line, _stack_depth)
+   2285                 kwargs[&apos;local_ns&apos;] = sys._getframe(stack_depth).f_locals
+   2286             with self.builtin_trap:
+-&gt; 2287                 result = fn(*args,**kwargs)
+   2288             return result
+   2289 
+
+
+&lt;decorator-gen-126&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+&lt;decorator-gen-125&gt; in execute(self, line, cell, local_ns)
+
+
+~/anaconda3/lib/python3.7/site-packages/IPython/core/magic.py in &lt;lambda&gt;(f, *a, **k)
+    185     # but it&apos;s overkill for just that one bit of state.
+    186     def magic_deco(arg):
+--&gt; 187         call = lambda f, *a, **k: f(*a, **k)
+    188 
+    189         if callable(arg):
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/magic.py in execute(self, line, cell, local_ns)
+     93 
+     94         try:
+---&gt; 95             result = sql.run.run(conn, parsed[&apos;sql&apos;], self, user_ns)
+     96 
+     97             if result is not None and not isinstance(result, str) and self.column_local_vars:
+
+
+~/anaconda3/lib/python3.7/site-packages/sql/run.py in run(conn, sql, config, user_namespace)
+    338             else:
+    339                 txt = sqlalchemy.sql.text(statement)
+--&gt; 340                 result = conn.session.execute(txt, user_namespace)
+    341             _commit(conn=conn, config=config)
+    342             if result and config.feedback:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in execute(self, object, *multiparams, **params)
+    946             raise exc.ObjectNotExecutableError(object)
+    947         else:
+--&gt; 948             return meth(self, multiparams, params)
+    949 
+    950     def _execute_function(self, func, multiparams, params):
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/sql/elements.py in _execute_on_connection(self, connection, multiparams, params)
+    267     def _execute_on_connection(self, connection, multiparams, params):
+    268         if self.supports_execution:
+--&gt; 269             return connection._execute_clauseelement(self, multiparams, params)
+    270         else:
+    271             raise exc.ObjectNotExecutableError(self)
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_clauseelement(self, elem, multiparams, params)
+   1058             compiled_sql,
+   1059             distilled_params,
+-&gt; 1060             compiled_sql, distilled_params
+   1061         )
+   1062         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1198                 parameters,
+   1199                 cursor,
+-&gt; 1200                 context)
+   1201 
+   1202         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _handle_dbapi_exception(self, e, statement, parameters, cursor, context)
+   1414                 )
+   1415             else:
+-&gt; 1416                 util.reraise(*exc_info)
+   1417 
+   1418         finally:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/util/compat.py in reraise(tp, value, tb, cause)
+    247         if value.__traceback__ is not tb:
+    248             raise value.with_traceback(tb)
+--&gt; 249         raise value
+    250 
+    251 else:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1191                         statement,
+   1192                         parameters,
+-&gt; 1193                         context)
+   1194         except BaseException as e:
+   1195             self._handle_dbapi_exception(
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/default.py in do_execute(self, cursor, statement, parameters, context)
+    507 
+    508     def do_execute(self, cursor, statement, parameters, context=None):
+--&gt; 509         cursor.execute(statement, parameters)
+    510 
+    511     def do_execute_no_params(self, cursor, statement, context=None):
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in execute(self, query, args)
+    168         query = self.mogrify(query, args)
+    169 
+--&gt; 170         result = self._query(query)
+    171         self._executed = query
+    172         return result
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/cursors.py in _query(self, q)
+    326         self._last_executed = q
+    327         self._clear_result()
+--&gt; 328         conn.query(q)
+    329         self._do_get_result()
+    330         return self.rowcount
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in query(self, sql, unbuffered)
+    515                 sql = sql.encode(self.encoding, &apos;surrogateescape&apos;)
+    516         self._execute_command(COMMAND.COM_QUERY, sql)
+--&gt; 517         self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+    518         return self._affected_rows
+    519 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_query_result(self, unbuffered)
+    730         else:
+    731             result = MySQLResult(self)
+--&gt; 732             result.read()
+    733         self._result = result
+    734         if result.server_status is not None:
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in read(self)
+   1073     def read(self):
+   1074         try:
+-&gt; 1075             first_packet = self.connection._read_packet()
+   1076 
+   1077             if first_packet.is_ok_packet():
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_packet(self, packet_type)
+    655         buff = b&apos;&apos;
+    656         while True:
+--&gt; 657             packet_header = self._read_bytes(4)
+    658             #if DEBUG: dump_packet(packet_header)
+    659 
+
+
+~/anaconda3/lib/python3.7/site-packages/pymysql/connections.py in _read_bytes(self, num_bytes)
+    689         while True:
+    690             try:
+--&gt; 691                 data = self._rfile.read(num_bytes)
+    692                 break
+    693             except (IOError, OSError) as e:
+
+
+~/anaconda3/lib/python3.7/socket.py in readinto(self, b)
+    587         while True:
+    588             try:
+--&gt; 589                 return self._sock.recv_into(b)
+    590             except timeout:
+    591                 self._timeout_occurred = True
+
+
+KeyboardInterrupt: </code></pre><table>
+<thead>
+<tr>
+<th>destinct</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mark Ruffalo</td>
+</tr>
+<tr>
+<td>Ryan Phillippe</td>
+</tr>
+<tr>
+<td>Mike Myers</td>
+</tr>
+<tr>
+<td>Neve Campbell</td>
+</tr>
+<tr>
+<td>Salma Hayek</td>
+</tr>
+<tr>
+<td>Sela Ward</td>
+</tr>
+<tr>
+<td>Breckin Meyer</td>
+</tr>
+<tr>
+<td>Sherry Stringfield</td>
+</tr>
+<tr>
+<td>Cameron Mathison</td>
+</tr>
+<tr>
+<td>Heather Matarazzo</td>
+</tr>
+<tr>
+<td>Skipp Sudduth</td>
+</tr>
+<tr>
+<td>Lauren Hutton</td>
+</tr>
+<tr>
+<td>Michael York</td>
+</tr>
+<tr>
+<td>Ellen Albertini Dow</td>
+</tr>
+<tr>
+<td>Thelma Houston</td>
+</tr>
+<tr>
+<td>Ron Jeremy</td>
+</tr>
+<tr>
+<td>Elio Fiorucci</td>
+</tr>
+<tr>
+<td>Sheryl Crow</td>
+</tr>
+<tr>
+<td>Georgina Grenville</td>
+</tr>
+<tr>
+<td>Cindy Crawford</td>
+</tr>
+<tr>
+<td>Heidi Klum</td>
+</tr>
+<tr>
+<td>Donald Trump</td>
+</tr>
+<tr>
+<td>Cecilie Thomsen</td>
+</tr>
+<tr>
+<td>Frederique van der Wal</td>
+</tr>
+<tr>
+<td>Veronica Webb</td>
+</tr>
+<tr>
+<td>Peter Bogdanovich</td>
+</tr>
+<tr>
+<td>Beverly Johnson</td>
+</tr>
+<tr>
+<td>Bruce Jay Friedman</td>
+</tr>
+<tr>
+<td>Lorna Luft</td>
+</tr>
+<tr>
+<td>Valerie Perrine</td>
+</tr>
+<tr>
+<td>Stars on 54</td>
+</tr>
+<tr>
+<td>Julian Sands</td>
+</tr>
+<tr>
+<td>Bill Paxton</td>
+</tr>
+<tr>
+<td>Sherilyn Fenn</td>
+</tr>
+<tr>
+<td>Kurtwood Smith</td>
+</tr>
+<tr>
+<td>Harris Yulin</td>
+</tr>
+<tr>
+<td>Robert DoQui</td>
+</tr>
+</tbody></table>
+<h3 id="pandas-15"><a href="#pandas-15" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m = movie.merge(casting, left_on=<span class="hljs-string">"id"</span>, right_on=<span class="hljs-string">"movieid"</span>)\</span><br><span class="line">    .merge(actor, left_on=<span class="hljs-string">"actorid"</span>, right_on=<span class="hljs-string">"id"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movieids = m[m.name == <span class="hljs-string">"Art Garfunkel"</span>][<span class="hljs-string">"movieid"</span>]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">actor_names = m[(m.name != <span class="hljs-string">"Art Garfunkel"</span>) &amp; (m.movieid.isin(movieids))][<span class="hljs-string">"name"</span>].drop_duplicates()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">actor_names</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>2460               Mark Ruffalo
+8496             Ryan Phillippe
+8511                 Mike Myers
+8524              Neve Campbell
+8536                Salma Hayek
+8554                  Sela Ward
+8563              Breckin Meyer
+8579         Sherry Stringfield
+8582           Cameron Mathison
+8583          Heather Matarazzo
+8592              Skipp Sudduth
+8596              Lauren Hutton
+8604               Michael York
+8623        Ellen Albertini Dow
+8628             Thelma Houston
+8629                 Ron Jeremy
+8637              Elio Fiorucci
+8638                Sheryl Crow
+8640         Georgina Grenville
+8641             Cindy Crawford
+8643                 Heidi Klum
+8646               Donald Trump
+8652            Cecilie Thomsen
+8654     Frederique van der Wal
+8655              Veronica Webb
+8660          Peter Bogdanovich
+8663            Beverly Johnson
+8667         Bruce Jay Friedman
+8668                 Lorna Luft
+8672            Valerie Perrine
+8684                Stars on 54
+22012              Julian Sands
+22669               Bill Paxton
+39417              Harris Yulin
+62213             Sherilyn Fenn
+62223            Kurtwood Smith
+65301              Robert DoQui
+Name: name, dtype: object</code></pre>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">mysql与pandas对照学习(8)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/">
+                <span class="level-item">mysql与pandas对照学习(6)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#More-JOIN-operations-zh">
+        <span class="has-mr-6">1</span>
+        <span>More JOIN operations/zh</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#電影數據庫">
+        <span class="has-mr-6">1.1</span>
+        <span>電影數據庫</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1-列出1962年首影的電影，-顯示-id-title">
+        <span class="has-mr-6">2</span>
+        <span>1. 列出1962年首影的電影， [顯示 id, title]</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql">
+        <span class="has-mr-6">2.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">2.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-電影大國民-‘Citizen-Kane’-的首影年份。">
+        <span class="has-mr-6">3</span>
+        <span>2. 電影大國民 ‘Citizen Kane’ 的首影年份。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-1">
+        <span class="has-mr-6">3.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-1">
+        <span class="has-mr-6">3.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-列出全部Star-Trek星空奇遇記系列的電影，包括id-title-和-yr-此系統電影都以Star-Trek為電影名稱的開首-。按年份順序排列。">
+        <span class="has-mr-6">4</span>
+        <span>3. 列出全部Star Trek星空奇遇記系列的電影，包括id, title 和 yr(此系統電影都以Star Trek為電影名稱的開首)。按年份順序排列。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-2">
+        <span class="has-mr-6">4.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-2">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li><li>
+        <a class="is-flex" href="#补充说明">
+        <span class="has-mr-6">4.3</span>
+        <span>补充说明</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4-id是-11768-11955-21191-的電影是什麼名稱">
+        <span class="has-mr-6">5</span>
+        <span>4. id是 11768, 11955, 21191 的電影是什麼名稱?</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-3">
+        <span class="has-mr-6">5.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-3">
+        <span class="has-mr-6">5.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5-女演員’Glenn-Close’的編號-id是什麼">
+        <span class="has-mr-6">6</span>
+        <span>5. 女演員’Glenn Close’的編號 id是什麼?</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-4">
+        <span class="has-mr-6">6.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">6.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6-電影北非諜影’Casablanca’-的編號-id是什麼">
+        <span class="has-mr-6">7</span>
+        <span>6. 電影北非諜影’Casablanca’ 的編號 id是什麼?</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-5">
+        <span class="has-mr-6">7.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-5">
+        <span class="has-mr-6">7.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#合拼語法">
+        <span class="has-mr-6">8</span>
+        <span>合拼語法</span>
+        </a></li><li>
+        <a class="is-flex" href="#7-列出電影北非諜影-‘Casablanca’的演員名單。">
+        <span class="has-mr-6">9</span>
+        <span>7. 列出電影北非諜影 ‘Casablanca’的演員名單。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-6">
+        <span class="has-mr-6">9.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-6">
+        <span class="has-mr-6">9.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#8-顯示電影異型’Alien’-的演員清單。">
+        <span class="has-mr-6">10</span>
+        <span>8.顯示電影異型’Alien’ 的演員清單。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-7">
+        <span class="has-mr-6">10.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-7">
+        <span class="has-mr-6">10.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#9-列出演員夏里遜福-‘Harrison-Ford’-曾演出的電影。">
+        <span class="has-mr-6">11</span>
+        <span>9. 列出演員夏里遜福 ‘Harrison Ford’ 曾演出的電影。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-8">
+        <span class="has-mr-6">11.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-8">
+        <span class="has-mr-6">11.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#10-列出演員夏里遜福-‘Harrison-Ford’-曾演出的電影，但他不是第1主角。">
+        <span class="has-mr-6">12</span>
+        <span>10. 列出演員夏里遜福 ‘Harrison Ford’ 曾演出的電影，但他不是第1主角。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-9">
+        <span class="has-mr-6">12.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-9">
+        <span class="has-mr-6">12.2</span>
+        <span>pandas</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#方法一">
+        <span class="has-mr-6">12.2.1</span>
+        <span>方法一</span>
+        </a></li><li>
+        <a class="is-flex" href="#方法二">
+        <span class="has-mr-6">12.2.2</span>
+        <span>方法二</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#11-列出1962年首影的電影及它的第1主角。">
+        <span class="has-mr-6">13</span>
+        <span>11. 列出1962年首影的電影及它的第1主角。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-10">
+        <span class="has-mr-6">13.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-10">
+        <span class="has-mr-6">13.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#困難的題目">
+        <span class="has-mr-6">14</span>
+        <span>困難的題目</span>
+        </a></li><li>
+        <a class="is-flex" href="#12">
+        <span class="has-mr-6">15</span>
+        <span>12.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-11">
+        <span class="has-mr-6">15.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-11">
+        <span class="has-mr-6">15.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#13">
+        <span class="has-mr-6">16</span>
+        <span>13.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-12">
+        <span class="has-mr-6">16.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-12">
+        <span class="has-mr-6">16.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#14-列出按字母順序，列出哪一演員曾作30次第1主角。">
+        <span class="has-mr-6">17</span>
+        <span>14. 列出按字母順序，列出哪一演員曾作30次第1主角。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-13">
+        <span class="has-mr-6">17.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-13">
+        <span class="has-mr-6">17.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#15">
+        <span class="has-mr-6">18</span>
+        <span>15.</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-14">
+        <span class="has-mr-6">18.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-14">
+        <span class="has-mr-6">18.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#16-列出曾與演員亞特·葛芬柯’Art-Garfunkel’合作過的演員姓名。">
+        <span class="has-mr-6">19</span>
+        <span>16. 列出曾與演員亞特·葛芬柯’Art Garfunkel’合作過的演員姓名。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-15">
+        <span class="has-mr-6">19.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-15">
+        <span class="has-mr-6">19.2</span>
+        <span>pandas</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time></div>
+                    <a href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(9)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time></div>
+                    <a href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(8)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time></div>
+                    <a href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(7)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time></div>
+                    <a href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(6)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="mysql与pandas对照学习(7)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

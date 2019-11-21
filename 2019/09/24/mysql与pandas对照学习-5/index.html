@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>mysql与pandas对照学习(5) - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="SUM and COUNT&#x2F;zhSUM and COUNT&#x2F;zh 全球統計:群組函數此教程是有關群組函數，例如COUNT, SUM 和 AVG。群組函數把多個數值運算，得出結果只有一個數值。例如SUM函數會把數值2,4,和5運算成結果11。    name continent area population gdp    Afghanistan Asia 652230 25500100 20343">
+<meta name="keywords" content="数据分析,mysql,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql与pandas对照学习(5)">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;24&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="SUM and COUNT&#x2F;zhSUM and COUNT&#x2F;zh 全球統計:群組函數此教程是有關群組函數，例如COUNT, SUM 和 AVG。群組函數把多個數值運算，得出結果只有一個數值。例如SUM函數會把數值2,4,和5運算成結果11。    name continent area population gdp    Afghanistan Asia 652230 25500100 20343">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-20T12:39:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="mysql与pandas对照学习(5)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-24T11:47:25.000Z">2019-09-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1015 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                mysql与pandas对照学习(5)
+            
+        </h1>
+        <div class="content">
+            <h2 id="SUM-and-COUNT-zh"><a href="#SUM-and-COUNT-zh" class="headerlink" title="SUM and COUNT/zh"></a>SUM and COUNT/zh</h2><p><a href="https://sqlzoo.net/wiki/SUM_and_COUNT/zh" target="_blank" rel="noopener">SUM and COUNT/zh</a></p>
+<h3 id="全球統計-群組函數"><a href="#全球統計-群組函數" class="headerlink" title="全球統計:群組函數"></a>全球統計:群組函數</h3><p>此教程是有關群組函數，例如COUNT, SUM 和 AVG。群組函數把多個數值運算，得出結果只有一個數值。例如SUM函數會把數值2,4,和5運算成結果11。</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>continent</th>
+<th>area</th>
+<th>population</th>
+<th>gdp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>652230</td>
+<td>25500100</td>
+<td>20343000000</td>
+</tr>
+<tr>
+<td>Albania</td>
+<td>Europe</td>
+<td>28748</td>
+<td>2831741</td>
+<td>12960000000</td>
+</tr>
+<tr>
+<td>Algeria</td>
+<td>Africa</td>
+<td>2381741</td>
+<td>37100000</td>
+<td>188681000000</td>
+</tr>
+<tr>
+<td>Andorra</td>
+<td>Europe</td>
+<td>468</td>
+<td>78115</td>
+<td>3712000000</td>
+</tr>
+<tr>
+<td>Angola</td>
+<td>Africa</td>
+<td>1246700</td>
+<td>20609294</td>
+<td>100990000000</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>name:國家名稱
+continent:洲份
+area:面積
+population:人口
+gdp:國內生產總值</p>
+<h2 id="示範"><a href="#示範" class="headerlink" title="示範"></a>示範</h2><p><a href="https://sqlzoo.net/wiki/Using_SUM,_Count,_MAX,_DISTINCT_and_ORDER_BY" target="_blank" rel="noopener" title="Using SUM, Count, MAX, DISTINCT and ORDER BY">使用 SUM, Count, MAX, DISTINCT 和 ORDER BY</a>.</p>
+<a id="more"></a>
+
+<hr>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sql</span><br><span class="line">%sql mysql+pymysql://root:lanhoo@localhost/dbs</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> sqlalchemy</span><br><span class="line">engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://root:lanhoo@localhost/dbs"</span>)</span><br><span class="line">world = pd.read_sql_table(<span class="hljs-string">"world"</span>, engine)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-展示世界的總人口。"><a href="#1-展示世界的總人口。" class="headerlink" title="1. 展示世界的總人口。"></a>1. 展示世界的總人口。</h2><p>world(name, continent, area, population, gdp)</p>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT SUM(population) FROM world</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>SUM(population)</th>
+    </tr>
+    <tr>
+        <td>7118632738</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world.population.sum()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>7118632738</code></pre><h2 id="2-列出所有的洲份-每個只有一次。"><a href="#2-列出所有的洲份-每個只有一次。" class="headerlink" title="2. 列出所有的洲份, 每個只有一次。"></a>2. 列出所有的洲份, 每個只有一次。</h2><h3 id="mysql-1"><a href="#mysql-1" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT DISTINCT continent FROM world</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+8 rows affected.</code></pre><table>
+    <tr>
+        <th>continent</th>
+    </tr>
+    <tr>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Caribbean</td>
+    </tr>
+    <tr>
+        <td>South America</td>
+    </tr>
+    <tr>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Oceania</td>
+    </tr>
+    <tr>
+        <td>North America</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world.continent.drop_duplicates()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>0              Asia
+1            Europe
+2            Africa
+5         Caribbean
+6     South America
+7           Eurasia
+8           Oceania
+17    North America
+Name: continent, dtype: object</code></pre><h2 id="3-找出非洲-Africa-的GDP總和。"><a href="#3-找出非洲-Africa-的GDP總和。" class="headerlink" title="3. 找出非洲(Africa)的GDP總和。"></a>3. 找出非洲(Africa)的GDP總和。</h2><h3 id="mysql-2"><a href="#mysql-2" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT SUM(gdp) FROM world WHERE continent=<span class="hljs-string">'Africa'</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>SUM(gdp)</th>
+    </tr>
+    <tr>
+        <td>1811788000000</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world[world.continent == <span class="hljs-string">"Africa"</span>].gdp.sum()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>1811788000000.0</code></pre><h2 id="4-有多少個國家具有至少百萬-1000000-的面積。"><a href="#4-有多少個國家具有至少百萬-1000000-的面積。" class="headerlink" title="4. 有多少個國家具有至少百萬(1000000)的面積。"></a>4. 有多少個國家具有至少百萬(1000000)的面積。</h2><h3 id="mysql-3"><a href="#mysql-3" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT COUNT(<span class="hljs-number">1</span>) FROM world WHERE area &gt; <span class="hljs-number">1000000</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>COUNT(1)</th>
+    </tr>
+    <tr>
+        <td>29</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-3"><a href="#pandas-3" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world[world.area &gt; <span class="hljs-number">1000000</span>].name.count()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>29</code></pre><h2 id="5-‘France’-’Germany’-’Spain’-（“法國”，“德國”，“西班牙”）的總人口是多少？"><a href="#5-‘France’-’Germany’-’Spain’-（“法國”，“德國”，“西班牙”）的總人口是多少？" class="headerlink" title="5. (‘France’,’Germany’,’Spain’)（“法國”，“德國”，“西班牙”）的總人口是多少？"></a>5. (‘France’,’Germany’,’Spain’)（“法國”，“德國”，“西班牙”）的總人口是多少？</h2><h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT SUM(population) FROM world WHERE name IN (<span class="hljs-string">'France'</span>, <span class="hljs-string">'Germany'</span>, <span class="hljs-string">'Spain'</span>);</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+1 rows affected.</code></pre><table>
+    <tr>
+        <th>SUM(population)</th>
+    </tr>
+    <tr>
+        <td>193231700</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-4"><a href="#pandas-4" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world[world.name.isin([<span class="hljs-string">'France'</span>, <span class="hljs-string">'Germany'</span>, <span class="hljs-string">'Spain'</span>])].population.sum()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>193231700</code></pre><hr>
+<p>示範: <a href="https://sqlzoo.net/wiki/Using_GROUP_BY_and_HAVING." target="_blank" rel="noopener">使用 GROUP BY 和 HAVING.</a></p>
+<h2 id="6-對於每一個洲份，顯示洲份和國家的數量。"><a href="#6-對於每一個洲份，顯示洲份和國家的數量。" class="headerlink" title="6. 對於每一個洲份，顯示洲份和國家的數量。"></a>6. 對於每一個洲份，顯示洲份和國家的數量。</h2><h3 id="msyql"><a href="#msyql" class="headerlink" title="msyql"></a>msyql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT continent, COUNT(name) FROM world GROUP BY continent</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+8 rows affected.</code></pre><table>
+    <tr>
+        <th>continent</th>
+        <th>COUNT(name)</th>
+    </tr>
+    <tr>
+        <td>Africa</td>
+        <td>53</td>
+    </tr>
+    <tr>
+        <td>Asia</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>Caribbean</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Eurasia</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Europe</td>
+        <td>44</td>
+    </tr>
+    <tr>
+        <td>North America</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Oceania</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>South America</td>
+        <td>13</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-5"><a href="#pandas-5" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 方法一</span></span><br><span class="line">world.groupby(<span class="hljs-string">"continent"</span>).name.count()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>continent
+Africa           53
+Asia             47
+Caribbean        11
+Eurasia           2
+Europe           44
+North America    11
+Oceania          14
+South America    13
+Name: name, dtype: int64</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 方法二</span></span><br><span class="line">world.groupby(<span class="hljs-string">"continent"</span>).size()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>continent
+Africa           53
+Asia             47
+Caribbean        11
+Eurasia           2
+Europe           44
+North America    11
+Oceania          14
+South America    13
+dtype: int64</code></pre><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 方法三</span></span><br><span class="line">world.continent.value_counts()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>Africa           53
+Asia             47
+Europe           44
+Oceania          14
+South America    13
+North America    11
+Caribbean        11
+Eurasia           2
+Name: continent, dtype: int64</code></pre><h2 id="7-對於每一個洲份，顯示洲份和至少有1000萬人-10-000-000-口國家的數目。"><a href="#7-對於每一個洲份，顯示洲份和至少有1000萬人-10-000-000-口國家的數目。" class="headerlink" title="7. 對於每一個洲份，顯示洲份和至少有1000萬人(10,000,000)口國家的數目。"></a>7. 對於每一個洲份，顯示洲份和至少有1000萬人(10,000,000)口國家的數目。</h2><h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT continent, COUNT(name) FROM world WHERE population &gt;= <span class="hljs-number">10000000</span> GROUP BY continent;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+8 rows affected.</code></pre><table>
+    <tr>
+        <th>continent</th>
+        <th>COUNT(name)</th>
+    </tr>
+    <tr>
+        <td>Africa</td>
+        <td>29</td>
+    </tr>
+    <tr>
+        <td>Asia</td>
+        <td>26</td>
+    </tr>
+    <tr>
+        <td>Caribbean</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Eurasia</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Europe</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>North America</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Oceania</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>South America</td>
+        <td>8</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-6"><a href="#pandas-6" class="headerlink" title="pandas"></a>pandas</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world[world.population &gt;= <span class="hljs-number">10000000</span>][<span class="hljs-string">"continent"</span>].value_counts()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>Africa           29
+Asia             26
+Europe           14
+South America     8
+North America     4
+Caribbean         2
+Oceania           1
+Eurasia           1
+Name: continent, dtype: int64</code></pre><h2 id="8-列出有至少100百萬-1億-100-000-000-人口的洲份。"><a href="#8-列出有至少100百萬-1億-100-000-000-人口的洲份。" class="headerlink" title="8. 列出有至少100百萬(1億)(100,000,000)人口的洲份。"></a>8. 列出有至少100百萬(1億)(100,000,000)人口的洲份。</h2><h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT continent FROM world GROUP BY continent HAVING SUM(population) &gt;= <span class="hljs-number">100000000</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code> * mysql+pymysql://root:***@localhost/dbs
+6 rows affected.</code></pre><table>
+    <tr>
+        <th>continent</th>
+    </tr>
+    <tr>
+        <td>Africa</td>
+    </tr>
+    <tr>
+        <td>Asia</td>
+    </tr>
+    <tr>
+        <td>Eurasia</td>
+    </tr>
+    <tr>
+        <td>Europe</td>
+    </tr>
+    <tr>
+        <td>North America</td>
+    </tr>
+    <tr>
+        <td>South America</td>
+    </tr>
+</table>
+
+
+
+<h3 id="pandas-7"><a href="#pandas-7" class="headerlink" title="pandas"></a>pandas</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world.groupby(<span class="hljs-string">"continent"</span>).agg(&#123;<span class="hljs-string">"population"</span>: <span class="hljs-keyword">lambda</span> x: sum(x) &gt;= <span class="hljs-number">100000000</span>&#125;) <span class="hljs-comment"># 这里可以看到哪些符合条件，哪些不符合</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>population</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Caribbean</th>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>Eurasia</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>North America</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>South America</th>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 对上面的语句加了query()起到过滤的作用</span></span><br><span class="line">world.groupby(<span class="hljs-string">"continent"</span>).agg(&#123;<span class="hljs-string">"population"</span>: <span class="hljs-keyword">lambda</span> x: sum(x) &gt;= <span class="hljs-number">100000000</span>&#125;).query(<span class="hljs-string">"population == True"</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>population</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Eurasia</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>North America</th>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>South America</th>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 最终的结果：</span></span><br><span class="line">world.groupby(<span class="hljs-string">"continent"</span>)\</span><br><span class="line">    .agg(&#123;<span class="hljs-string">"population"</span>: <span class="hljs-keyword">lambda</span> x: sum(x) &gt;= <span class="hljs-number">100000000</span>&#125;)\</span><br><span class="line">        .query(<span class="hljs-string">"population == True"</span>)\</span><br><span class="line">            .index.values</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([&apos;Africa&apos;, &apos;Asia&apos;, &apos;Eurasia&apos;, &apos;Europe&apos;, &apos;North America&apos;,
+       &apos;South America&apos;], dtype=object)</code></pre><h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># 使用groupby() 和 filter()的组合得到的是符合条件的各项源数据，还须对其进行唯一过滤。</span></span><br><span class="line">world.groupby(<span class="hljs-string">"continent"</span>).filter(<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-string">"population"</span>].sum() &gt;= <span class="hljs-number">100000000</span>).head()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>continent</th>
+      <th>area</th>
+      <th>population</th>
+      <th>gdp</th>
+      <th>capital</th>
+      <th>tld</th>
+      <th>flag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>652230</td>
+      <td>25500100</td>
+      <td>2.036400e+10</td>
+      <td>Kabul</td>
+      <td>.af</td>
+      <td>//upload.wikimedia.org/wikipedia/commons/9/9a/...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Europe</td>
+      <td>28748</td>
+      <td>2821977</td>
+      <td>1.204400e+10</td>
+      <td>Tirana</td>
+      <td>.al</td>
+      <td>//upload.wikimedia.org/wikipedia/commons/3/36/...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>2381741</td>
+      <td>38700000</td>
+      <td>2.070210e+11</td>
+      <td>Algiers</td>
+      <td>.dz</td>
+      <td>//upload.wikimedia.org/wikipedia/commons/7/77/...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Andorra</td>
+      <td>Europe</td>
+      <td>468</td>
+      <td>76098</td>
+      <td>3.222000e+09</td>
+      <td>Andorra la Vella</td>
+      <td>.ad</td>
+      <td>//upload.wikimedia.org/wikipedia/commons/1/19/...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>Africa</td>
+      <td>1246700</td>
+      <td>19183590</td>
+      <td>1.163080e+11</td>
+      <td>Luanda</td>
+      <td>.ao</td>
+      <td>//upload.wikimedia.org/wikipedia/commons/9/9d/...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">world.groupby(<span class="hljs-string">"continent"</span>).filter(<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-string">"population"</span>].sum() &gt;= <span class="hljs-number">100000000</span>)[<span class="hljs-string">"continent"</span>].unique()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([&apos;Asia&apos;, &apos;Europe&apos;, &apos;Africa&apos;, &apos;South America&apos;, &apos;Eurasia&apos;,
+       &apos;North America&apos;], dtype=object)</code></pre>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">mysql与pandas对照学习(6)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/23/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-4/">
+                <span class="level-item">mysql与pandas对照学习(4)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#SUM-and-COUNT-zh">
+        <span class="has-mr-6">1</span>
+        <span>SUM and COUNT/zh</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#全球統計-群組函數">
+        <span class="has-mr-6">1.1</span>
+        <span>全球統計:群組函數</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#示範">
+        <span class="has-mr-6">2</span>
+        <span>示範</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-展示世界的總人口。">
+        <span class="has-mr-6">3</span>
+        <span>1. 展示世界的總人口。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql">
+        <span class="has-mr-6">3.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">3.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-列出所有的洲份-每個只有一次。">
+        <span class="has-mr-6">4</span>
+        <span>2. 列出所有的洲份, 每個只有一次。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-1">
+        <span class="has-mr-6">4.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-1">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-找出非洲-Africa-的GDP總和。">
+        <span class="has-mr-6">5</span>
+        <span>3. 找出非洲(Africa)的GDP總和。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-2">
+        <span class="has-mr-6">5.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-2">
+        <span class="has-mr-6">5.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4-有多少個國家具有至少百萬-1000000-的面積。">
+        <span class="has-mr-6">6</span>
+        <span>4. 有多少個國家具有至少百萬(1000000)的面積。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-3">
+        <span class="has-mr-6">6.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-3">
+        <span class="has-mr-6">6.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5-‘France’-’Germany’-’Spain’-（“法國”，“德國”，“西班牙”）的總人口是多少？">
+        <span class="has-mr-6">7</span>
+        <span>5. (‘France’,’Germany’,’Spain’)（“法國”，“德國”，“西班牙”）的總人口是多少？</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-4">
+        <span class="has-mr-6">7.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">7.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6-對於每一個洲份，顯示洲份和國家的數量。">
+        <span class="has-mr-6">8</span>
+        <span>6. 對於每一個洲份，顯示洲份和國家的數量。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#msyql">
+        <span class="has-mr-6">8.1</span>
+        <span>msyql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-5">
+        <span class="has-mr-6">8.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#7-對於每一個洲份，顯示洲份和至少有1000萬人-10-000-000-口國家的數目。">
+        <span class="has-mr-6">9</span>
+        <span>7. 對於每一個洲份，顯示洲份和至少有1000萬人(10,000,000)口國家的數目。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-5">
+        <span class="has-mr-6">9.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-6">
+        <span class="has-mr-6">9.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#8-列出有至少100百萬-1億-100-000-000-人口的洲份。">
+        <span class="has-mr-6">10</span>
+        <span>8. 列出有至少100百萬(1億)(100,000,000)人口的洲份。</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mysql-6">
+        <span class="has-mr-6">10.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-7">
+        <span class="has-mr-6">10.2</span>
+        <span>pandas</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#方法一">
+        <span class="has-mr-6">10.2.1</span>
+        <span>方法一</span>
+        </a></li><li>
+        <a class="is-flex" href="#方法二">
+        <span class="has-mr-6">10.2.2</span>
+        <span>方法二</span>
+        </a></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time></div>
+                    <a href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(9)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time></div>
+                    <a href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(8)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time></div>
+                    <a href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(7)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time></div>
+                    <a href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/" class="has-link-black-ter is-size-6">mysql与pandas对照学习(6)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="mysql与pandas对照学习(5)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
