@@ -16,7 +16,7 @@
 <meta property="og:description" content="一开始使用的是ubuntu 系列的系统，但总有些软件安装好麻烦，即使安装好了，总会字体、介面、图标等等问题。后来经一朋友的帮助下，安装成功了arch ,软件库非常丰富，当组件、软件、系统方面有更新会提示升级，非常便捷友好。后来安装QGIS后，检测不到python，使用不了；同时由于我是多系统，一不小心把GRUB搞坏了，每次都要进入arch系统都要敲命令改参数。 我不得不考虑更换系统了，那哥们是一">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-22T03:26:42.552Z">
+<meta property="og:updated_time" content="2019-11-22T06:02:40.123Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 808 个字)
+                    5 分钟 读完 (大约 730 个字)
                 </span>
                 
                 
@@ -196,17 +196,17 @@
 <ul>
 <li>开始尝试输入<code>sudo pacman -S fusuma</code>， 没有</li>
 </ul>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-084754578.png" alt="image-084754578"></p>
+<p><img src="/images/image-084754578.png" alt="image-084754578"></p>
 <ul>
 <li>在软件管理器里有，点击安装</li>
 </ul>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-084946795.png" alt="image-084946795"></p>
+<p><img src="/images/image-084946795.png" alt="image-084946795"></p>
 <ul>
 <li>修改配置文件<code>.config/fusuma/config.yml</code>，我的配置如下：</li>
 </ul>
 <figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">swipe:</span></span><br><span class="line">  <span class="hljs-attr">3:</span> </span><br><span class="line">    <span class="hljs-attr">left:</span> </span><br><span class="line">      <span class="hljs-attr">shortcut:</span> <span class="hljs-string">'xdotool key alt+Left'</span></span><br><span class="line">    <span class="hljs-attr">right:</span> </span><br><span class="line">      <span class="hljs-attr">shortcut:</span> <span class="hljs-string">'xdotool key alt+Right'</span></span><br><span class="line">    <span class="hljs-attr">up:</span> </span><br><span class="line">      <span class="hljs-attr">shortcut:</span> <span class="hljs-string">'xdotool key super+d'</span> <span class="hljs-comment"># 显示桌面</span></span><br><span class="line">    <span class="hljs-attr">down:</span> </span><br><span class="line">      <span class="hljs-attr">shortcut:</span> <span class="hljs-string">'xdotool key ctrl+F9'</span> <span class="hljs-comment"># 选择当前桌面的程序</span></span><br><span class="line">  <span class="hljs-attr">4:</span></span><br><span class="line">    <span class="hljs-attr">left:</span></span><br><span class="line">      <span class="hljs-attr">command:</span> <span class="hljs-string">'xdotool key ctrl+F1'</span> <span class="hljs-comment"># 切换左边的桌面</span></span><br><span class="line">    <span class="hljs-attr">right:</span></span><br><span class="line">      <span class="hljs-attr">command:</span> <span class="hljs-string">'xdotool key ctrl+F2'</span> <span class="hljs-comment"># 切换右边的桌面</span></span><br><span class="line">    <span class="hljs-attr">up:</span></span><br><span class="line">      <span class="hljs-attr">command:</span> <span class="hljs-string">'xdotool key ctrl+F8'</span> <span class="hljs-comment"># 选择桌面</span></span><br><span class="line">    <span class="hljs-attr">down:</span></span><br><span class="line">      <span class="hljs-attr">command:</span> <span class="hljs-string">'xdotool key ctrl+F10'</span> <span class="hljs-comment"># 选择全部桌面的程序</span></span><br><span class="line"><span class="hljs-attr">pinch:</span></span><br><span class="line">  <span class="hljs-attr">in:</span></span><br><span class="line">    <span class="hljs-attr">shortcut:</span> <span class="hljs-string">'ctrl+shift+plus'</span></span><br><span class="line">  <span class="hljs-attr">out:</span></span><br><span class="line">    <span class="hljs-attr">shortcut:</span> <span class="hljs-string">'ctrl+minus'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">threshold:</span></span><br><span class="line">  <span class="hljs-attr">swipe:</span> <span class="hljs-number">0.5</span></span><br><span class="line">  <span class="hljs-attr">pinch:</span> <span class="hljs-number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">interval:</span></span><br><span class="line">  <span class="hljs-attr">swipe:</span> <span class="hljs-number">0.2</span></span><br><span class="line">  <span class="hljs-attr">pinch:</span> <span class="hljs-number">0.2</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-092326753.png" alt="image-092326753"></p>
+<p><img src="/images/image-092326753.png" alt="image-092326753"></p>
 <ul>
 <li><p>设置开机自动启动</p>
 <ul>
@@ -219,46 +219,46 @@
 </ul>
 </li>
 </ul>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-090741223.png" alt="image-090741223"></p>
+<p><img src="/images/image-090741223.png" alt="image-090741223"></p>
 <h2 id="GoldenDict"><a href="#GoldenDict" class="headerlink" title="GoldenDict"></a>GoldenDict</h2><blockquote>
 <p>词典必备，下了两个词典，一个带有发音的，另一个多了2w个词</p>
 </blockquote>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-091149032.png" alt="image-091149032"></p>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-091610119.png" alt="image-091610119"></p>
+<p><img src="/images/image-091149032.png" alt="image-091149032"></p>
+<p><img src="/images/image-091610119.png" alt="image-091610119"></p>
 <ul>
 <li>若发音不行，要设置一下：<code>cvlc  --play-and-exit -Vdummy</code></li>
 </ul>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-091746581.png" alt="image-091746581"></p>
+<p><img src="/images/image-091746581.png" alt="image-091746581"></p>
 <ul>
 <li>选中单词翻译的快捷键：<code>ctrl + c + c</code></li>
 </ul>
 <h2 id="zeal"><a href="#zeal" class="headerlink" title="zeal"></a>zeal</h2><blockquote>
 <p>文档管理查看工具，程序员必备，在mac上有<code>dash</code>，而在win和linux上可以使用<code>zeal</code></p>
 </blockquote>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-092635443.png" alt="image-092635443"></p>
+<p><img src="/images/image-092635443.png" alt="image-092635443"></p>
 <ul>
 <li>设定显示快捷键</li>
 </ul>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-095538146.png" alt="image-095538146"></p>
+<p><img src="/images/image-095538146.png" alt="image-095538146"></p>
 <ul>
 <li><code>Visual Studio Code</code>关联<code>zeal</code> 的插件安装，快捷键使用<code>ctrl + h</code></li>
 </ul>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-095847297.png" alt="image-095847297"></p>
+<p><img src="/images/image-095847297.png" alt="image-095847297"></p>
 <ul>
 <li>一些docset的feed:<a href="https://github.com/quericy/Zeal-docset-CN" target="_blank" rel="noopener">https://github.com/quericy/Zeal-docset-CN</a></li>
 </ul>
 <h2 id="flameshot"><a href="#flameshot" class="headerlink" title="flameshot"></a>flameshot</h2><blockquote>
 <p>截图工具</p>
 </blockquote>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-093531940.png" alt="image-093531940"></p>
+<p><img src="/images/image-093531940.png" alt="image-093531940"></p>
 <ul>
 <li>设定快捷键</li>
 </ul>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-093932302.png" alt="image-093932302"></p>
+<p><img src="/images/image-093932302.png" alt="image-093932302"></p>
 <h2 id="typora"><a href="#typora" class="headerlink" title="typora"></a>typora</h2><blockquote>
 <p>markdown编辑器</p>
 </blockquote>
-<p><img src="manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/image-093803300.png" alt="image-093803300"></p>
+<p><img src="/images/image-093803300.png" alt="image-093803300"></p>
 
         </div>
         
