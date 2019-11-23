@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>摘录一个关于jupyter-notebook技巧的网页 - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="原文在：https:&#x2F;&#x2F;www.dataquest.io&#x2F;blog&#x2F;jupyter-notebook-tips-tricks-shortcuts&#x2F; 若看不到，得翻墙  28 Jupyter Notebook Tips, Tricks, and Shortcuts">
+<meta name="keywords" content="数据分析,jupyter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摘录一个关于jupyter-notebook技巧的网页">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;10&#x2F;05&#x2F;%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="原文在：https:&#x2F;&#x2F;www.dataquest.io&#x2F;blog&#x2F;jupyter-notebook-tips-tricks-shortcuts&#x2F; 若看不到，得翻墙  28 Jupyter Notebook Tips, Tricks, and Shortcuts">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-11-23T08:03:55.953Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="摘录一个关于jupyter-notebook技巧的网页" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    25 分钟 读完 (大约 3764 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                摘录一个关于jupyter-notebook技巧的网页
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p>原文在：<a href="https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/" target="_blank" rel="noopener">https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/</a></p>
+<p>若看不到，得翻墙</p>
+</blockquote>
+<h1 id="28-Jupyter-Notebook-Tips-Tricks-and-Shortcuts"><a href="#28-Jupyter-Notebook-Tips-Tricks-and-Shortcuts" class="headerlink" title="28 Jupyter Notebook Tips, Tricks, and Shortcuts"></a>28 Jupyter Notebook Tips, Tricks, and Shortcuts</h1><a id="more"></a>
+
+<p><img src="/images/blog/1-LPnY8nOLg4S6_TG0DEXwsg-1.png" alt="jupyter-notebook best free data science tools"></p>
+<h2 id="Jupyter-Notebook"><a href="#Jupyter-Notebook" class="headerlink" title="Jupyter Notebook"></a>Jupyter Notebook</h2><p>Jupyter notebook, formerly known as the IPython notebook, is a flexible tool that helps you create readable analyses, as you can keep code, images, comments, formulae and plots together. In this post, we’ve collected some of the top Jupyter notebook tips to quickly turn you into a Jupyter power user!</p>
+<p><em>(This post is based on a post that originally appeared on <a href="http://arogozhnikov.github.io/2016/09/10/jupyter-features.html" target="_blank" rel="noopener">Alex Rogozhnikov’s blog, ‘Brilliantly Wrong’</a>. We have expanded the post and will continue to do so over time — if you have a suggestion please <a href="https://twitter.com/dataquestio" target="_blank" rel="noopener">let us know</a>. Thanks to Alex for graciously letting us republish his work here.)</em></p>
+<p>Jupyter is quite extensible, supports many programming languages and is easily hosted on your computer or on almost any server — you only need to have ssh or http access. Best of all, it’s completely free. Now let’s dive in to our list of 28 (and counting!) Jupyter notebook tips!</p>
+<p><img src="/images/blog/interface-screenshot.png" alt="interface-screenshot"></p>
+<p><em>The Jupyter interface.</em></p>
+<p>Project Jupyter was born out of the IPython project as the project evolved to become a notebook that could support multiple languages – hence its historical name as the IPython notebook. The name Jupyter is an indirect acronyum of the three core languages it was designed for: <strong>JU</strong>lia, <strong>PYT</strong>hon, and <strong>R</strong> and is inspired by the planet Jupiter.</p>
+<p>When working with Python in Jupyter, the IPython kernel is used, which gives us some handy access to IPython features from within our Jupyter notebooks (more on that later!)</p>
+<p>We’re going to show you 28 tips and tricks to make your life working with Jupyter easier.</p>
+<h2 id="1-Keyboard-Shortcuts"><a href="#1-Keyboard-Shortcuts" class="headerlink" title="1. Keyboard Shortcuts"></a>1. Keyboard Shortcuts</h2><p>As any power user knows, keyboard shortcuts will save you lots of time. Jupyter stores a list of keybord shortcuts under the menu at the top: <code>Help &gt; Keyboard Shortcuts</code>, or by pressing <code>H</code> in command mode (more on that later). It’s worth checking this each time you update Jupyter, as more shortcuts are added all the time.</p>
+<p>Another way to access keyboard shortcuts, and a handy way to learn them is to use the command palette: <code>Cmd + Shift + P</code> (or <code>Ctrl + Shift + P</code> on Linux and Windows). This dialog box helps you run any command by name – useful if you don’t know the keyboard shortcut for an action or if what you want to do does not have a keyboard shortcut. The functionality is similar to Spotlight search on a Mac, and once you start using it you’ll wonder how you lived without it!</p>
+<p><img src="/images/blog/command-palette.gif" alt="command-palette"></p>
+<p><em>The command palette.</em></p>
+<p>Some of my favorites:</p>
+<ul>
+<li><code>Esc</code> will take you into command mode where you can navigate around your notebook with arrow keys.</li>
+<li>While in command mode:<ul>
+<li><code>A</code> to insert a new cell above the current cell, <code>B</code> to insert a new cell below.</li>
+<li><code>M</code> to change the current cell to Markdown, <code>Y</code> to change it back to code</li>
+<li><code>D + D</code> (press the key twice) to delete the current cell</li>
+</ul>
+</li>
+<li><code>Enter</code> will take you from command mode back into edit mode for the given cell.</li>
+<li><code>Shift + Tab</code> will show you the Docstring (documentation) for the the object you have just typed in a code cell – you can keep pressing this short cut to cycle through a few modes of documentation.</li>
+<li><code>Ctrl + Shift + -</code> will split the current cell into two from where your cursor is.</li>
+<li><code>Esc + F</code> Find and replace on your code but not the outputs.</li>
+<li><code>Esc + O</code> Toggle cell output.</li>
+<li>Select Multiple Cells:<ul>
+<li><code>Shift + J</code> or <code>Shift + Down</code> selects the next sell in a downwards direction. You can also select sells in an upwards direction by using <code>Shift + K</code> or <code>Shift + Up</code>.</li>
+<li>Once cells are selected, you can then delete / copy / cut / paste / run them as a batch. This is helpful when you need to move parts of a notebook.</li>
+<li>You can also use <code>Shift + M</code> to merge multiple cells.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/blog/multi-merge.gif" alt="multi-merge"></p>
+<p><em>Merging multiple cells.</em></p>
+<h2 id="2-Pretty-Display-of-Variables"><a href="#2-Pretty-Display-of-Variables" class="headerlink" title="2. Pretty Display of Variables"></a>2. Pretty Display of Variables</h2><p>The first part of this is pretty widely known. By finishing a Jupyter cell with the name of a variable or unassigned output of a statement, Jupyter will display that variable without the need for a print statement. This is especially useful when dealing with Pandas DataFrames, as the output is neatly formatted into a table.</p>
+<p>What is known less, is that you can alter a modify the <code>ast_note_interactivity</code> kernel option to make jupyter do this for any variable or statement on it’s own line, so you can see the value of multiple statements at once.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> IPython.core.interactiveshell <span class="hljs-keyword">import</span> InteractiveShell</span><br><span class="line">InteractiveShell.ast_node_interactivity = <span class="hljs-string">"all"</span></span><br><span class="line"><span class="hljs-keyword">from</span> pydataset <span class="hljs-keyword">import</span> data</span><br><span class="line">quakes = data(<span class="hljs-string">'quakes'</span>)</span><br><span class="line">quakes.head()</span><br><span class="line">quakes.tail()</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">lat</th>
+<th align="left">long</th>
+<th align="left">depth</th>
+<th align="left">mag</th>
+<th align="left">stations</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">-20.42</td>
+<td align="left">181.62</td>
+<td align="left">562</td>
+<td align="left">4.8</td>
+<td align="left">41</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">-20.62</td>
+<td align="left">181.03</td>
+<td align="left">650</td>
+<td align="left">4.2</td>
+<td align="left">15</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">-26.00</td>
+<td align="left">184.10</td>
+<td align="left">42</td>
+<td align="left">5.4</td>
+<td align="left">43</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">-17.97</td>
+<td align="left">181.66</td>
+<td align="left">626</td>
+<td align="left">4.1</td>
+<td align="left">19</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">-20.42</td>
+<td align="left">181.96</td>
+<td align="left">649</td>
+<td align="left">4.0</td>
+<td align="left">11</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">lat</th>
+<th align="left">long</th>
+<th align="left">depth</th>
+<th align="left">mag</th>
+<th align="left">stations</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">996</td>
+<td align="left">-25.93</td>
+<td align="left">179.54</td>
+<td align="left">470</td>
+<td align="left">4.4</td>
+<td align="left">22</td>
+</tr>
+<tr>
+<td align="left">997</td>
+<td align="left">-12.28</td>
+<td align="left">167.06</td>
+<td align="left">248</td>
+<td align="left">4.7</td>
+<td align="left">35</td>
+</tr>
+<tr>
+<td align="left">998</td>
+<td align="left">-20.13</td>
+<td align="left">184.20</td>
+<td align="left">244</td>
+<td align="left">4.5</td>
+<td align="left">34</td>
+</tr>
+<tr>
+<td align="left">999</td>
+<td align="left">-17.40</td>
+<td align="left">187.80</td>
+<td align="left">40</td>
+<td align="left">4.5</td>
+<td align="left">14</td>
+</tr>
+<tr>
+<td align="left">1000</td>
+<td align="left">-21.59</td>
+<td align="left">170.56</td>
+<td align="left">165</td>
+<td align="left">6.0</td>
+<td align="left">119</td>
+</tr>
+</tbody></table>
+<p>If you want to set this behaviour for all instances of Jupyter (Notebook and Console), simply create a file <code>~/.ipython/profile_default/ipython_config.py</code> with the lines below.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c = get_config()</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># Run all nodes interactively</span></span><br><span class="line">c.InteractiveShell.ast_node_interactivity = <span class="hljs-string">"all"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Easy-links-to-documentation"><a href="#3-Easy-links-to-documentation" class="headerlink" title="3. Easy links to documentation"></a>3. Easy links to documentation</h2><p>Inside the <code>Help</code> menu you’ll find handy links to the online documentation for common libraries including NumPy, Pandas, SciPy and Matplotlib.</p>
+<p>Don’t forget also that by prepending a library, method or variable with <code>?</code>, you can access the Docstring for quick reference on syntax.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">?str.replace()</span><br><span class="line">Docstring:</span><br><span class="line">S.replace(old, new[, count]) -&gt; str</span><br><span class="line"></span><br><span class="line">Return a copy of S <span class="hljs-keyword">with</span> all occurrences of substringold replaced by new.  If the optional argument count isgiven, only the first count occurrences are replaced.</span><br><span class="line">Type:      method_descriptor</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Plotting-in-notebooks"><a href="#4-Plotting-in-notebooks" class="headerlink" title="4. Plotting in notebooks"></a>4. Plotting in notebooks</h2><p>There are many options for generating plots in your notebooks.</p>
+<ul>
+<li><a href="http://matplotlib.org/" target="_blank" rel="noopener">matplotlib</a> (the de-facto standard), activated with <code>%matplotlib inline</code> – Here’s a Dataquest <a href="https://www.dataquest.io/blog/matplotlib-tutorial/" target="_blank" rel="noopener">Matplotlib Tutorial</a>.</li>
+<li><code>%matplotlib notebook</code> provides interactivity but can be a little slow, since rendering is done server-side.</li>
+<li><a href="http://seaborn.pydata.org/" target="_blank" rel="noopener">Seaborn</a> is built over Matplotlib and makes building more attractive plots easier. Just by importing Seaborn, your matplotlib plots are made ‘prettier’ without any code modification.</li>
+<li><a href="https://github.com/mpld3/mpld3" target="_blank" rel="noopener">mpld3</a> provides alternative renderer (using d3) for matplotlib code. Quite nice, though incomplete.</li>
+<li><a href="http://bokeh.pydata.org/en/latest/" target="_blank" rel="noopener">bokeh</a> is a better option for building interactive plots.</li>
+<li><a href="https://plot.ly/" target="_blank" rel="noopener">plot.ly</a> can generate nice plots – this used to be a paid service only but was recently open sourced.</li>
+<li><a href="https://github.com/altair-viz/altair" target="_blank" rel="noopener">Altair</a> is a relatively new declarative visualization library for Python. It’s easy to use and makes great looking plots, however the ability to customize those plots is not nearly as powerful as in Matplotlib.</li>
+</ul>
+<p><img src="/images/blog/bokeh.png" alt="bokeh"></p>
+<p><em>The Jupyter interface.</em></p>
+<h2 id="5-IPython-Magic-Commands"><a href="#5-IPython-Magic-Commands" class="headerlink" title="5. IPython Magic Commands"></a>5. IPython Magic Commands</h2><p>The <code>%matplotlib inline</code> you saw above was an example of a <em>IPython Magic</em> command. Being based on the IPython kernel, Jupyter has access to all the Magics from the IPython kernel, and they can make your life a lot easier!</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># This will list all magic commands%lsmagic</span></span><br><span class="line">Available line magics:</span><br><span class="line">%alias  %alias_magic  %autocall  %automagic  %autosave  %bookmark  %cat  %cd  %clear  %colors  %config  %connect_info  %cp  %debug  %dhist  %dirs  %doctest_mode  %ed  %edit  %env  %gui  %hist  %history  %killbgscripts  %ldir  %less  %lf  %lk  %ll  %load  %load_ext  %loadpy  %logoff  %logon  %logstart  %logstate  %logstop  %ls  %lsmagic  %lx  %macro  %magic  %man  %matplotlib  %mkdir  %more  %mv  %notebook  %page  %pastebin  %pdb  %pdef  %pdoc  %pfile  %pinfo  %pinfo2  %popd  %pprint  %precision  %profile  %prun  %psearch  %psource  %pushd  %pwd  %pycat  %pylab  %qtconsole  %quickref  %recall  %rehashx  %reload_ext  %rep  %rerun  %reset  %reset_selective  %rm  %rmdir  %run  %save  %sc  %set_env  %store  %sx  %system  %tb  %time  %timeit  %unalias  %unload_ext  %who  %who_ls  %whos  %xdel  %xmode</span><br><span class="line"></span><br><span class="line">Available cell magics:%%!  %%HTML  %%SVG  %%bash  %%capture  %%debug  %%file  %%html  %%javascript  %%js  %%latex  %%perl  %%prun  %%pypy  %%python  %%python2  %%python3  %%ruby  %%script  %%sh  %%svg  %%sx  %%system  %%time  %%timeit  %%writefile</span><br><span class="line"></span><br><span class="line">Automagic <span class="hljs-keyword">is</span> ON, % prefix IS NOT needed <span class="hljs-keyword">for</span> line magics.</span><br></pre></td></tr></table></figure>
+
+<p>I recommend browsing <a href="http://ipython.readthedocs.io/en/stable/interactive/magics.html" target="_blank" rel="noopener">the documentation for all IPython Magic commands</a> as you’ll no doubt find some that work for you. A few of my favorites are below:</p>
+<h3 id="6-IPython-Magic-–-env-Set-Environment-Variables"><a href="#6-IPython-Magic-–-env-Set-Environment-Variables" class="headerlink" title="6. IPython Magic – %env: Set Environment Variables"></a>6. IPython Magic – %env: Set Environment Variables</h3><p>You can manage environment variables of your notebook without restarting the jupyter server process. Some libraries (like theano) use environment variables to control behavior, %env is the most convenient way.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Running %env without any arguments</span></span><br><span class="line"><span class="hljs-comment"># lists all environment variables</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># The line below sets the environment</span></span><br><span class="line"><span class="hljs-comment"># variable</span></span><br><span class="line">%env OMP_NUM_THREADS%env OMP_NUM_THREADS=<span class="hljs-number">4</span></span><br><span class="line">env: OMP_NUM_THREADS=<span class="hljs-number">4</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-IPython-Magic-–-run-Execute-python-code"><a href="#7-IPython-Magic-–-run-Execute-python-code" class="headerlink" title="7. IPython Magic – %run: Execute python code"></a>7. IPython Magic – %run: Execute python code</h3><p><code>%run</code> can execute python code from .py files – this is well-documented behavior. Lesser known is the fact that it can also execute other jupyter notebooks, which can quite useful.</p>
+<p>Note that using <code>%run</code> is not the same as importing a python module.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># this will execute and show the output from</span></span><br><span class="line"><span class="hljs-comment"># all code cells of the specified notebook</span></span><br><span class="line">%run ./two-histograms.ipynb</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/two-hists.png" alt="two-hists"></p>
+<h3 id="8-IPython-Magic-–-load-Insert-the-code-from-an-external-script"><a href="#8-IPython-Magic-–-load-Insert-the-code-from-an-external-script" class="headerlink" title="8. IPython Magic – %load: Insert the code from an external script"></a>8. IPython Magic – %load: Insert the code from an external script</h3><p>This will replace the contents of the cell with an external script. You can either use a file on your computer as a source, or alternatively a URL.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># Before Running</span></span><br><span class="line">%load ./hello_world.py</span><br><span class="line"><span class="hljs-comment"># After Running</span></span><br><span class="line"><span class="hljs-comment"># %load ./hello_world.py</span></span><br><span class="line"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:</span><br><span class="line">   print(<span class="hljs-string">"Hello World!"</span>)</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-IPython-Magic-–-store-Pass-variables-between-notebooks"><a href="#9-IPython-Magic-–-store-Pass-variables-between-notebooks" class="headerlink" title="9. IPython Magic – %store: Pass variables between notebooks."></a>9. IPython Magic – %store: Pass variables between notebooks.</h3><p>The <code>%store</code> command lets you pass variables between two different notebooks.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data = <span class="hljs-string">'this is the string I want to pass to different notebook'</span></span><br><span class="line">%store data</span><br><span class="line"><span class="hljs-keyword">del</span> data <span class="hljs-comment"># This has deleted the variable</span></span><br><span class="line">Stored <span class="hljs-string">'data'</span> (str)</span><br></pre></td></tr></table></figure>
+
+<p>Now, in a new notebook…</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%store -r data</span><br><span class="line">print(data)</span><br><span class="line">this <span class="hljs-keyword">is</span> the string I want to <span class="hljs-keyword">pass</span> to different notebook</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-IPython-Magic-–-who-List-all-variables-of-global-scope"><a href="#10-IPython-Magic-–-who-List-all-variables-of-global-scope" class="headerlink" title="10. IPython Magic – %who: List all variables of global scope."></a>10. IPython Magic – %who: List all variables of global scope.</h3><p>The <code>%who</code> command without any arguments will list all variables that existing in the global scope. Passing a parameter like <code>str</code> will list only variables of that type.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">one = <span class="hljs-string">"for the money"</span></span><br><span class="line">two = <span class="hljs-string">"for the show"</span></span><br><span class="line">three = <span class="hljs-string">"to get ready now go cat go"</span></span><br><span class="line">%who str</span><br><span class="line">one   three   two</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-IPython-Magic-–-Timing"><a href="#11-IPython-Magic-–-Timing" class="headerlink" title="11. IPython Magic – Timing"></a>11. IPython Magic – Timing</h3><p>There are two IPython Magic commands that are useful for timing – <code>%%time</code> and <code>%timeit</code>. These are especially handy when you have some slow code and you’re trying to indentify where the issue is.</p>
+<p><code>%%time</code> will give you information about a single run of the code in your cell.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line"><span class="hljs-keyword">import</span> time</span><br><span class="line"><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">1000</span>):</span><br><span class="line">    time.sleep(<span class="hljs-number">0.01</span>) <span class="hljs-comment"># sleep for 0.01 seconds</span></span><br><span class="line">CPU times: user <span class="hljs-number">21.5</span> ms, sys: <span class="hljs-number">14.8</span> ms, total: <span class="hljs-number">36.3</span> ms</span><br><span class="line">Wall time: <span class="hljs-number">11.6</span> s</span><br></pre></td></tr></table></figure>
+
+<p><code>%%timeit</code> uses the Python <a href="https://docs.python.org/3.5/library/timeit.html" target="_blank" rel="noopener">timeit module</a> which runs a statement 100,000 times (by default) and then provides the mean of the fastest three times.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> numpy</span><br><span class="line">%timeit numpy.random.normal(size=<span class="hljs-number">100</span>)</span><br><span class="line">The slowest run took <span class="hljs-number">7.29</span> times longer than the fastest. This could mean that an intermediate result <span class="hljs-keyword">is</span> being cached.</span><br><span class="line"><span class="hljs-number">100000</span> loops, best of <span class="hljs-number">3</span>: <span class="hljs-number">5.5</span> µs per loop</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-IPython-Magic-–-writefile-and-pycat-Export-the-contents-of-a-cell-Show-the-contents-of-an-external-script"><a href="#12-IPython-Magic-–-writefile-and-pycat-Export-the-contents-of-a-cell-Show-the-contents-of-an-external-script" class="headerlink" title="12. IPython Magic – %%writefile and %pycat: Export the contents of a cell/Show the contents of an external script"></a>12. IPython Magic – %%writefile and %pycat: Export the contents of a cell/Show the contents of an external script</h3><p>Using the <code>%%writefile</code> magic saves the contents of that cell to an external file. <code>%pycat</code> does the opposite, and shows you (in a popup) the syntax highlighted contents of an external file.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">%%writefile pythoncode.py</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> numpy</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">append_if_not_exists</span><span class="hljs-params">(arr, x)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">if</span> x <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> arr:</span><br><span class="line">        arr.append(x)</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">some_useless_slow_function</span><span class="hljs-params">()</span>:</span></span><br><span class="line">    arr = list()</span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10000</span>):</span><br><span class="line">        x = numpy.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">10000</span>)</span><br><span class="line">        append_if_not_exists(arr, x)</span><br><span class="line">Writing pythoncode.py</span><br><span class="line">%pycat pythoncode.py</span><br><span class="line"><span class="hljs-keyword">import</span> numpy</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">append_if_not_exists</span><span class="hljs-params">(arr, x)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">if</span> x <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> arr:</span><br><span class="line">        arr.append(x)</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">some_useless_slow_function</span><span class="hljs-params">()</span>:</span></span><br><span class="line">    arr = list()</span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10000</span>):</span><br><span class="line">        x = numpy.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">10000</span>)</span><br><span class="line">        append_if_not_exists(arr, x)</span><br></pre></td></tr></table></figure>
+
+<p>### 13. IPython Magic – %prun: Show how much time your program spent in each function.Using <code>%prun statement_name</code> will give you an ordered table showing you the number of times each internal function was called within the statement, the time each call took as well as the cumulative time of all runs of the function.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">%prun some_useless_slow_function()</span><br><span class="line"><span class="hljs-number">26324</span> function calls <span class="hljs-keyword">in</span> <span class="hljs-number">0.556</span> seconds</span><br><span class="line"></span><br><span class="line">Ordered by: internal time</span><br><span class="line"></span><br><span class="line">ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span><br><span class="line"> <span class="hljs-number">10000</span>    <span class="hljs-number">0.527</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.528</span>    <span class="hljs-number">0.000</span> :<span class="hljs-number">2</span>(append_if_not_exists)</span><br><span class="line"> <span class="hljs-number">10000</span>    <span class="hljs-number">0.022</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.022</span>    <span class="hljs-number">0.000</span> &#123;method <span class="hljs-string">'randint'</span> of <span class="hljs-string">'mtrand.RandomState'</span> objects&#125;</span><br><span class="line">     <span class="hljs-number">1</span>    <span class="hljs-number">0.006</span>    <span class="hljs-number">0.006</span>    <span class="hljs-number">0.556</span>    <span class="hljs-number">0.556</span> :<span class="hljs-number">6</span>(some_useless_slow_function)</span><br><span class="line">  <span class="hljs-number">6320</span>    <span class="hljs-number">0.001</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.001</span>    <span class="hljs-number">0.000</span> &#123;method <span class="hljs-string">'append'</span> of <span class="hljs-string">'list'</span> objects&#125;</span><br><span class="line">     <span class="hljs-number">1</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.556</span>    <span class="hljs-number">0.556</span> :<span class="hljs-number">1</span>()</span><br><span class="line">     <span class="hljs-number">1</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.556</span>    <span class="hljs-number">0.556</span> &#123;built-<span class="hljs-keyword">in</span> method <span class="hljs-keyword">exec</span>&#125;</span><br><span class="line">     <span class="hljs-number">1</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.000</span>    <span class="hljs-number">0.000</span> &#123;method <span class="hljs-string">'disable'</span> of <span class="hljs-string">'_lsprof.Profiler'</span> objects&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="14-IPython-Magic-–-Debugging-with-pdb"><a href="#14-IPython-Magic-–-Debugging-with-pdb" class="headerlink" title="14. IPython Magic – Debugging with %pdb"></a>14. IPython Magic – Debugging with %pdb</h3><p>Jupyter has own interface for <a href="https://docs.python.org/3.5/library/pdb.html" target="_blank" rel="noopener">The Python Debugger (<code>pdb</code>)</a>. This makes it possible to go inside the function and investigate what happens there.</p>
+<p>You can view <a href="https://docs.python.org/3.5/library/pdb.html#debugger-commands" target="_blank" rel="noopener">a list of accepted commands for <code>pdb</code> here</a>.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">%pdb</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pick_and_take</span><span class="hljs-params">()</span>:</span></span><br><span class="line">    picked = numpy.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">1000</span>)</span><br><span class="line">    <span class="hljs-keyword">raise</span> NotImplementedError()</span><br><span class="line"></span><br><span class="line">pick_and_take()</span><br><span class="line">Automatic pdb calling has been turned ON</span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line">NotImplementedError                       Traceback (most recent call last)</span><br><span class="line"> <span class="hljs-keyword">in</span> ()</span><br><span class="line">      <span class="hljs-number">5</span>     <span class="hljs-keyword">raise</span> NotImplementedError()</span><br><span class="line">      <span class="hljs-number">6</span></span><br><span class="line">----&gt; 7 pick_and_take()</span><br><span class="line"></span><br><span class="line"> <span class="hljs-keyword">in</span> pick_and_take()</span><br><span class="line">      <span class="hljs-number">3</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pick_and_take</span><span class="hljs-params">()</span>:</span></span><br><span class="line">      <span class="hljs-number">4</span>     picked = numpy.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">1000</span>)</span><br><span class="line">----&gt; 5     raise NotImplementedError()</span><br><span class="line">      <span class="hljs-number">6</span></span><br><span class="line">      <span class="hljs-number">7</span> pick_and_take()</span><br><span class="line"></span><br><span class="line">NotImplementedError:</span><br><span class="line">&gt; (<span class="hljs-number">5</span>)pick_and_take()</span><br><span class="line">      <span class="hljs-number">3</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pick_and_take</span><span class="hljs-params">()</span>:</span></span><br><span class="line">      <span class="hljs-number">4</span>     picked = numpy.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">1000</span>)</span><br><span class="line">----&gt; 5     raise NotImplementedError()</span><br><span class="line">      <span class="hljs-number">6</span></span><br><span class="line">      <span class="hljs-number">7</span> pick_and_take()</span><br><span class="line">ipdb&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="15-IPython-Magic-–-High-resolution-plot-outputs-for-Retina-notebooks"><a href="#15-IPython-Magic-–-High-resolution-plot-outputs-for-Retina-notebooks" class="headerlink" title="15. IPython Magic – High-resolution plot outputs for Retina notebooks"></a>15. IPython Magic – High-resolution plot outputs for Retina notebooks</h3><p>One line of IPython magic will give you double resolution plot output for Retina screens, such as the more recent Macbooks. <em>Note: the example below won’t render on non-retina screens</em></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = range(<span class="hljs-number">1000</span>)</span><br><span class="line">y = [i ** <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> x]</span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.show();</span><br><span class="line">%config InlineBackend.figure_format =<span class="hljs-string">'retina'</span></span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.show();</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/hires-1.png" alt="hires-1"></p>
+<p><img src="/images/blog/hires-2.png" alt="hires-2"></p>
+<h2 id="16-Suppress-the-output-of-a-final-function"><a href="#16-Suppress-the-output-of-a-final-function" class="headerlink" title="16. Suppress the output of a final function."></a>16. Suppress the output of a final function.</h2><p>Sometimes it’s handy to suppress the output of the function on a final line, for instance when plotting. To do this, you just add a semicolon at the end.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt</span><br><span class="line"><span class="hljs-keyword">import</span> numpyx = numpy.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1000</span>)**<span class="hljs-number">1.5</span></span><br><span class="line"><span class="hljs-comment"># Here you get the output of the function</span></span><br><span class="line">plt.hist(x)</span><br><span class="line">(array([ <span class="hljs-number">216.</span>,  <span class="hljs-number">126.</span>,  <span class="hljs-number">106.</span>,   <span class="hljs-number">95.</span>,   <span class="hljs-number">87.</span>,   <span class="hljs-number">81.</span>,   <span class="hljs-number">77.</span>,   <span class="hljs-number">73.</span>,   <span class="hljs-number">71.</span>,   <span class="hljs-number">68.</span>]), array([ <span class="hljs-number">0.</span> ,  <span class="hljs-number">0.1</span>,  <span class="hljs-number">0.2</span>,  <span class="hljs-number">0.3</span>,  <span class="hljs-number">0.4</span>,  <span class="hljs-number">0.5</span>,  <span class="hljs-number">0.6</span>,  <span class="hljs-number">0.7</span>,  <span class="hljs-number">0.8</span>,  <span class="hljs-number">0.9</span>,  <span class="hljs-number">1.</span> ]),</span><br><span class="line">&lt;a list of <span class="hljs-number">10</span> Patch objects&gt;)</span><br><span class="line"><span class="hljs-comment"># By adding a semicolon at the end, the output is suppressed.plt.hist(x);</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/hist.png" alt="hist"></p>
+<p><img src="https://www.dataquest.io/wp-content/uploads/2019/01/hist.png" alt="hist"></p>
+<h2 id="17-Executing-Shell-Commands"><a href="#17-Executing-Shell-Commands" class="headerlink" title="17. Executing Shell Commands"></a>17. Executing Shell Commands</h2><p>It’s easy to execute a shell command from inside your notebook. You can use this to check what datasets are in available in your working folder:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">!ls *.csv</span><br><span class="line">nba_2016.csv             titanic.csv</span><br><span class="line">pixar_movies.csv         whitehouse_employees.csv</span><br></pre></td></tr></table></figure>
+
+<p>Or to check and manage packages.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">!pip install numpy</span><br><span class="line">!pip list | grep pandas</span><br><span class="line">Requirement already satisfied (use --upgrade to upgrade): numpy <span class="hljs-keyword">in</span> /Library/Frameworks/Python.framework/Versions/<span class="hljs-number">3.4</span>/lib/python3<span class="hljs-number">.4</span>/site-packages</span><br><span class="line">pandas (<span class="hljs-number">0.18</span><span class="hljs-number">.1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="18-Using-LaTeX-for-forumlas"><a href="#18-Using-LaTeX-for-forumlas" class="headerlink" title="18. Using LaTeX for forumlas"></a>18. Using LaTeX for forumlas</h2><p>When you write <a href="https://www.latex-project.org/" target="_blank" rel="noopener">LaTeX</a> in a Markdown cell, it will be rendered as a formula using MathJax.</p>
+<p>This:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$P(A \mid B) = \frac&#123;P(B \mid A)P(A)&#125;&#123;P(B)&#125;$</span><br></pre></td></tr></table></figure>
+
+<p>Becomes this:</p>
+<p>P(A∣B)=P(B∣A)P(A)P(B)</p>
+<p>Markdown is an important part of notebooks, so don’t forget to use its expressiveness!</p>
+<h2 id="19-Run-code-from-a-different-kernel-in-a-notebook"><a href="#19-Run-code-from-a-different-kernel-in-a-notebook" class="headerlink" title="19. Run code from a different kernel in a notebook"></a>19. Run code from a different kernel in a notebook</h2><p>If you want to, you can combine code from multiple kernels into one notebook.</p>
+<p>Just use IPython Magics with the name of your kernel at the start of each cell that you want to use that Kernel for:</p>
+<ul>
+<li><code>%%bash</code></li>
+<li><code>%%HTML</code></li>
+<li><code>%%python2</code></li>
+<li><code>%%python3</code></li>
+<li><code>%%ruby</code></li>
+<li><code>%%perl</code></li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">%%bash</span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> &#123;<span class="hljs-number">1.</span><span class="hljs-number">.5</span>&#125;</span><br><span class="line">do</span><br><span class="line">   echo <span class="hljs-string">"i is $i"</span></span><br><span class="line">done</span><br><span class="line">i <span class="hljs-keyword">is</span> <span class="hljs-number">1</span></span><br><span class="line">i <span class="hljs-keyword">is</span> <span class="hljs-number">2</span></span><br><span class="line">i <span class="hljs-keyword">is</span> <span class="hljs-number">3</span></span><br><span class="line">i <span class="hljs-keyword">is</span> <span class="hljs-number">4</span></span><br><span class="line">i <span class="hljs-keyword">is</span> <span class="hljs-number">5</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="20-Install-other-kernels-for-Jupyter"><a href="#20-Install-other-kernels-for-Jupyter" class="headerlink" title="20. Install other kernels for Jupyter"></a>20. Install other kernels for Jupyter</h2><p>One of the nice features about Jupyter is ability to run kernels for different languages. As an example, here is how to get and R kernel running.</p>
+<h3 id="Easy-Option-Installing-the-R-Kernel-Using-Anaconda"><a href="#Easy-Option-Installing-the-R-Kernel-Using-Anaconda" class="headerlink" title="Easy Option: Installing the R Kernel Using Anaconda"></a>Easy Option: Installing the R Kernel Using Anaconda</h3><p>If you used Anaconda to set up your environment, getting R working is extremely easy. Just run the below in your terminal:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c r r-essentials</span><br></pre></td></tr></table></figure>
+
+<h3 id="Less-Easy-Option-Installing-the-R-Kernel-Manually"><a href="#Less-Easy-Option-Installing-the-R-Kernel-Manually" class="headerlink" title="Less Easy Option: Installing the R Kernel Manually"></a>Less Easy Option: Installing the R Kernel Manually</h3><p>If you are not using Anaconda, the process is a little more complex. Firstly, you’ll need to install R from <a href="https://cloud.r-project.org/" target="_blank" rel="noopener">CRAN</a> if you haven’t already.</p>
+<p>Once that’s done, fire up an R console and run the following:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">install.packages(c(<span class="hljs-string">'repr'</span>, <span class="hljs-string">'IRdisplay'</span>, <span class="hljs-string">'crayon'</span>, <span class="hljs-string">'pbdZMQ'</span>, <span class="hljs-string">'devtools'</span>))</span><br><span class="line">devtools::install_github(<span class="hljs-string">'IRkernel/IRkernel'</span>)</span><br><span class="line">IRkernel::installspec()  <span class="hljs-comment"># to register the kernel in the current R installation</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="21-Running-R-and-Python-in-the-same-notebook"><a href="#21-Running-R-and-Python-in-the-same-notebook" class="headerlink" title="21. Running R and Python in the same notebook."></a>21. Running R and Python in the same notebook.</h2><p>The best solution to this is to install <a href="http://rpy2.bitbucket.org/" target="_blank" rel="noopener">rpy2</a> (requires a working version of R as well), which can be easily done with <code>pip</code>:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install rpy2</span><br></pre></td></tr></table></figure>
+
+<p>You can then use the two languages together, and even pass variables inbetween:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">%load_ext rpy2.ipython</span><br><span class="line">%R require(ggplot2)</span><br><span class="line">array([<span class="hljs-number">1</span>], dtype=int32)</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">        <span class="hljs-string">'Letter'</span>: [<span class="hljs-string">'a'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'c'</span>],</span><br><span class="line">        <span class="hljs-string">'X'</span>: [<span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">7</span>, <span class="hljs-number">7</span>, <span class="hljs-number">5</span>, <span class="hljs-number">9</span>],</span><br><span class="line">        <span class="hljs-string">'Y'</span>: [<span class="hljs-number">0</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">9</span>, <span class="hljs-number">13</span>],</span><br><span class="line">        <span class="hljs-string">'Z'</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]</span><br><span class="line">    &#125;)</span><br><span class="line">%%R -i df</span><br><span class="line">ggplot(data = df) + geom_point(aes(x = X, y= Y, color = Letter, size = Z))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/ggplot.png" alt="ggplot"></p>
+<p><em>Example courtesy <a href="http://blog.revolutionanalytics.com/2016/01/pipelining-r-python.html" target="_blank" rel="noopener">Revolutions Blog</a></em></p>
+<h2 id="22-Writing-functions-in-other-languages"><a href="#22-Writing-functions-in-other-languages" class="headerlink" title="22. Writing functions in other languages"></a>22. Writing functions in other languages</h2><p>Sometimes the speed of numpy is not enough and I need to write some fast code.
+In principle, you can compile function in the dynamic library and write python wrappers…</p>
+<p>But it is much better when this boring part is done for you, right?</p>
+<p>You can write functions in cython or fortran and use those directly from python code.</p>
+<p>First you’ll need to install:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">!pip install cython fortran-magic</span><br><span class="line">%load_ext Cython</span><br><span class="line">%%cython</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">myltiply_by_2</span><span class="hljs-params">(float x)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">2.0</span> * x</span><br><span class="line">myltiply_by_2(<span class="hljs-number">23.</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Personally I prefer to use fortran, which I found very convenient for writing number-crunching functions. More details of usage can be found <a href="http://arogozhnikov.github.io/2015/11/29/using-fortran-from-python.html" target="_blank" rel="noopener">here</a>.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">%load_ext fortranmagic</span><br><span class="line">%%fortran</span><br><span class="line">subroutine compute_fortran(x, y, z)</span><br><span class="line">    real, intent(<span class="hljs-keyword">in</span>) :: x(:), y(:)</span><br><span class="line">    real, intent(out) :: z(size(x, <span class="hljs-number">1</span>))</span><br><span class="line"></span><br><span class="line">    z = sin(x + y)</span><br><span class="line"></span><br><span class="line">end subroutine compute_fortran</span><br><span class="line">compute_fortran([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>])</span><br></pre></td></tr></table></figure>
+
+<p>There are also different jitter systems which can speed up your python code. More examples <a href="http://arogozhnikov.github.io/2015/09/08/SpeedBenchmarks.html" target="_blank" rel="noopener">can be found here</a>.</p>
+<h2 id="23-Multicursor-support"><a href="#23-Multicursor-support" class="headerlink" title="23. Multicursor support"></a>23. Multicursor support</h2><p>Jupyter supports mutiple cursors, similar to Sublime Text. Simply click and drag your mouse while holding down <code>Alt</code>.</p>
+<p><img src="/images/blog/multiline.gif" alt="multiline"></p>
+<p><em>Multicursor support.</em></p>
+<h2 id="24-Jupyter-contrib-extensions"><a href="#24-Jupyter-contrib-extensions" class="headerlink" title="24. Jupyter-contrib extensions"></a>24. Jupyter-contrib extensions</h2><p><a href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions" target="_blank" rel="noopener">Jupyter-contrib extensions</a> is a family of extensions which give Jupyter a lot more functionality, including e.g. <code>jupyter spell-checker</code> and <code>code-formatter</code>.</p>
+<p>The following commands will install the extensions, as well as a menu based configurator that will help you browse and enable the extensions from the main Jupyter notebook screen.</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">!pip install https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master</span><br><span class="line">!pip install jupyter_nbextensions_configurator</span><br><span class="line">!jupyter contrib nbextension install --user</span><br><span class="line">!jupyter nbextensions_configurator enable --user</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/nbextensions.png" alt="nbextensions"></p>
+<p><em>The nbextension configurator.</em></p>
+<h2 id="25-Create-a-presentation-from-a-Jupyter-notebook"><a href="#25-Create-a-presentation-from-a-Jupyter-notebook" class="headerlink" title="25. Create a presentation from a Jupyter notebook."></a>25. Create a presentation from a Jupyter notebook.</h2><p>Damian Avila’s <a href="https://github.com/damianavila/RISE" target="_blank" rel="noopener">RISE</a> allows you to create a powerpoint style presentation from an existing notebook.</p>
+<p>You can install RISE using conda:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c damianavila82 rise</span><br></pre></td></tr></table></figure>
+
+<p>Or alternatively pip:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install RISE</span><br></pre></td></tr></table></figure>
+
+<p>And then run the following code to install and enable the extension:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jupyter-nbextension install rise --py --sys-prefix</span><br><span class="line">jupyter-nbextension enable rise --py --sys-prefix</span><br></pre></td></tr></table></figure>
+
+<h2 id="26-The-Jupyter-output-system"><a href="#26-The-Jupyter-output-system" class="headerlink" title="26. The Jupyter output system"></a>26. The Jupyter output system</h2><p>Notebooks are displayed as HTML and the cell output can be HTML, so you can return virtually anything: video/audio/images.</p>
+<p>In this example I scan the folder with images in my repository and show thumbnails of the first 5:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> os</span><br><span class="line"><span class="hljs-keyword">from</span> IPython.display <span class="hljs-keyword">import</span> display, Image</span><br><span class="line">names = [f <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> os.listdir(<span class="hljs-string">'/images/ml_demonstrations/'</span>) <span class="hljs-keyword">if</span> f.endswith(<span class="hljs-string">'.png'</span>)]</span><br><span class="line"><span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> names[:<span class="hljs-number">5</span>]:</span><br><span class="line">    display(Image(<span class="hljs-string">'/images/ml_demonstrations/'</span> + name, width=<span class="hljs-number">100</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/img1.png" alt="img1"></p>
+<p><img src="/images/blog/img2.png" alt="img2"></p>
+<p><img src="/images/blog/img3.png" alt="img3"></p>
+<p><img src="/images/blog/img4.png" alt="img4"></p>
+<p><img src="/images/blog/img5.png" alt="img5"></p>
+<p>We can create the same list with a bash command, because magics and bash calls return python variables:</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">names = !ls /images/ml_demonstrations/*.png</span><br><span class="line">names[:<span class="hljs-number">5</span>]</span><br><span class="line">[<span class="hljs-string">'/images/ml_demonstrations/colah_embeddings.png'</span>,</span><br><span class="line"><span class="hljs-string">'/images/ml_demonstrations/convnetjs.png'</span>,</span><br><span class="line"><span class="hljs-string">'/images/ml_demonstrations/decision_tree.png'</span>,</span><br><span class="line"><span class="hljs-string">'/images/ml_demonstrations/decision_tree_in_course.png'</span>,</span><br><span class="line"><span class="hljs-string">'/images/ml_demonstrations/dream_mnist.png'</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="27-‘Big-data’-analysis"><a href="#27-‘Big-data’-analysis" class="headerlink" title="27. ‘Big data’ analysis"></a>27. ‘Big data’ analysis</h2><p>A number of solutions are available for querying/processing large data samples:</p>
+<ul>
+<li><a href="https://github.com/ipython/ipyparallel" target="_blank" rel="noopener">ipyparallel (formerly ipython cluster)</a> is a good option for simple map-reduce operations in python. We use it in <a href="https://github.com/yandex/rep" target="_blank" rel="noopener">rep</a> to train many machine learning models in parallel</li>
+<li><a href="http://www.cloudera.com/documentation/enterprise/5-5-x/topics/spark_ipython.html" target="_blank" rel="noopener">pyspark</a></li>
+<li>spark-sql magic <a href="https://github.com/jupyter-incubator/sparkmagic" target="_blank" rel="noopener">%%sql</a></li>
+</ul>
+<h2 id="28-Sharing-notebooks"><a href="#28-Sharing-notebooks" class="headerlink" title="28. Sharing notebooks"></a>28. Sharing notebooks</h2><p>The easiest way to share your notebook is simply using the notebook file (.ipynb), but for those who don’t use Jupyter, you have a few options:</p>
+<ul>
+<li><p>Convert notebooks to html file using the <code>File &gt; Download as &gt; HTML</code> Menu option.</p>
+</li>
+<li><p>Share your notebook file with</p>
+</li>
+</ul>
+<p>  gists</p>
+<p>  or on github, both of which render the notebooks. See</p>
+<p>  this example</p>
+<p>  .</p>
+<ul>
+<li>If you upload your notebook to a github repository, you can use the handy <a href="http://mybinder.org/" target="_blank" rel="noopener">mybinder</a> service to allow someone half an hour of interactive Jupyter access to your repository.</li>
+</ul>
+<ul>
+<li><p>Setup your own system with <a href="https://github.com/jupyterhub/jupyterhub" target="_blank" rel="noopener">jupyterhub</a>, this is very handy when you organize mini-course or workshop and don’t have time to care about students machines.</p>
+</li>
+<li><p>Store your notebook e.g. in dropbox and put the link to <a href="http://nbviewer.jupyter.org/" target="_blank" rel="noopener">nbviewer</a>. nbviewer will render the notebook from whichever source you host it.</p>
+</li>
+<li><p>Use the <code>File &gt; Download as &gt; PDF</code> menu to save your notebook as a PDF. If you’re going this route, I highly recommend reading Julius Schulz’s excellent article <a href="http://blog.juliusschulz.de/blog/ultimate-ipython-notebook" target="_blank" rel="noopener">Making publication ready Python notebooks</a>.</p>
+</li>
+<li><p><a href="https://www.dataquest.io/blog/how-to-setup-a-data-science-blog/" target="_blank" rel="noopener">Create a blog using Pelican from your Jupyter notebooks</a>.</p>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/jupyter/" rel="tag">jupyter</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">分享一个按照模板文件格式自动汇总统计的脚本</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/">
+                <span class="level-item">matplotlib中文显示问题</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#28-Jupyter-Notebook-Tips-Tricks-and-Shortcuts">
+        <span class="has-mr-6">1</span>
+        <span>28 Jupyter Notebook Tips, Tricks, and Shortcuts</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Jupyter-Notebook">
+        <span class="has-mr-6">1.1</span>
+        <span>Jupyter Notebook</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-Keyboard-Shortcuts">
+        <span class="has-mr-6">1.2</span>
+        <span>1. Keyboard Shortcuts</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-Pretty-Display-of-Variables">
+        <span class="has-mr-6">1.3</span>
+        <span>2. Pretty Display of Variables</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-Easy-links-to-documentation">
+        <span class="has-mr-6">1.4</span>
+        <span>3. Easy links to documentation</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-Plotting-in-notebooks">
+        <span class="has-mr-6">1.5</span>
+        <span>4. Plotting in notebooks</span>
+        </a></li><li>
+        <a class="is-flex" href="#5-IPython-Magic-Commands">
+        <span class="has-mr-6">1.6</span>
+        <span>5. IPython Magic Commands</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#6-IPython-Magic-–-env-Set-Environment-Variables">
+        <span class="has-mr-6">1.6.1</span>
+        <span>6. IPython Magic – %env: Set Environment Variables</span>
+        </a></li><li>
+        <a class="is-flex" href="#7-IPython-Magic-–-run-Execute-python-code">
+        <span class="has-mr-6">1.6.2</span>
+        <span>7. IPython Magic – %run: Execute python code</span>
+        </a></li><li>
+        <a class="is-flex" href="#8-IPython-Magic-–-load-Insert-the-code-from-an-external-script">
+        <span class="has-mr-6">1.6.3</span>
+        <span>8. IPython Magic – %load: Insert the code from an external script</span>
+        </a></li><li>
+        <a class="is-flex" href="#9-IPython-Magic-–-store-Pass-variables-between-notebooks">
+        <span class="has-mr-6">1.6.4</span>
+        <span>9. IPython Magic – %store: Pass variables between notebooks.</span>
+        </a></li><li>
+        <a class="is-flex" href="#10-IPython-Magic-–-who-List-all-variables-of-global-scope">
+        <span class="has-mr-6">1.6.5</span>
+        <span>10. IPython Magic – %who: List all variables of global scope.</span>
+        </a></li><li>
+        <a class="is-flex" href="#11-IPython-Magic-–-Timing">
+        <span class="has-mr-6">1.6.6</span>
+        <span>11. IPython Magic – Timing</span>
+        </a></li><li>
+        <a class="is-flex" href="#12-IPython-Magic-–-writefile-and-pycat-Export-the-contents-of-a-cell-Show-the-contents-of-an-external-script">
+        <span class="has-mr-6">1.6.7</span>
+        <span>12. IPython Magic – %%writefile and %pycat: Export the contents of a cell/Show the contents of an external script</span>
+        </a></li><li>
+        <a class="is-flex" href="#14-IPython-Magic-–-Debugging-with-pdb">
+        <span class="has-mr-6">1.6.8</span>
+        <span>14. IPython Magic – Debugging with %pdb</span>
+        </a></li><li>
+        <a class="is-flex" href="#15-IPython-Magic-–-High-resolution-plot-outputs-for-Retina-notebooks">
+        <span class="has-mr-6">1.6.9</span>
+        <span>15. IPython Magic – High-resolution plot outputs for Retina notebooks</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#16-Suppress-the-output-of-a-final-function">
+        <span class="has-mr-6">1.7</span>
+        <span>16. Suppress the output of a final function.</span>
+        </a></li><li>
+        <a class="is-flex" href="#17-Executing-Shell-Commands">
+        <span class="has-mr-6">1.8</span>
+        <span>17. Executing Shell Commands</span>
+        </a></li><li>
+        <a class="is-flex" href="#18-Using-LaTeX-for-forumlas">
+        <span class="has-mr-6">1.9</span>
+        <span>18. Using LaTeX for forumlas</span>
+        </a></li><li>
+        <a class="is-flex" href="#19-Run-code-from-a-different-kernel-in-a-notebook">
+        <span class="has-mr-6">1.10</span>
+        <span>19. Run code from a different kernel in a notebook</span>
+        </a></li><li>
+        <a class="is-flex" href="#20-Install-other-kernels-for-Jupyter">
+        <span class="has-mr-6">1.11</span>
+        <span>20. Install other kernels for Jupyter</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Easy-Option-Installing-the-R-Kernel-Using-Anaconda">
+        <span class="has-mr-6">1.11.1</span>
+        <span>Easy Option: Installing the R Kernel Using Anaconda</span>
+        </a></li><li>
+        <a class="is-flex" href="#Less-Easy-Option-Installing-the-R-Kernel-Manually">
+        <span class="has-mr-6">1.11.2</span>
+        <span>Less Easy Option: Installing the R Kernel Manually</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#21-Running-R-and-Python-in-the-same-notebook">
+        <span class="has-mr-6">1.12</span>
+        <span>21. Running R and Python in the same notebook.</span>
+        </a></li><li>
+        <a class="is-flex" href="#22-Writing-functions-in-other-languages">
+        <span class="has-mr-6">1.13</span>
+        <span>22. Writing functions in other languages</span>
+        </a></li><li>
+        <a class="is-flex" href="#23-Multicursor-support">
+        <span class="has-mr-6">1.14</span>
+        <span>23. Multicursor support</span>
+        </a></li><li>
+        <a class="is-flex" href="#24-Jupyter-contrib-extensions">
+        <span class="has-mr-6">1.15</span>
+        <span>24. Jupyter-contrib extensions</span>
+        </a></li><li>
+        <a class="is-flex" href="#25-Create-a-presentation-from-a-Jupyter-notebook">
+        <span class="has-mr-6">1.16</span>
+        <span>25. Create a presentation from a Jupyter notebook.</span>
+        </a></li><li>
+        <a class="is-flex" href="#26-The-Jupyter-output-system">
+        <span class="has-mr-6">1.17</span>
+        <span>26. The Jupyter output system</span>
+        </a></li><li>
+        <a class="is-flex" href="#27-‘Big-data’-analysis">
+        <span class="has-mr-6">1.18</span>
+        <span>27. ‘Big data’ analysis</span>
+        </a></li><li>
+        <a class="is-flex" href="#28-Sharing-notebooks">
+        <span class="has-mr-6">1.19</span>
+        <span>28. Sharing notebooks</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time></div>
+                    <a href="/2019/10/05/%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5/" class="has-link-black-ter is-size-6">摘录一个关于jupyter-notebook技巧的网页</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-03T11:13:07.000Z">2019-10-03</time></div>
+                    <a href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/" class="has-link-black-ter is-size-6">matplotlib中文显示问题</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-02T07:28:37.000Z">2019-10-02</time></div>
+                    <a href="/2019/10/02/manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/" class="has-link-black-ter is-size-6">manjaro系统必备软件</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-01T10:32:29.000Z">2019-10-01</time></div>
+                    <a href="/2019/10/01/manjaro%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" class="has-link-black-ter is-size-6">manjaro系统配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="摘录一个关于jupyter-notebook技巧的网页" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
