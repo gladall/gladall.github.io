@@ -212,6 +212,109 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 179 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/">Mysql开启慢日志</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="查看mysql物理文件存放地方"><a href="#查看mysql物理文件存放地方" class="headerlink" title="查看mysql物理文件存放地方"></a>查看mysql物理文件存放地方</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">show global variables like &quot;%datadir%&quot;;</span><br><span class="line"></span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| Variable_name | Value           |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| datadir       | /var/lib/mysql/ |</span><br><span class="line">+---------------+-----------------+</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 103 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/">mariadb的安装</a>
+            
+        </h1>
+        <div class="content">
+            <p>安装 <a href="https://www.archlinux.org/packages/?name=mariadb" target="_blank" rel="noopener">mariadb</a> 软件包之后，你必须在启动 <code>mariadb.service</code> <strong>之前</strong>运行下面这条命令：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql</span></span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time>
                 
                 <div class="level-item">
@@ -277,7 +380,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 344 个字)
+                    2 分钟 读完 (大约 345 个字)
                 </span>
                 
                 
@@ -294,56 +397,19 @@
 <li>查看matplotlib默认的设置文件所在位置</li>
 </ol>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> matplotlib</span><br><span class="line">print(matplotlib.matplotlib_fname())</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><ul>
-<li>结果显示：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'/home/lanhoo/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/matplotlibrc'</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>查看该文件内容</li>
-</ol>
-<ul>
-<li><ul>
-<li>摘录如下：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#### MATPLOTLIBRC FORMAT</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">## This is a sample matplotlib configuration file - you can find a copy</span></span><br><span class="line"><span class="hljs-comment">## of it on your system in</span></span><br><span class="line"><span class="hljs-comment">## site-packages/matplotlib/mpl-data/matplotlibrc.  If you edit it</span></span><br><span class="line"><span class="hljs-comment">## there, please note that it will be overwritten in your next install.</span></span><br><span class="line"><span class="hljs-comment">## If you want to keep a permanent local copy that will not be</span></span><br><span class="line"><span class="hljs-comment">## overwritten, place it in the following location:</span></span><br><span class="line"><span class="hljs-comment">## unix/linux:</span></span><br><span class="line"><span class="hljs-comment">##      $HOME/.config/matplotlib/matplotlibrc or</span></span><br><span class="line"><span class="hljs-comment">##      $XDG_CONFIG_HOME/matplotlib/matplotlibrc (if $XDG_CONFIG_HOME is set)</span></span><br><span class="line"><span class="hljs-comment">## other platforms:</span></span><br><span class="line"><span class="hljs-comment">##      $HOME/.matplotlib/matplotlibrc</span></span><br><span class="line"><span class="hljs-comment">##</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><ul>
-<li>上面提示说以后安装会重写这个文件，导致你所修改的失效。最好根据上面的提示自定义一个文件 <code>matplotlibrc</code> </li>
-<li>根据系统找到有这个文件夹：<code>$HOME/.config/matplotlib/</code> </li>
-<li>在上面的文件夹里新建一个文件<code>matplotlibrc</code> </li>
-</ul>
-</li>
-</ul>
-<ol start="3">
-<li><code>matplotlibrc</code> 的配置内容如下：</li>
-</ol>
-<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">font.family         :</span> <span class="hljs-string">sans-serif</span></span><br><span class="line"><span class="hljs-attr">font.sans-serif     :</span> <span class="hljs-string">SimHei,</span> <span class="hljs-string">DejaVu</span> <span class="hljs-string">Sans,</span> <span class="hljs-string">Bitstream</span> <span class="hljs-string">Vera</span> <span class="hljs-string">Sans,</span> <span class="hljs-string">Computer</span> <span class="hljs-string">Modern</span> <span class="hljs-string">Sans</span> <span class="hljs-string">Serif,</span> <span class="hljs-string">Lucida</span> <span class="hljs-string">Grande,</span> <span class="hljs-string">Verdana,</span> <span class="hljs-string">Geneva,</span> <span class="hljs-string">Lucid,</span> <span class="hljs-string">Arial,</span> <span class="hljs-string">Helvetica,</span> <span class="hljs-string">Avant</span> <span class="hljs-string">Garde,</span> <span class="hljs-string">sans-serif</span></span><br><span class="line"><span class="hljs-attr">axes.unicode_minus  :</span> <span class="hljs-literal">False</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><ul>
-<li><code>SimHei</code> 字体没有安装的请下载安装，网上多得是。</li>
-</ul>
-</li>
-</ul>
-<ol start="4">
-<li>重启电脑问题解决，或者执行下面的代码，重新执行之前的ipython或py文件</li>
-</ol>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> matplotlib.font_manager <span class="hljs-keyword">import</span> _rebuild</span><br><span class="line"></span><br><span class="line">_rebuild() <span class="hljs-comment">#reload一下</span></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>检验设置成功与否，执行第一步的代码， 结果如下：</li>
-</ol>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'/home/lanhoo/.config/matplotlib/matplotlibrc'</span></span><br></pre></td></tr></table></figure>
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -372,7 +438,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 743 个字)
+                    5 分钟 读完 (大约 817 个字)
                 </span>
                 
                 
@@ -763,223 +829,6 @@ route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    22 分钟 读完 (大约 3252 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/">mysql与pandas对照学习(6)</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="The-JOIN-operation-zh"><a href="#The-JOIN-operation-zh" class="headerlink" title="The JOIN operation/zh"></a>The JOIN operation/zh</h2><p><a href="https://sqlzoo.net/wiki/The_JOIN_operation/zh" target="_blank" rel="noopener">The JOIN operation/zh</a></p>
-<p>game(賽事)</p>
-<table>
-<thead>
-<tr>
-<th>id(編號)</th>
-<th>mdate(日期)</th>
-<th>stadium(場館)</th>
-<th>team1(隊伍1)</th>
-<th>team2(隊伍2)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1001</td>
-<td>8 June 2012</td>
-<td>National Stadium, Warsaw</td>
-<td>POL</td>
-<td>GRE</td>
-</tr>
-<tr>
-<td>1002</td>
-<td>8 June 2012</td>
-<td>Stadion Miejski (Wroclaw)</td>
-<td>RUS</td>
-<td>CZE</td>
-</tr>
-<tr>
-<td>1003</td>
-<td>12 June 2012</td>
-<td>Stadion Miejski (Wroclaw)</td>
-<td>GRE</td>
-<td>CZE</td>
-</tr>
-<tr>
-<td>1004</td>
-<td>12 June 2012</td>
-<td>National Stadium, Warsaw</td>
-<td>POL</td>
-<td>RUS</td>
-</tr>
-<tr>
-<td>…</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                    <!-- 不要跳转到more处 -->
-                <a class="button is-size-7 is-light" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/">阅读更多</a>
-
-                <!-- <a class="button is-size-7 is-light" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/#more">阅读更多</a> -->
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-09-24T11:47:25.000Z">2019-09-24</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 1015 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/09/24/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5/">mysql与pandas对照学习(5)</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="SUM-and-COUNT-zh"><a href="#SUM-and-COUNT-zh" class="headerlink" title="SUM and COUNT/zh"></a>SUM and COUNT/zh</h2><p><a href="https://sqlzoo.net/wiki/SUM_and_COUNT/zh" target="_blank" rel="noopener">SUM and COUNT/zh</a></p>
-<h3 id="全球統計-群組函數"><a href="#全球統計-群組函數" class="headerlink" title="全球統計:群組函數"></a>全球統計:群組函數</h3><p>此教程是有關群組函數，例如COUNT, SUM 和 AVG。群組函數把多個數值運算，得出結果只有一個數值。例如SUM函數會把數值2,4,和5運算成結果11。</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>continent</th>
-<th>area</th>
-<th>population</th>
-<th>gdp</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Afghanistan</td>
-<td>Asia</td>
-<td>652230</td>
-<td>25500100</td>
-<td>20343000000</td>
-</tr>
-<tr>
-<td>Albania</td>
-<td>Europe</td>
-<td>28748</td>
-<td>2831741</td>
-<td>12960000000</td>
-</tr>
-<tr>
-<td>Algeria</td>
-<td>Africa</td>
-<td>2381741</td>
-<td>37100000</td>
-<td>188681000000</td>
-</tr>
-<tr>
-<td>Andorra</td>
-<td>Europe</td>
-<td>468</td>
-<td>78115</td>
-<td>3712000000</td>
-</tr>
-<tr>
-<td>Angola</td>
-<td>Africa</td>
-<td>1246700</td>
-<td>20609294</td>
-<td>100990000000</td>
-</tr>
-<tr>
-<td>…</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>name:國家名稱
-continent:洲份
-area:面積
-population:人口
-gdp:國內生產總值</p>
-<h2 id="示範"><a href="#示範" class="headerlink" title="示範"></a>示範</h2><p><a href="https://sqlzoo.net/wiki/Using_SUM,_Count,_MAX,_DISTINCT_and_ORDER_BY" target="_blank" rel="noopener" title="Using SUM, Count, MAX, DISTINCT and ORDER BY">使用 SUM, Count, MAX, DISTINCT 和 ORDER BY</a>.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                    <!-- 不要跳转到more处 -->
-                <a class="button is-size-7 is-light" href="/2019/09/24/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5/">阅读更多</a>
-
-                <!-- <a class="button is-size-7 is-light" href="/2019/09/24/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5/#more">阅读更多</a> -->
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -995,6 +844,8 @@ gdp:國內生產總值</p>
             <li><a class="pagination-link is-current" href="/">1</a></li>
             
             <li><a class="pagination-link has-text-black-ter" href="/page/2/">2</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/3/">3</a></li>
             
         </ul>
     </nav>
@@ -1042,7 +893,7 @@ gdp:國內生產總值</p>
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        18
+                        21
                     </p>
                 </div>
             </div>
@@ -1062,7 +913,7 @@ gdp:國內生產總值</p>
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        16
                     </p>
                 </div>
             </div>
@@ -1176,7 +1027,7 @@ gdp:國內生產總值</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/arch/" style="font-size: 12px;">arch</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/icarus/" style="font-size: 10px;">icarus</a> <a href="/tags/jupyter/" style="font-size: 10px;">jupyter</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/matplotlib/" style="font-size: 10px;">matplotlib</a> <a href="/tags/mysql/" style="font-size: 16px;">mysql</a> <a href="/tags/pandas/" style="font-size: 18px;">pandas</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 20px;">数据分析</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 12px;">配置</a>
+        <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/arch/" style="font-size: 12.5px;">arch</a> <a href="/tags/excel/" style="font-size: 12.5px;">excel</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/icarus/" style="font-size: 10px;">icarus</a> <a href="/tags/jupyter/" style="font-size: 10px;">jupyter</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mariadb/" style="font-size: 10px;">mariadb</a> <a href="/tags/matplotlib/" style="font-size: 10px;">matplotlib</a> <a href="/tags/mysql/" style="font-size: 17.5px;">mysql</a> <a href="/tags/pandas/" style="font-size: 17.5px;">pandas</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 20px;">数据分析</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a>
     </div>
 </div>
 
@@ -1206,7 +1057,7 @@ gdp:國內生產總值</p>
                     <span class="level-item">十月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1217,7 +1068,7 @@ gdp:國內生產總值</p>
                     <span class="level-item">九月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">10</span>
                 </span>
             </a>
         </li>
@@ -1228,7 +1079,7 @@ gdp:國內生產總值</p>
                     <span class="level-item">八月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1278,6 +1129,32 @@ gdp:國內生產總值</p>
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time></div>
+                    <a href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/" class="has-link-black-ter is-size-6">Mysql开启慢日志</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time></div>
+                    <a href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/" class="has-link-black-ter is-size-6">mariadb的安装</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time></div>
                     <a href="/2019/10/05/%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5/" class="has-link-black-ter is-size-6">摘录一个关于jupyter-notebook技巧的网页</a>
                     <p class="is-size-7 is-uppercase">
@@ -1295,32 +1172,6 @@ gdp:國內生產總值</p>
                     <a href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/" class="has-link-black-ter is-size-6">matplotlib中文显示问题</a>
                     <p class="is-size-7 is-uppercase">
                         
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-02T07:28:37.000Z">2019-10-02</time></div>
-                    <a href="/2019/10/02/manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/" class="has-link-black-ter is-size-6">manjaro系统必备软件</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-01T10:32:29.000Z">2019-10-01</time></div>
-                    <a href="/2019/10/01/manjaro%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" class="has-link-black-ter is-size-6">manjaro系统配置</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
                     </p>
                 </div>
             </div>
@@ -1370,6 +1221,32 @@ gdp:國內生產總值</p>
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time></div>
+                    <a href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/" class="has-link-black-ter is-size-6">Mysql开启慢日志</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time></div>
+                    <a href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/" class="has-link-black-ter is-size-6">mariadb的安装</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time></div>
                     <a href="/2019/10/05/%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5/" class="has-link-black-ter is-size-6">摘录一个关于jupyter-notebook技巧的网页</a>
                     <p class="is-size-7 is-uppercase">
@@ -1387,32 +1264,6 @@ gdp:國內生產總值</p>
                     <a href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/" class="has-link-black-ter is-size-6">matplotlib中文显示问题</a>
                     <p class="is-size-7 is-uppercase">
                         
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-02T07:28:37.000Z">2019-10-02</time></div>
-                    <a href="/2019/10/02/manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/" class="has-link-black-ter is-size-6">manjaro系统必备软件</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-01T10:32:29.000Z">2019-10-01</time></div>
-                    <a href="/2019/10/01/manjaro%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" class="has-link-black-ter is-size-6">manjaro系统配置</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
                     </p>
                 </div>
             </div>

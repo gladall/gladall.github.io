@@ -8,7 +8,7 @@
 
 
     <meta name="description" content="Self joinSelf join Edinburgh BusesDetails of the database Looking at the data stops(id, name) route(num, company, pos, stop)    stops    id   name      route    num   company   pos   stop">
-<meta name="keywords" content="数据分析,mysql,pandas">
+<meta name="keywords" content="数据分析,mysql,pandas,sql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql与pandas对照学习(9)">
 <meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;28&#x2F;mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9&#x2F;index.html">
@@ -16,7 +16,7 @@
 <meta property="og:description" content="Self joinSelf join Edinburgh BusesDetails of the database Looking at the data stops(id, name) route(num, company, pos, stop)    stops    id   name      route    num   company   pos   stop">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-20T12:39:45.000Z">
+<meta property="og:updated_time" content="2019-11-23T08:38:19.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -735,7 +735,11 @@ route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>
 <blockquote>
 <p>示例</p>
 </blockquote>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">SELECT a.company, a.num, a.stop, b.stop</span><br><span class="line">FROM route a JOIN route b ON</span><br><span class="line">  (a.company=b.company AND a.num=b.num)</span><br><span class="line">WHERE a.stop=53</span><br><span class="line">```     </span><br><span class="line"></span><br><span class="line">![image.png](attachment:image.png)</span><br><span class="line">**...**</span><br><span class="line">### mysql</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">%sql SELECT a.company, a.num, a.stop, b.stop \</span><br><span class="line">FROM route a JOIN route b ON \</span><br><span class="line">  (a.company=b.company AND a.num=b.num) \</span><br><span class="line">WHERE a.stop=53 and b.stop = ( \</span><br><span class="line">select id from stops where name = &apos;London Road&apos;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT a.company, a.num, a.stop, b.stop</span><br><span class="line">FROM route a JOIN route b ON</span><br><span class="line">  (a.company=b.company AND a.num=b.num)</span><br><span class="line">WHERE a.stop=53</span><br></pre></td></tr></table></figure>
+
+<p><img src="attachment:image.png" alt="image.png">
+<strong>…</strong></p>
+<h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT a.company, a.num, a.stop, b.stop \</span><br><span class="line">FROM route a JOIN route b ON \</span><br><span class="line">  (a.company=b.company AND a.num=b.num) \</span><br><span class="line">WHERE a.stop=<span class="hljs-number">53</span> <span class="hljs-keyword">and</span> b.stop = ( \</span><br><span class="line">select id <span class="hljs-keyword">from</span> stops where name = <span class="hljs-string">'London Road'</span>)</span><br></pre></td></tr></table></figure>
 
 <pre><code> * mysql+pymysql://root:***@localhost/dbs
 2 rows affected.</code></pre><table>
@@ -873,7 +877,7 @@ route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT a.company, a.num, stopa.name, stopb.name</span><br><span class="line">FROM route a JOIN route b ON</span><br><span class="line">  (a.company=b.company AND a.num=b.num)</span><br><span class="line">  JOIN stops stopa ON (a.stop=stopa.id)</span><br><span class="line">  JOIN stops stopb ON (b.stop=stopb.id)</span><br><span class="line">WHERE stopa.name=&apos;Craiglockhart&apos;</span><br></pre></td></tr></table></figure>
 <p><img src="attachment:image.png" alt="image.png">
 <strong>…</strong></p>
-<h3 id="mysql-4"><a href="#mysql-4" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT a.company, a.num, stopa.name, stopb.name \</span><br><span class="line">FROM route a JOIN route b ON \</span><br><span class="line">  (a.company=b.company AND a.num=b.num) \</span><br><span class="line">  JOIN stops stopa ON (a.stop=stopa.id) \</span><br><span class="line">  JOIN stops stopb ON (b.stop=stopb.id) \</span><br><span class="line">WHERE stopa.name=<span class="hljs-string">'Craiglockhart'</span> <span class="hljs-keyword">and</span> stopb.name = <span class="hljs-string">'London Road'</span></span><br></pre></td></tr></table></figure>
+<h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT a.company, a.num, stopa.name, stopb.name \</span><br><span class="line">FROM route a JOIN route b ON \</span><br><span class="line">  (a.company=b.company AND a.num=b.num) \</span><br><span class="line">  JOIN stops stopa ON (a.stop=stopa.id) \</span><br><span class="line">  JOIN stops stopb ON (b.stop=stopb.id) \</span><br><span class="line">WHERE stopa.name=<span class="hljs-string">'Craiglockhart'</span> <span class="hljs-keyword">and</span> stopb.name = <span class="hljs-string">'London Road'</span></span><br></pre></td></tr></table></figure>
 
 <pre><code> * mysql+pymysql://root:***@localhost/dbs
 2 rows affected.</code></pre><table>
@@ -949,7 +953,7 @@ route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>
 
 
 <h2 id="Using-a-self-join"><a href="#Using-a-self-join" class="headerlink" title="Using a self join"></a><a href="https://sqlzoo.net/wiki/Using_a_self_join" target="_blank" rel="noopener" title="Using a self join">Using a self join</a></h2><h2 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h2><p><strong>Give a list of all the services which connect stops 115 and 137 (‘Haymarket’ and ‘Leith’)</strong></p>
-<h3 id="mysql-5"><a href="#mysql-5" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql select DISTINCTROW a.company, a.num \     <span class="hljs-comment"># mysql里用了DISTINCTROW来删除重复行</span></span><br><span class="line"><span class="hljs-keyword">from</span> route a join route b on \</span><br><span class="line">(a.company = b.company <span class="hljs-keyword">and</span> a.num = b.num) \</span><br><span class="line">join stops stopa on (a.stop = stopa.id) \</span><br><span class="line">join stops stopb on (b.stop = stopb.id) \</span><br><span class="line">where stopa.name = <span class="hljs-string">'Haymarket'</span> <span class="hljs-keyword">and</span> stopb.name = <span class="hljs-string">'Leith'</span></span><br></pre></td></tr></table></figure>
+<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql select DISTINCTROW a.company, a.num \     <span class="hljs-comment"># mysql里用了DISTINCTROW来删除重复行</span></span><br><span class="line"><span class="hljs-keyword">from</span> route a join route b on \</span><br><span class="line">(a.company = b.company <span class="hljs-keyword">and</span> a.num = b.num) \</span><br><span class="line">join stops stopa on (a.stop = stopa.id) \</span><br><span class="line">join stops stopb on (b.stop = stopb.id) \</span><br><span class="line">where stopa.name = <span class="hljs-string">'Haymarket'</span> <span class="hljs-keyword">and</span> stopb.name = <span class="hljs-string">'Leith'</span></span><br></pre></td></tr></table></figure>
 
 <pre><code> * mysql+pymysql://root:***@localhost/dbs
 6 rows affected.</code></pre><table>
@@ -1049,7 +1053,7 @@ route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>
 
 
 <h2 id="8"><a href="#8" class="headerlink" title="8."></a>8.</h2><p>Give a list of the services which connect the <strong>stops</strong> ‘Craiglockhart’ and ‘Tollcross’</p>
-<h3 id="mysql-6"><a href="#mysql-6" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT DISTINCTROW a.company, a.num \</span><br><span class="line">FROM route a JOIN route b \</span><br><span class="line">ON (a.company = b.company AND a.num = b.num) \</span><br><span class="line">JOIN stops stopa ON (a.stop = stopa.id) \</span><br><span class="line">JOIN stops stopb ON (b.stop = stopb.id) \</span><br><span class="line">WHERE stopa.name = <span class="hljs-string">'Craiglockhart'</span> AND stopb.name = <span class="hljs-string">'Tollcross'</span></span><br></pre></td></tr></table></figure>
+<h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT DISTINCTROW a.company, a.num \</span><br><span class="line">FROM route a JOIN route b \</span><br><span class="line">ON (a.company = b.company AND a.num = b.num) \</span><br><span class="line">JOIN stops stopa ON (a.stop = stopa.id) \</span><br><span class="line">JOIN stops stopb ON (b.stop = stopb.id) \</span><br><span class="line">WHERE stopa.name = <span class="hljs-string">'Craiglockhart'</span> AND stopb.name = <span class="hljs-string">'Tollcross'</span></span><br></pre></td></tr></table></figure>
 
 <pre><code> * mysql+pymysql://root:***@localhost/dbs
 4 rows affected.</code></pre><table>
@@ -1132,7 +1136,7 @@ route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>
 
 
 <h2 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h2><p>Give a distinct list of the <strong>stops</strong> which may be reached from ‘Craiglockhart’ by taking one bus, including ‘Craiglockhart’ itself, offered by the LRT company. Include the company and bus no. of the relevant services.</p>
-<h3 id="mysql-7"><a href="#mysql-7" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%sql select DISTINCTROW stopb.name, a.company, a.num <span class="hljs-keyword">from</span> route a \</span><br><span class="line">join route b on (a.company = b.company <span class="hljs-keyword">and</span> a.num = b.num) \</span><br><span class="line">join stops stopa on (a.stop = stopa.id) \</span><br><span class="line">join stops stopb on (b.stop = stopb.id) \</span><br><span class="line">where a.company = <span class="hljs-string">'LRT'</span> <span class="hljs-keyword">and</span> stopa.name = <span class="hljs-string">'Craiglockhart'</span></span><br></pre></td></tr></table></figure>
+<h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%sql select DISTINCTROW stopb.name, a.company, a.num <span class="hljs-keyword">from</span> route a \</span><br><span class="line">join route b on (a.company = b.company <span class="hljs-keyword">and</span> a.num = b.num) \</span><br><span class="line">join stops stopa on (a.stop = stopa.id) \</span><br><span class="line">join stops stopb on (b.stop = stopb.id) \</span><br><span class="line">where a.company = <span class="hljs-string">'LRT'</span> <span class="hljs-keyword">and</span> stopa.name = <span class="hljs-string">'Craiglockhart'</span></span><br></pre></td></tr></table></figure>
 
 <pre><code> * mysql+pymysql://root:***@localhost/dbs
 46 rows affected.</code></pre><table>
@@ -1690,7 +1694,7 @@ route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>
 Show the bus no. and company for the first bus, the name of the stop for the transfer,<br>and the bus no. and company for the second bus.</p>
 <p>Hint</p>
 <p>Self-join twice to find buses that visit Craiglockhart and Lochend, then join those on matching stops.</p>
-<h3 id="mysql-8"><a href="#mysql-8" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT a.num, a.company, stops.name, c.num, c.company \</span><br><span class="line"><span class="hljs-keyword">from</span> route a join route b on a.company=b.company AND a.num=b.num \</span><br><span class="line">join stops on stops.id=a.stop \</span><br><span class="line">join route c on stops.id=c.stop \</span><br><span class="line">join route d on c.company=d.company AND c.num=d.num \</span><br><span class="line">where b.stop =(select id <span class="hljs-keyword">from</span> stops where name= <span class="hljs-string">'Craiglockhart'</span>) \</span><br><span class="line"><span class="hljs-keyword">and</span> d.stop =(select id <span class="hljs-keyword">from</span> stops where name= <span class="hljs-string">'Lochend'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="mysql-9"><a href="#mysql-9" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%sql SELECT a.num, a.company, stops.name, c.num, c.company \</span><br><span class="line"><span class="hljs-keyword">from</span> route a join route b on a.company=b.company AND a.num=b.num \</span><br><span class="line">join stops on stops.id=a.stop \</span><br><span class="line">join route c on stops.id=c.stop \</span><br><span class="line">join route d on c.company=d.company AND c.num=d.num \</span><br><span class="line">where b.stop =(select id <span class="hljs-keyword">from</span> stops where name= <span class="hljs-string">'Craiglockhart'</span>) \</span><br><span class="line"><span class="hljs-keyword">and</span> d.stop =(select id <span class="hljs-keyword">from</span> stops where name= <span class="hljs-string">'Lochend'</span>)</span><br></pre></td></tr></table></figure>
 
 <pre><code> * mysql+pymysql://root:***@localhost/dbs
 36 rows affected.</code></pre><table>
@@ -2579,7 +2583,7 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/sql/" rel="tag">sql</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
                 </div>
             </div>
         </div>
@@ -2735,15 +2739,19 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
         <span class="has-mr-6">7</span>
         <span>5.</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#pandas-4">
+        <a class="is-flex" href="#mysql-4">
         <span class="has-mr-6">7.1</span>
+        <span>mysql</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas-4">
+        <span class="has-mr-6">7.2</span>
         <span>pandas</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#6">
         <span class="has-mr-6">8</span>
         <span>6.</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#mysql-4">
+        <a class="is-flex" href="#mysql-5">
         <span class="has-mr-6">8.1</span>
         <span>mysql</span>
         </a></li><li>
@@ -2759,7 +2767,7 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
         <span class="has-mr-6">10</span>
         <span>7.</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#mysql-5">
+        <a class="is-flex" href="#mysql-6">
         <span class="has-mr-6">10.1</span>
         <span>mysql</span>
         </a></li><li>
@@ -2771,7 +2779,7 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
         <span class="has-mr-6">11</span>
         <span>8.</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#mysql-6">
+        <a class="is-flex" href="#mysql-7">
         <span class="has-mr-6">11.1</span>
         <span>mysql</span>
         </a></li></ul></li><li>
@@ -2779,7 +2787,7 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
         <span class="has-mr-6">12</span>
         <span>9.</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#mysql-7">
+        <a class="is-flex" href="#mysql-8">
         <span class="has-mr-6">12.1</span>
         <span>mysql</span>
         </a></li></ul></li><li>
@@ -2787,7 +2795,7 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
         <span class="has-mr-6">13</span>
         <span>10.</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#mysql-8">
+        <a class="is-flex" href="#mysql-9">
         <span class="has-mr-6">13.1</span>
         <span>mysql</span>
         </a></li></ul></li></ul>
@@ -2820,6 +2828,32 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time></div>
+                    <a href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/" class="has-link-black-ter is-size-6">Mysql开启慢日志</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time></div>
+                    <a href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/" class="has-link-black-ter is-size-6">mariadb的安装</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time></div>
                     <a href="/2019/10/05/%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5/" class="has-link-black-ter is-size-6">摘录一个关于jupyter-notebook技巧的网页</a>
                     <p class="is-size-7 is-uppercase">
@@ -2837,32 +2871,6 @@ dtype: int64</code></pre><p><strong>尽管结果得出跟mysql一样，但过程
                     <a href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/" class="has-link-black-ter is-size-6">matplotlib中文显示问题</a>
                     <p class="is-size-7 is-uppercase">
                         
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-02T07:28:37.000Z">2019-10-02</time></div>
-                    <a href="/2019/10/02/manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/" class="has-link-black-ter is-size-6">manjaro系统必备软件</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-01T10:32:29.000Z">2019-10-01</time></div>
-                    <a href="/2019/10/01/manjaro%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" class="has-link-black-ter is-size-6">manjaro系统配置</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
                     </p>
                 </div>
             </div>

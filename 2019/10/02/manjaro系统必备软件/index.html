@@ -16,7 +16,7 @@
 <meta property="og:description" content="一开始使用的是ubuntu 系列的系统，但总有些软件安装好麻烦，即使安装好了，总会字体、介面、图标等等问题。后来经一朋友的帮助下，安装成功了arch ,软件库非常丰富，当组件、软件、系统方面有更新会提示升级，非常便捷友好。后来安装QGIS后，检测不到python，使用不了；同时由于我是多系统，一不小心把GRUB搞坏了，每次都要进入arch系统都要敲命令改参数。 我不得不考虑更换系统了，那哥们是一">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-22T06:22:39.933Z">
+<meta property="og:updated_time" content="2019-11-23T09:02:45.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 743 个字)
+                    5 分钟 读完 (大约 817 个字)
                 </span>
                 
                 
@@ -220,6 +220,18 @@
 </li>
 </ul>
 <p><img src="/images/blog/image-090741223.png" alt="image-090741223"></p>
+<ul>
+<li>当出现这样的错误时：</li>
+</ul>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lanhoo@lanhoo-pc sh_files]$ fusuma</span><br><span class="line">E, [2019-10-28T15:46:38.774809 <span class="hljs-comment">#1647] ERROR -- : Touchpad is not found</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>要给input group 加上当前的用户</li>
+</ul>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gpasswd -a <span class="hljs-variable">$USER</span> input</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lanhoo@lanhoo-pc sh_files]$ sudo gpasswd -a <span class="hljs-variable">$USER</span> input</span><br><span class="line">[sudo] lanhoo 的密码：</span><br><span class="line">正在将用户“lanhoo”加入到“input”组中</span><br></pre></td></tr></table></figure>
+
 <h2 id="GoldenDict"><a href="#GoldenDict" class="headerlink" title="GoldenDict"></a>GoldenDict</h2><blockquote>
 <p>词典必备，下了两个词典，一个带有发音的，另一个多了2w个词</p>
 </blockquote>
@@ -407,6 +419,32 @@
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time></div>
+                    <a href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/" class="has-link-black-ter is-size-6">Mysql开启慢日志</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time></div>
+                    <a href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/" class="has-link-black-ter is-size-6">mariadb的安装</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time></div>
                     <a href="/2019/10/05/%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5/" class="has-link-black-ter is-size-6">摘录一个关于jupyter-notebook技巧的网页</a>
                     <p class="is-size-7 is-uppercase">
@@ -424,32 +462,6 @@
                     <a href="/2019/10/03/matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/" class="has-link-black-ter is-size-6">matplotlib中文显示问题</a>
                     <p class="is-size-7 is-uppercase">
                         
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-02T07:28:37.000Z">2019-10-02</time></div>
-                    <a href="/2019/10/02/manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/" class="has-link-black-ter is-size-6">manjaro系统必备软件</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-01T10:32:29.000Z">2019-10-01</time></div>
-                    <a href="/2019/10/01/manjaro%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" class="has-link-black-ter is-size-6">manjaro系统配置</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
                     </p>
                 </div>
             </div>

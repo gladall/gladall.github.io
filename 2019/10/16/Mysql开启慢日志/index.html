@@ -2,21 +2,21 @@
 <html  lang="zh">
 <head>
     <meta charset="utf-8">
-<title>Hive group by distinct性能调优 - Lanhoo&#39;s blog</title>
+<title>Mysql开启慢日志 - Lanhoo&#39;s blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 
 
-    <meta name="description" content="Hive去重统计相信使用Hive的人平时会经常用到去重统计之类的吧，但是好像平时很少关注这个去重的性能问题，但是当一个表的数据量非常大的时候，会发现一个简单的count(distinct order_no)这种语句跑的特别慢，和直接运行count(order_no)的时间差了很多，于是研究了一下。 先说结论:能使用group by代替distinc就不要使用distinct，例子：">
-<meta name="keywords" content="hive">
+    <meta name="description" content="查看mysql物理文件存放地方1234567show global variables like &amp;quot;%datadir%&amp;quot;;+---------------+-----------------+| Variable_name | Value           |+---------------+-----------------+| datadir       | &#x2F;var&#x2F;l">
+<meta name="keywords" content="mysql,sql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hive group by distinct性能调优">
-<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;09&#x2F;02&#x2F;Hive%20group%20by%20distinct%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98&#x2F;index.html">
+<meta property="og:title" content="Mysql开启慢日志">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;10&#x2F;16&#x2F;Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97&#x2F;index.html">
 <meta property="og:site_name" content="Lanhoo&#39;s blog">
-<meta property="og:description" content="Hive去重统计相信使用Hive的人平时会经常用到去重统计之类的吧，但是好像平时很少关注这个去重的性能问题，但是当一个表的数据量非常大的时候，会发现一个简单的count(distinct order_no)这种语句跑的特别慢，和直接运行count(order_no)的时间差了很多，于是研究了一下。 先说结论:能使用group by代替distinc就不要使用distinct，例子：">
+<meta property="og:description" content="查看mysql物理文件存放地方1234567show global variables like &amp;quot;%datadir%&amp;quot;;+---------------+-----------------+| Variable_name | Value           |+---------------+-----------------+| datadir       | &#x2F;var&#x2F;l">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-20T12:40:04.000Z">
+<meta property="og:updated_time" content="2019-11-23T08:37:07.597Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -106,7 +106,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/grid.svg" alt="Hive group by distinct性能调优" height="28">
+                <img src="/images/grid.svg" alt="Mysql开启慢日志" height="28">
             
             </a>
         </div>
@@ -159,13 +159,13 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-09-02T00:16:42.000Z">2019-09-02</time>
+                <time class="level-item has-text-grey" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 761 个字)
+                    1 分钟 读完 (大约 179 个字)
                 </span>
                 
                 
@@ -174,47 +174,47 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Hive group by distinct性能调优
+                Mysql开启慢日志
             
         </h1>
         <div class="content">
-            <h3 id="Hive去重统计"><a href="#Hive去重统计" class="headerlink" title="Hive去重统计"></a>Hive去重统计</h3><p>相信使用Hive的人平时会经常用到去重统计之类的吧，但是好像平时很少关注这个去重的性能问题，但是当一个表的数据量非常大的时候，会发现一个简单的<code>count(distinct order_no)</code>这种语句跑的特别慢，和直接运行<code>count(order_no)</code>的时间差了很多，于是研究了一下。
-<strong>先说结论:</strong>能使用<code>group by</code>代替<code>distinc</code>就不要使用<code>distinct</code>，例子：</p>
+            <h2 id="查看mysql物理文件存放地方"><a href="#查看mysql物理文件存放地方" class="headerlink" title="查看mysql物理文件存放地方"></a>查看mysql物理文件存放地方</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">show global variables like &quot;%datadir%&quot;;</span><br><span class="line"></span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| Variable_name | Value           |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| datadir       | /var/lib/mysql/ |</span><br><span class="line">+---------------+-----------------+</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
-<h3 id="实际论证"><a href="#实际论证" class="headerlink" title="实际论证"></a>实际论证</h3><p>order_snap为订单的快照表 总记录条数763191489，即将近8亿条记录,总大小:108.877GB,存储的是公司所有的订单信息，表的字段大概有20个,其中订单号是没有重复的,所以在统计总共有多少订单号的时候去重不去重结果都一样，我们来看看:
-统计所有的订单有多少条条数，一个<code>count</code>函数就可以搞定的sql性能如何。</p>
-<ul>
-<li><font color="pinkblue">DISTINCT</font></li>
+
+<h2 id="以root进入该目录，建立data-slow-log-并更改所有者，所有组"><a href="#以root进入该目录，建立data-slow-log-并更改所有者，所有组" class="headerlink" title="以root进入该目录，建立data/slow.log,并更改所有者，所有组"></a>以root进入该目录，建立data/slow.log,并更改所有者，所有组</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">cd /var/lib/mysql/</span><br><span class="line">mkdir data</span><br><span class="line">cd data</span><br><span class="line">touch slow.log</span><br><span class="line">cd ..</span><br><span class="line">chown -R mysql:mysql data/</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="在mysql里设置"><a href="#在mysql里设置" class="headerlink" title="在mysql里设置"></a>在mysql里设置</h2><ul>
+<li><code>set global slow_query_log=&#39;ON&#39;;</code> </li>
+<li><code>set global slow_query_log_file=&quot;/var/lib/mysql/data/slow.log&quot;;</code> </li>
+<li><code>set global long_query_time=1;</code> </li>
 </ul>
-<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">select</span> <span class="hljs-keyword">count</span>(<span class="hljs-keyword">distinct</span> order_no) <span class="hljs-keyword">from</span> order_snap;</span><br><span class="line">Stage-Stage-1: Map: 396  Reduce: 1   Cumulative CPU: 7915.67 sec   HDFS Read: 119072894175 HDFS Write: 10 SUCCESS</span><br><span class="line">Total MapReduce CPU Time Spent: 0 days 2 hours 11 minutes 55 seconds 670 msec</span><br><span class="line">OK</span><br><span class="line">_c0</span><br><span class="line">763191489</span><br><span class="line">Time taken: 1818.864 seconds, Fetched: 1 row(s)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><font color="pinkblue">GROUP BY</font></li>
-</ul>
-<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">select</span> <span class="hljs-keyword">count</span>(t.order_no) <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> order_no <span class="hljs-keyword">from</span> order_snap <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> order_no) t;</span><br><span class="line">Stage-Stage-1: Map: 396  Reduce: 457   Cumulative CPU: 10056.7 sec   HDFS Read: 119074266583 HDFS Write: 53469 SUCCESS</span><br><span class="line">Stage-Stage-2: Map: 177  Reduce: 1   Cumulative CPU: 280.22 sec   HDFS Read: 472596 HDFS Write: 10 SUCCESS</span><br><span class="line">Total MapReduce CPU Time Spent: 0 days 2 hours 52 minutes 16 seconds 920 msec</span><br><span class="line">OK</span><br><span class="line">_c0</span><br><span class="line">763191489</span><br><span class="line">Time taken: 244.192 seconds, Fetched: 1 row(s)</span><br></pre></td></tr></table></figure>
-
-<p><strong>结论:</strong><font color="#fd5f00">第二种写法的性能是第一种的<code>7.448499541</code>倍</font>
-注意到为什么会有这个差异，Hadoop其实就是处理大数据的，Hive并不怕数据有多大，怕的就是数据倾斜,我们看看两者的输出信息:</p>
-<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># distinct</span></span><br><span class="line">Stage-Stage-1: Map: 396  Reduce: 1   Cumulative CPU: 7915.67 sec   HDFS Read: 119072894175 HDFS Write: 10 SUCCESS</span><br><span class="line"><span class="hljs-comment"># group by</span></span><br><span class="line">Stage-Stage-1: Map: 396  Reduce: 457   Cumulative CPU: 10056.7 sec   HDFS Read: 119074266583 HDFS Write: 53469 SUCCESS</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [mygame]&gt; set global slow_query_log=&apos;ON&apos;;</span><br><span class="line">Query OK, 0 rows affected (0.011 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [mygame]&gt; set global slow_query_log_file=&quot;/var/lib/mysql/data/slow.log&quot;;</span><br><span class="line">Query OK, 0 rows affected (0.000 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [mygame]&gt; set global long_query_time=1;</span><br><span class="line">Query OK, 0 rows affected (0.000 sec)</span><br></pre></td></tr></table></figure>
 
 
 
-<p>发现猫腻了没有，<font color="#fd5f00">使用distinct会将所有的order_no都shuffle到一个reducer里面，这就是我们所说的数据倾斜，都倾斜到一个reducer这样性能能不低么？再看第二个，直接按订单号分组，起了457个<code>reducer</code>，将数据分布到多台机器上执行，时间当然快了.</font>
-由于没有手动指定Reduce的个数，Hive会根据数据的大小动态的指定Reduce大小，你也可以手动指定</p>
-<figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; set mapred.reduce.tasks=100；</span><br></pre></td></tr></table></figure>
+<h2 id="重启mysql服务"><a href="#重启mysql服务" class="headerlink" title="重启mysql服务"></a>重启mysql服务</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart mysqld</span><br></pre></td></tr></table></figure>
 
 
 
-<p>类似这样,所以如果数据量特别大的情况下，尽量不要使用<code>distinct</code>吧。
-但是如果你想在一条语句里看总记录条数以及去重之后的记录条数，那没有办法过滤，所以你有两个选择，要么使用两个sql语句分别跑，然后union all或者就使用普通的distinct。具体来说得看具体情况，直接使用distinct可读性好，数据量如果不大的话推荐使用，如果数据太大了，性能受到影响了，再考虑优化。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ol>
+<li>执行一条慢查询SQL语句</li>
+</ol>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sleep(2);</span><br></pre></td></tr></table></figure>
 
+<ol>
+<li>查看是否生成慢查询日志</li>
+</ol>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail /var/lib/mysql/data/slow.log</span><br></pre></td></tr></table></figure>
         </div>
         
         <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/hive/" rel="tag">hive</a>
+                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/sql/" rel="tag">sql</a>
                 </div>
             </div>
         </div>
@@ -265,16 +265,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/20/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-0/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">mysql与pandas对照学习(0)</span>
+                <span class="level-item">分享一个按照模板文件格式自动汇总统计的脚本</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/08/04/hexo%E5%8D%9A%E5%AE%A2icarus%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9/">
-                <span class="level-item">hexo博客icarus主题的修改</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/">
+                <span class="level-item">mariadb的安装</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -306,13 +306,25 @@
                 目录
             </h3>
             <ul class="menu-list"><li>
-        <a class="is-flex" href="#Hive去重统计">
+        <a class="is-flex" href="#查看mysql物理文件存放地方">
         <span class="has-mr-6">1</span>
-        <span>Hive去重统计</span>
+        <span>查看mysql物理文件存放地方</span>
         </a></li><li>
-        <a class="is-flex" href="#实际论证">
+        <a class="is-flex" href="#以root进入该目录，建立data-slow-log-并更改所有者，所有组">
         <span class="has-mr-6">2</span>
-        <span>实际论证</span>
+        <span>以root进入该目录，建立data/slow.log,并更改所有者，所有组</span>
+        </a></li><li>
+        <a class="is-flex" href="#在mysql里设置">
+        <span class="has-mr-6">3</span>
+        <span>在mysql里设置</span>
+        </a></li><li>
+        <a class="is-flex" href="#重启mysql服务">
+        <span class="has-mr-6">4</span>
+        <span>重启mysql服务</span>
+        </a></li><li>
+        <a class="is-flex" href="#测试">
+        <span class="has-mr-6">5</span>
+        <span>测试</span>
         </a></li></ul>
         </div>
     </div>
@@ -334,6 +346,32 @@
                     <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time></div>
+                    <a href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/" class="has-link-black-ter is-size-6">Mysql开启慢日志</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time></div>
+                    <a href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/" class="has-link-black-ter is-size-6">mariadb的安装</a>
+                    <p class="is-size-7 is-uppercase">
+                        
                     </p>
                 </div>
             </div>
@@ -365,32 +403,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-02T07:28:37.000Z">2019-10-02</time></div>
-                    <a href="/2019/10/02/manjaro%E7%B3%BB%E7%BB%9F%E5%BF%85%E5%A4%87%E8%BD%AF%E4%BB%B6/" class="has-link-black-ter is-size-6">manjaro系统必备软件</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-01T10:32:29.000Z">2019-10-01</time></div>
-                    <a href="/2019/10/01/manjaro%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" class="has-link-black-ter is-size-6">manjaro系统配置</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">系统配置</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -407,7 +419,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/grid.svg" alt="Hive group by distinct性能调优" height="28">
+                    <img src="/images/grid.svg" alt="Mysql开启慢日志" height="28">
                 
                 </a>
                 <p class="is-size-7">
