@@ -164,6 +164,57 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 185 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/">Mysql开启慢日志</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="查看mysql物理文件存放地方"><a href="#查看mysql物理文件存放地方" class="headerlink" title="查看mysql物理文件存放地方"></a>查看mysql物理文件存放地方</h2><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">show</span> <span class="hljs-keyword">global</span> <span class="hljs-keyword">variables</span> <span class="hljs-keyword">like</span> <span class="hljs-string">"%datadir%"</span>;</span><br><span class="line"></span><br><span class="line">+<span class="hljs-comment">---------------+-----------------+</span></span><br><span class="line">| Variable_name | Value           |</span><br><span class="line">+<span class="hljs-comment">---------------+-----------------+</span></span><br><span class="line">| datadir       | /var/lib/mysql/ |</span><br><span class="line">+<span class="hljs-comment">---------------+-----------------+</span></span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time>
                 
                 
@@ -210,6 +261,850 @@
 
 
 
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-28T13:06:53.000Z">2019-09-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    18 分钟 读完 (大约 2706 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/">mysql与pandas对照学习(9)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="Self-join"><a href="#Self-join" class="headerlink" title="Self join"></a>Self join</h2><p><a href="https://sqlzoo.net/wiki/Self_join" target="_blank" rel="noopener">Self join</a></p>
+<h3 id="Edinburgh-Buses"><a href="#Edinburgh-Buses" class="headerlink" title="Edinburgh Buses"></a>Edinburgh Buses</h3><p><a href="https://sqlzoo.net/wiki/Edinburgh_Buses." target="_blank" rel="noopener" title="Edinburgh Buses.">Details of the database</a> Looking at the data</p>
+<p>stops(<strong>id</strong>, name)
+route(<strong>num</strong>, <strong>company</strong>, <strong>pos</strong>, <em>stop</em>)</p>
+<table>
+<thead>
+<tr>
+<th><strong>stops</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>id</em></td>
+</tr>
+<tr>
+<td>name</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>route</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>num</em></td>
+</tr>
+<tr>
+<td><em>company</em></td>
+</tr>
+<tr>
+<td><em>pos</em></td>
+</tr>
+<tr>
+<td>stop</td>
+</tr>
+</tbody></table>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/28/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-9/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-27T11:32:09.000Z">2019-09-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1390 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/">mysql与pandas对照学习(8)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="Using-Null"><a href="#Using-Null" class="headerlink" title="Using Null"></a>Using Null</h2><p><a href="https://sqlzoo.net/wiki/Using_Null" target="_blank" rel="noopener">Using Null</a></p>
+<table>
+<thead>
+<tr>
+<th align="left">id</th>
+<th align="left">dept</th>
+<th align="left">name</th>
+<th align="left">phone</th>
+<th align="left">mobile</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">101</td>
+<td align="left">1</td>
+<td align="left">Shrivell</td>
+<td align="left">2753</td>
+<td align="left">07986 555 1234</td>
+</tr>
+<tr>
+<td align="left">102</td>
+<td align="left">1</td>
+<td align="left">Throd</td>
+<td align="left">2754</td>
+<td align="left">07122 555 1920</td>
+</tr>
+<tr>
+<td align="left">103</td>
+<td align="left">1</td>
+<td align="left">Splint</td>
+<td align="left">2293</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">104</td>
+<td align="left"></td>
+<td align="left">Spiregrain</td>
+<td align="left">3287</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">105</td>
+<td align="left">2</td>
+<td align="left">Cutflower</td>
+<td align="left">3212</td>
+<td align="left">07996 555 6574</td>
+</tr>
+<tr>
+<td align="left">106</td>
+<td align="left"></td>
+<td align="left">Deadyawn</td>
+<td align="left">3345</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">id</th>
+<th align="left">name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">Computing</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">Design</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">Engineering</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/27/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-8/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-26T12:19:48.000Z">2019-09-26</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 小时 读完 (大约 8287 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/">mysql与pandas对照学习(7)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="More-JOIN-operations-zh"><a href="#More-JOIN-operations-zh" class="headerlink" title="More JOIN operations/zh"></a>More JOIN operations/zh</h2><p><a href="https://sqlzoo.net/wiki/More_JOIN_operations/zh" target="_blank" rel="noopener">More JOIN operations/zh</a></p>
+<blockquote>
+<p>关于下面使用<code>ipython-sql</code>模块，查询报错的情况说明：sql语句是没有错误的，可以在终端里进入mysql里运行，只是当有三个表联表查询时，这个模块会运行不下去，卡住。</p>
+</blockquote>
+<h3 id="電影數據庫"><a href="#電影數據庫" class="headerlink" title="電影數據庫"></a>電影數據庫</h3><p>此教程練習表格合拼。數據庫有三個表格
+<code>movie電影(id編號, title電影名稱, yr首影年份, director導演, budget製作費, gross票房收入)</code>
+<code>actor演員(id編號, name姓名)</code>
+<code>casting角色(movieid電影編號, actorid演員編號, ord角色次序)</code>
+角色次序代表第1主角是1, 第2主角是2…如此類推.</p>
+<p><a href="https://sqlzoo.net/wiki/More_details_about_the_database." target="_blank" rel="noopener" title="More details about the database.">More details about the database.</a></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/26/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-7/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-25T12:38:19.000Z">2019-09-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    22 分钟 读完 (大约 3252 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/">mysql与pandas对照学习(6)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="The-JOIN-operation-zh"><a href="#The-JOIN-operation-zh" class="headerlink" title="The JOIN operation/zh"></a>The JOIN operation/zh</h2><p><a href="https://sqlzoo.net/wiki/The_JOIN_operation/zh" target="_blank" rel="noopener">The JOIN operation/zh</a></p>
+<p>game(賽事)</p>
+<table>
+<thead>
+<tr>
+<th>id(編號)</th>
+<th>mdate(日期)</th>
+<th>stadium(場館)</th>
+<th>team1(隊伍1)</th>
+<th>team2(隊伍2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1001</td>
+<td>8 June 2012</td>
+<td>National Stadium, Warsaw</td>
+<td>POL</td>
+<td>GRE</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>8 June 2012</td>
+<td>Stadion Miejski (Wroclaw)</td>
+<td>RUS</td>
+<td>CZE</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>12 June 2012</td>
+<td>Stadion Miejski (Wroclaw)</td>
+<td>GRE</td>
+<td>CZE</td>
+</tr>
+<tr>
+<td>1004</td>
+<td>12 June 2012</td>
+<td>National Stadium, Warsaw</td>
+<td>POL</td>
+<td>RUS</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/25/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-6/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-24T11:47:25.000Z">2019-09-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1015 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/24/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5/">mysql与pandas对照学习(5)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="SUM-and-COUNT-zh"><a href="#SUM-and-COUNT-zh" class="headerlink" title="SUM and COUNT/zh"></a>SUM and COUNT/zh</h2><p><a href="https://sqlzoo.net/wiki/SUM_and_COUNT/zh" target="_blank" rel="noopener">SUM and COUNT/zh</a></p>
+<h3 id="全球統計-群組函數"><a href="#全球統計-群組函數" class="headerlink" title="全球統計:群組函數"></a>全球統計:群組函數</h3><p>此教程是有關群組函數，例如COUNT, SUM 和 AVG。群組函數把多個數值運算，得出結果只有一個數值。例如SUM函數會把數值2,4,和5運算成結果11。</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>continent</th>
+<th>area</th>
+<th>population</th>
+<th>gdp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>652230</td>
+<td>25500100</td>
+<td>20343000000</td>
+</tr>
+<tr>
+<td>Albania</td>
+<td>Europe</td>
+<td>28748</td>
+<td>2831741</td>
+<td>12960000000</td>
+</tr>
+<tr>
+<td>Algeria</td>
+<td>Africa</td>
+<td>2381741</td>
+<td>37100000</td>
+<td>188681000000</td>
+</tr>
+<tr>
+<td>Andorra</td>
+<td>Europe</td>
+<td>468</td>
+<td>78115</td>
+<td>3712000000</td>
+</tr>
+<tr>
+<td>Angola</td>
+<td>Africa</td>
+<td>1246700</td>
+<td>20609294</td>
+<td>100990000000</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>name:國家名稱
+continent:洲份
+area:面積
+population:人口
+gdp:國內生產總值</p>
+<h2 id="示範"><a href="#示範" class="headerlink" title="示範"></a>示範</h2><p><a href="https://sqlzoo.net/wiki/Using_SUM,_Count,_MAX,_DISTINCT_and_ORDER_BY" target="_blank" rel="noopener" title="Using SUM, Count, MAX, DISTINCT and ORDER BY">使用 SUM, Count, MAX, DISTINCT 和 ORDER BY</a>.</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/24/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/24/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-5/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-23T11:28:11.000Z">2019-09-23</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    25 分钟 读完 (大约 3682 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/23/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-4/">mysql与pandas对照学习(4)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="SELECT-within-SELECT-Tutorial-zh"><a href="#SELECT-within-SELECT-Tutorial-zh" class="headerlink" title="SELECT within SELECT Tutorial/zh"></a>SELECT within SELECT Tutorial/zh</h2><p><a href="https://sqlzoo.net/wiki/SELECT_within_SELECT_Tutorial/zh" target="_blank" rel="noopener">SELECT within SELECT Tutorial/zh</a></p>
+<p>此教程教我們在SELECT查詢中使用別一個SELECT查詢，進行一些更複雜的查詢。</p>
+<table>
+<thead>
+<tr>
+<th>name國家名</th>
+<th>continent洲份</th>
+<th>area面積</th>
+<th>population人口</th>
+<th>gdp國民生產總值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>652230</td>
+<td>25500100</td>
+<td>20343000000</td>
+</tr>
+<tr>
+<td>Albania</td>
+<td>Europe</td>
+<td>28748</td>
+<td>2831741</td>
+<td>12960000000</td>
+</tr>
+<tr>
+<td>Algeria</td>
+<td>Africa</td>
+<td>2381741</td>
+<td>37100000</td>
+<td>188681000000</td>
+</tr>
+<tr>
+<td>Andorra</td>
+<td>Europe</td>
+<td>468</td>
+<td>78115</td>
+<td>3712000000</td>
+</tr>
+<tr>
+<td>Angola</td>
+<td>Africa</td>
+<td>1246700</td>
+<td>20609294</td>
+<td>100990000000</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><a href="https://sqlzoo.net/wiki/Using_nested_SELECT/zh" target="_blank" rel="noopener" title="Using nested SELECT/zh">如何使用子查詢</a></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/23/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-4/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/23/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-4/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-22T12:12:31.000Z">2019-09-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    19 分钟 读完 (大约 2809 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/22/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-3/">mysql与pandas对照学习(3)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="SELECT-from-Nobel-Tutorial-zh"><a href="#SELECT-from-Nobel-Tutorial-zh" class="headerlink" title="SELECT from Nobel Tutorial/zh"></a>SELECT from Nobel Tutorial/zh</h2><p><a href="https://sqlzoo.net/wiki/SELECT_from_Nobel_Tutorial/zh" target="_blank" rel="noopener">SELECT from Nobel Tutorial/zh</a></p>
+<table>
+<thead>
+<tr>
+<th align="left">yr</th>
+<th align="left">subject</th>
+<th align="left">winner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1960</td>
+<td align="left">Chemistry</td>
+<td align="left">Willard F. Libby</td>
+</tr>
+<tr>
+<td align="left">1960</td>
+<td align="left">Literature</td>
+<td align="left">Saint-John Perse</td>
+</tr>
+<tr>
+<td align="left">1960</td>
+<td align="left">Medicine</td>
+<td align="left">Sir Frank Macfarlane Burnet</td>
+</tr>
+<tr>
+<td align="left">1960</td>
+<td align="left">Medicine</td>
+<td align="left">Peter Madawar</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>yr: 年份
+subject: 獎項
+winner: 得獎者</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/22/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-3/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/22/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-3/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-21T00:35:43.000Z">2019-09-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    26 分钟 读完 (大约 3961 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/09/21/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-2/">mysql与pandas对照学习(2)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="SQLZOO-SELECT-from-WORLD-Tutorial-zh"><a href="#SQLZOO-SELECT-from-WORLD-Tutorial-zh" class="headerlink" title="SQLZOO:SELECT from WORLD Tutorial/zh"></a>SQLZOO:SELECT from WORLD Tutorial/zh</h2><p><a href="https://sqlzoo.net/wiki/SQLZOO:SELECT_from_WORLD_Tutorial/zh" target="_blank" rel="noopener">SQLZOO:SELECT_from_WORLD_Tutorial/zh</a></p>
+<table>
+<thead>
+<tr>
+<th align="left">name</th>
+<th align="left">continent</th>
+<th align="left">area</th>
+<th align="left">population</th>
+<th align="left">gdp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="left">652230</td>
+<td align="left">25500100</td>
+<td align="left">20343000000</td>
+</tr>
+<tr>
+<td align="left">Albania</td>
+<td align="left">Europe</td>
+<td align="left">28748</td>
+<td align="left">2831741</td>
+<td align="left">12960000000</td>
+</tr>
+<tr>
+<td align="left">Algeria</td>
+<td align="left">Africa</td>
+<td align="left">2381741</td>
+<td align="left">37100000</td>
+<td align="left">188681000000</td>
+</tr>
+<tr>
+<td align="left">Andorra</td>
+<td align="left">Europe</td>
+<td align="left">468</td>
+<td align="left">78115</td>
+<td align="left">3712000000</td>
+</tr>
+<tr>
+<td align="left">Angola</td>
+<td align="left">Africa</td>
+<td align="left">1246700</td>
+<td align="left">20609294</td>
+<td align="left">100990000000</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>name:國家名稱
+continent:洲份
+area:面積
+population:人口
+gdp:國內生產總值</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <!-- 不要跳转到more处 -->
+                <a class="button is-size-7 is-light" href="/2019/09/21/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-2/">阅读更多</a>
+
+                <!-- <a class="button is-size-7 is-light" href="/2019/09/21/mysql%E4%B8%8Epandas%E5%AF%B9%E7%85%A7%E5%AD%A6%E4%B9%A0-2/#more">阅读更多</a> -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/tags/SQL/page/0/">上一页</a>
+        </div>
+        <div class="pagination-next">
+            <a class="is-flex-grow has-text-black-ter" href="/tags/SQL/page/2/">下一页</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link is-current" href="/tags/SQL/">1</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/tags/SQL/page/2/">2</a></li>
+            
+        </ul>
+    </nav>
+</div>
 </div>
                         <!-- 修改 -->
     
@@ -273,7 +1168,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        16
+                        15
                     </p>
                 </div>
             </div>
@@ -387,7 +1282,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/arch/" style="font-size: 12.5px;">arch</a> <a href="/tags/excel/" style="font-size: 12.5px;">excel</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/icarus/" style="font-size: 10px;">icarus</a> <a href="/tags/jupyter/" style="font-size: 10px;">jupyter</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mariadb/" style="font-size: 10px;">mariadb</a> <a href="/tags/matplotlib/" style="font-size: 10px;">matplotlib</a> <a href="/tags/mysql/" style="font-size: 17.5px;">mysql</a> <a href="/tags/pandas/" style="font-size: 17.5px;">pandas</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 20px;">数据分析</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a>
+        <a href="/tags/SQL/" style="font-size: 20px;">SQL</a> <a href="/tags/arch/" style="font-size: 12.5px;">arch</a> <a href="/tags/excel/" style="font-size: 12.5px;">excel</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/icarus/" style="font-size: 10px;">icarus</a> <a href="/tags/jupyter/" style="font-size: 10px;">jupyter</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mariadb/" style="font-size: 10px;">mariadb</a> <a href="/tags/matplotlib/" style="font-size: 10px;">matplotlib</a> <a href="/tags/mysql/" style="font-size: 17.5px;">mysql</a> <a href="/tags/pandas/" style="font-size: 17.5px;">pandas</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 20px;">数据分析</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a>
     </div>
 </div>
 

@@ -7,16 +7,16 @@
 
 
 
-    <meta name="description" content="查看mysql物理文件存放地方1234567show global variables like &amp;quot;%datadir%&amp;quot;;+---------------+-----------------+| Variable_name | Value           |+---------------+-----------------+| datadir       | &#x2F;var&#x2F;l">
-<meta name="keywords" content="mysql,sql">
+    <meta name="description" content="查看mysql物理文件存放地方1234567show global variables like &quot;%datadir%&quot;;+---------------+-----------------+| Variable_name | Value           |+---------------+-----------------+| datadir       | &#x2F;var&#x2F;lib&#x2F;mysql&#x2F;">
+<meta name="keywords" content="mysql,SQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql开启慢日志">
 <meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;10&#x2F;16&#x2F;Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97&#x2F;index.html">
 <meta property="og:site_name" content="Lanhoo&#39;s blog">
-<meta property="og:description" content="查看mysql物理文件存放地方1234567show global variables like &amp;quot;%datadir%&amp;quot;;+---------------+-----------------+| Variable_name | Value           |+---------------+-----------------+| datadir       | &#x2F;var&#x2F;l">
+<meta property="og:description" content="查看mysql物理文件存放地方1234567show global variables like &quot;%datadir%&quot;;+---------------+-----------------+| Variable_name | Value           |+---------------+-----------------+| datadir       | &#x2F;var&#x2F;lib&#x2F;mysql&#x2F;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-23T08:37:07.597Z">
+<meta property="og:updated_time" content="2019-11-24T00:54:18.977Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -165,7 +165,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 179 个字)
+                    1 分钟 读完 (大约 185 个字)
                 </span>
                 
                 
@@ -178,11 +178,11 @@
             
         </h1>
         <div class="content">
-            <h2 id="查看mysql物理文件存放地方"><a href="#查看mysql物理文件存放地方" class="headerlink" title="查看mysql物理文件存放地方"></a>查看mysql物理文件存放地方</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">show global variables like &quot;%datadir%&quot;;</span><br><span class="line"></span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| Variable_name | Value           |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| datadir       | /var/lib/mysql/ |</span><br><span class="line">+---------------+-----------------+</span><br></pre></td></tr></table></figure>
+            <h2 id="查看mysql物理文件存放地方"><a href="#查看mysql物理文件存放地方" class="headerlink" title="查看mysql物理文件存放地方"></a>查看mysql物理文件存放地方</h2><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">show</span> <span class="hljs-keyword">global</span> <span class="hljs-keyword">variables</span> <span class="hljs-keyword">like</span> <span class="hljs-string">"%datadir%"</span>;</span><br><span class="line"></span><br><span class="line">+<span class="hljs-comment">---------------+-----------------+</span></span><br><span class="line">| Variable_name | Value           |</span><br><span class="line">+<span class="hljs-comment">---------------+-----------------+</span></span><br><span class="line">| datadir       | /var/lib/mysql/ |</span><br><span class="line">+<span class="hljs-comment">---------------+-----------------+</span></span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
-<h2 id="以root进入该目录，建立data-slow-log-并更改所有者，所有组"><a href="#以root进入该目录，建立data-slow-log-并更改所有者，所有组" class="headerlink" title="以root进入该目录，建立data/slow.log,并更改所有者，所有组"></a>以root进入该目录，建立data/slow.log,并更改所有者，所有组</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">cd /var/lib/mysql/</span><br><span class="line">mkdir data</span><br><span class="line">cd data</span><br><span class="line">touch slow.log</span><br><span class="line">cd ..</span><br><span class="line">chown -R mysql:mysql data/</span><br></pre></td></tr></table></figure>
+<h2 id="以root进入该目录，建立data-slow-log-并更改所有者，所有组"><a href="#以root进入该目录，建立data-slow-log-并更改所有者，所有组" class="headerlink" title="以root进入该目录，建立data/slow.log,并更改所有者，所有组"></a>以root进入该目录，建立data/slow.log,并更改所有者，所有组</h2><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">cd /var/lib/mysql/</span><br><span class="line">mkdir data</span><br><span class="line">cd data</span><br><span class="line">touch slow.log</span><br><span class="line">cd ..</span><br><span class="line">chown -R mysql:mysql data/</span><br></pre></td></tr></table></figure>
 
 
 
@@ -191,30 +191,30 @@
 <li><code>set global slow_query_log_file=&quot;/var/lib/mysql/data/slow.log&quot;;</code> </li>
 <li><code>set global long_query_time=1;</code> </li>
 </ul>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [mygame]&gt; set global slow_query_log=&apos;ON&apos;;</span><br><span class="line">Query OK, 0 rows affected (0.011 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [mygame]&gt; set global slow_query_log_file=&quot;/var/lib/mysql/data/slow.log&quot;;</span><br><span class="line">Query OK, 0 rows affected (0.000 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [mygame]&gt; set global long_query_time=1;</span><br><span class="line">Query OK, 0 rows affected (0.000 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [mygame]&gt; set global slow_query_log='ON';</span><br><span class="line">Query OK, 0 rows affected (0.011 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [mygame]&gt; set global slow_query_log_file="/var/lib/mysql/data/slow.log";</span><br><span class="line">Query OK, 0 rows affected (0.000 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [mygame]&gt; set global long_query_time=1;</span><br><span class="line">Query OK, 0 rows affected (0.000 sec)</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="重启mysql服务"><a href="#重启mysql服务" class="headerlink" title="重启mysql服务"></a>重启mysql服务</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart mysqld</span><br></pre></td></tr></table></figure>
+<h2 id="重启mysql服务"><a href="#重启mysql服务" class="headerlink" title="重启mysql服务"></a>重启mysql服务</h2><figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart mysqld</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ol>
 <li>执行一条慢查询SQL语句</li>
 </ol>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sleep(2);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">select</span> <span class="hljs-keyword">sleep</span>(<span class="hljs-number">2</span>);</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>查看是否生成慢查询日志</li>
 </ol>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail /var/lib/mysql/data/slow.log</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail /var/lib/mysql/data/slow.log</span><br></pre></td></tr></table></figure>
         </div>
         
         <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>, <a class="has-link-grey -link" href="/tags/sql/" rel="tag">sql</a>
+                    <a class="has-link-grey -link" href="/tags/SQL/" rel="tag">SQL</a>, <a class="has-link-grey -link" href="/tags/mysql/" rel="tag">mysql</a>
                 </div>
             </div>
         </div>
