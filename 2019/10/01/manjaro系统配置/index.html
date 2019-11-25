@@ -16,7 +16,7 @@
 <meta property="og:description" content="更换国内源使用国内的源有更快的下载速度，pacman能够测试不同源的速度并给它们排名，从中选择一个快的即可。选择的是上海交大sjtu的源。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-24T00:52:08.713Z">
+<meta property="og:updated_time" content="2019-11-25T01:17:59.786Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 140 个字)
+                    2 分钟 读完 (大约 249 个字)
                 </span>
                 
                 
@@ -195,6 +195,24 @@
 <p><code>sudo pacman -Syy &amp;&amp; sudo pacman -S archlinuxcn-keyring</code></p>
 <p>现在可以升级一下系统：</p>
 <p><code>sudo pacman -Su</code></p>
+<h2 id="添加两个命令pbcopy和pbpaste"><a href="#添加两个命令pbcopy和pbpaste" class="headerlink" title="添加两个命令pbcopy和pbpaste"></a>添加两个命令<code>pbcopy</code>和<code>pbpaste</code></h2><ul>
+<li>先安装<code>xsel</code>：<ul>
+<li><code>sudo pacman -S xsel</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[lanhoo@lanhoo-pc ~]$ sudo pacman -S xsel</span><br><span class="line">[sudo] lanhoo 的密码：</span><br><span class="line">正在解析依赖关系...</span><br><span class="line">正在查找软件包冲突...</span><br><span class="line"></span><br><span class="line">软件包 (1) xsel-1.2.0.20160929-2</span><br><span class="line"></span><br><span class="line">下载大小:   0.02 MiB</span><br><span class="line">全部安装大小：  0.04 MiB</span><br><span class="line"></span><br><span class="line">:: 进行安装吗？ [Y/n] y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加以下语句到<code>~/.bashrc</code></li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias pbcopy=&apos;xsel --clipboard --input&apos;</span><br><span class="line">alias pbpaste=&apos;xsel --clipboard --output&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>source .bashrc</code>使刚才的修改生效</li>
+</ul>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lanhoo@lanhoo-pc ~]$ <span class="hljs-built_in">source</span> .bashrc</span><br></pre></td></tr></table></figure>
+
 
         </div>
         
@@ -301,6 +319,10 @@
         <a class="is-flex" href="#添加arch源">
         <span class="has-mr-6">2</span>
         <span>添加arch源</span>
+        </a></li><li>
+        <a class="is-flex" href="#添加两个命令pbcopy和pbpaste">
+        <span class="has-mr-6">3</span>
+        <span>添加两个命令pbcopy和pbpaste</span>
         </a></li></ul>
         </div>
     </div>
