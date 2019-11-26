@@ -2,21 +2,21 @@
 <html  lang="zh">
 <head>
     <meta charset="utf-8">
-<title>linux系统问题杂锦 - Lanhoo&#39;s blog</title>
+<title>用python写了一个解数字华容道游戏的程序 - Lanhoo&#39;s blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 
 
-    <meta name="description" content="ubuntu硬盘分区ntfs加载 有时在ubuntu系统里，碰到有些硬盘分区没有成功加载，以下代码可以解决这个问题   sudo parted &#x2F;dev&#x2F;sda print sudo ntfsfix &#x2F;dev&#x2F;sda5   或   sudo ntfsfix &#x2F;dev&#x2F;sda7">
-<meta name="keywords" content="linux,ubuntu">
+    <meta name="description" content="华容道游戏，可以有数字型，也可以有图像型。这里介绍的是数字华容道，也叫数字推盘。市面上一般有3X3、4X4、5X5、6X6等，其中4X4数字华容道常作为《最强大脑》第一轮节目来选拔选手。 网络上有很多与之相关的编程话题，但很多都只是把数字打乱，并调整为有解的玩法。而我想要做的是怎样从一个有解的数字推盘一步一步地还原并且是最少的步数。 下面这张图就是程序完成后的结果">
+<meta name="keywords" content="python,华容道">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux系统问题杂锦">
-<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;07&#x2F;18&#x2F;linux%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98%E6%9D%82%E9%94%A6&#x2F;index.html">
+<meta property="og:title" content="用python写了一个解数字华容道游戏的程序">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;11&#x2F;10&#x2F;%E7%94%A8python%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E8%A7%A3%E6%95%B0%E5%AD%97%E5%8D%8E%E5%AE%B9%E9%81%93%E6%B8%B8%E6%88%8F%E7%9A%84%E7%A8%8B%E5%BA%8F&#x2F;index.html">
 <meta property="og:site_name" content="Lanhoo&#39;s blog">
-<meta property="og:description" content="ubuntu硬盘分区ntfs加载 有时在ubuntu系统里，碰到有些硬盘分区没有成功加载，以下代码可以解决这个问题   sudo parted &#x2F;dev&#x2F;sda print sudo ntfsfix &#x2F;dev&#x2F;sda5   或   sudo ntfsfix &#x2F;dev&#x2F;sda7">
+<meta property="og:description" content="华容道游戏，可以有数字型，也可以有图像型。这里介绍的是数字华容道，也叫数字推盘。市面上一般有3X3、4X4、5X5、6X6等，其中4X4数字华容道常作为《最强大脑》第一轮节目来选拔选手。 网络上有很多与之相关的编程话题，但很多都只是把数字打乱，并调整为有解的玩法。而我想要做的是怎样从一个有解的数字推盘一步一步地还原并且是最少的步数。 下面这张图就是程序完成后的结果">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-23T00:25:47.297Z">
+<meta property="og:updated_time" content="2019-11-26T06:45:12.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -106,7 +106,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/grid.svg" alt="linux系统问题杂锦" height="28">
+                <img src="/images/grid.svg" alt="用python写了一个解数字华容道游戏的程序" height="28">
             
             </a>
         </div>
@@ -159,13 +159,13 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-18T11:21:33.000Z">2019-07-18</time>
+                <time class="level-item has-text-grey" datetime="2019-11-10T11:48:06.000Z">2019-11-10</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 357 个字)
+                    5 分钟 读完 (大约 800 个字)
                 </span>
                 
                 
@@ -174,25 +174,84 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                linux系统问题杂锦
+                用python写了一个解数字华容道游戏的程序
             
         </h1>
         <div class="content">
-            <h2 id="ubuntu硬盘分区ntfs加载"><a href="#ubuntu硬盘分区ntfs加载" class="headerlink" title="ubuntu硬盘分区ntfs加载"></a>ubuntu硬盘分区ntfs加载</h2><blockquote>
-<p>有时在ubuntu系统里，碰到有些硬盘分区没有成功加载，以下代码可以解决这个问题</p>
+            <blockquote>
+<p>华容道游戏，可以有数字型，也可以有图像型。这里介绍的是数字华容道，也叫数字推盘。市面上一般有3X3、4X4、5X5、6X6等，其中4X4数字华容道常作为《最强大脑》第一轮节目来选拔选手。</p>
+<p>网络上有很多与之相关的编程话题，但很多都只是把数字打乱，并调整为有解的玩法。而我想要做的是怎样<strong>从一个有解的数字推盘一步一步地还原并且是最少的步数。</strong></p>
+<p>下面这张图就是程序完成后的结果</p>
 </blockquote>
-<ul>
-<li>sudo parted /dev/sda print</li>
-<li>sudo ntfsfix /dev/sda5   或   sudo ntfsfix /dev/sda7</li>
-</ul>
+<p><img src="/images/blog/3X3%E8%BF%98%E5%8E%9F%E5%8D%8E%E5%AE%B9%E9%81%93_hard.gif" alt="3X3还原华容道_hard"></p>
 <a id="more"></a>
 
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">lanhoo@lanhoo-rexbook:~$ sudo parted /dev/sda <span class="hljs-built_in">print</span></span><br><span class="line">[sudo] password <span class="hljs-keyword">for</span> lanhoo:         </span><br><span class="line">Model: ATA M.2 2242V 256GB (scsi)</span><br><span class="line">Disk /dev/sda: 256GB</span><br><span class="line">Sector size (logical/physical): 512B/512B</span><br><span class="line">Partition Table: gpt</span><br><span class="line">Disk Flags: </span><br><span class="line"></span><br><span class="line">Number  Start   End     Size    File system     Name                          Flags</span><br><span class="line"> 1      1049kB  106MB   105MB   fat32           EFI system partition          boot, esp</span><br><span class="line"> 2      106MB   123MB   16.8MB                  Microsoft reserved partition  msftres</span><br><span class="line"> 3      123MB   42.2GB  42.1GB  ntfs            Basic data partition          msftdata</span><br><span class="line"> 4      42.2GB  43.1GB  844MB   ntfs                                          hidden, diag</span><br><span class="line"> 5      43.1GB  85.7GB  42.6GB  ntfs            Basic data partition          msftdata</span><br><span class="line"> 6      85.7GB  120GB   34.2GB  ext4</span><br><span class="line"> 9      120GB   128GB   8505MB  linux-swap(v1)</span><br><span class="line"> 7      128GB   256GB   127GB   ntfs            Basic data partition          msftdata</span><br><span class="line"> 8      256GB   256GB   503MB   ntfs            Basic data partition          hidden, diag</span><br><span class="line"></span><br><span class="line">lanhoo@lanhoo-rexbook:~$ sudo ntfsfix /dev/sda5</span><br><span class="line">Mounting volume... The disk contains an unclean file system (0, 0).</span><br><span class="line">Metadata kept <span class="hljs-keyword">in</span> Windows cache, refused to mount.</span><br><span class="line">FAILED</span><br><span class="line">Attempting to correct errors... </span><br><span class="line">Processing <span class="hljs-variable">$MFT</span> and <span class="hljs-variable">$MFTMirr</span>...</span><br><span class="line">Reading <span class="hljs-variable">$MFT</span>... OK</span><br><span class="line">Reading <span class="hljs-variable">$MFTMirr</span>... OK</span><br><span class="line">Comparing <span class="hljs-variable">$MFTMirr</span> to <span class="hljs-variable">$MFT</span>... OK</span><br><span class="line">Processing of <span class="hljs-variable">$MFT</span> and <span class="hljs-variable">$MFTMirr</span> completed successfully.</span><br><span class="line">Setting required flags on partition... OK</span><br><span class="line">Going to empty the journal (<span class="hljs-variable">$LogFile</span>)... OK</span><br><span class="line">Checking the alternate boot sector... OK</span><br><span class="line">NTFS volume version is 3.1.</span><br><span class="line">NTFS partition /dev/sda5 was processed successfully.</span><br><span class="line"></span><br><span class="line">lanhoo@lanhoo-rexbook:~$ sudo ntfsfix /dev/sda7</span><br><span class="line">Mounting volume... The disk contains an unclean file system (0, 0).</span><br><span class="line">Metadata kept <span class="hljs-keyword">in</span> Windows cache, refused to mount.</span><br><span class="line">FAILED</span><br><span class="line">Attempting to correct errors... </span><br><span class="line">Processing <span class="hljs-variable">$MFT</span> and <span class="hljs-variable">$MFTMirr</span>...</span><br><span class="line">Reading <span class="hljs-variable">$MFT</span>... OK</span><br><span class="line">Reading <span class="hljs-variable">$MFTMirr</span>... OK</span><br><span class="line">Comparing <span class="hljs-variable">$MFTMirr</span> to <span class="hljs-variable">$MFT</span>... OK</span><br><span class="line">Processing of <span class="hljs-variable">$MFT</span> and <span class="hljs-variable">$MFTMirr</span> completed successfully.</span><br><span class="line">Setting required flags on partition... OK</span><br><span class="line">Going to empty the journal (<span class="hljs-variable">$LogFile</span>)... OK</span><br><span class="line">Checking the alternate boot sector... OK</span><br><span class="line">NTFS volume version is 3.1.</span><br><span class="line">NTFS partition /dev/sda7 was processed successfully.</span><br></pre></td></tr></table></figure>
-
-<h2 id="linux解压文件名乱码处理"><a href="#linux解压文件名乱码处理" class="headerlink" title="linux解压文件名乱码处理"></a>linux解压文件名乱码处理</h2><p>使用终端命令：<code>unar file.zip</code></p>
-<blockquote>
-<p>参与文章：<a href="https://www.zhihu.com/question/20523036" target="_blank" rel="noopener">https://www.zhihu.com/question/20523036</a></p>
+<h3 id="1-创建了一个Position类"><a href="#1-创建了一个Position类" class="headerlink" title="1. 创建了一个Position类"></a>1. 创建了一个Position类</h3><blockquote>
+<p>以3X3为例，那右下角的位置就是<code>p = Positon(2, 2)</code>，它们之前可以相加，判断是否相等，以及作为字典的key。</p>
 </blockquote>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Position</span><span class="hljs-params">()</span>:</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, a, b)</span>:</span></span><br><span class="line">        self.a = a</span><br><span class="line">        self.b = b</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__add__</span><span class="hljs-params">(self, other)</span>:</span></span><br><span class="line">        <span class="hljs-keyword">return</span> Position(self.a + other.a, self.b + other.b)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__repr__</span><span class="hljs-params">(self)</span>:</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"(%d, %d)"</span> % (self.a, self.b)</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__eq__</span><span class="hljs-params">(self, other)</span>:</span></span><br><span class="line">        <span class="hljs-keyword">if</span> self.a == other.a <span class="hljs-keyword">and</span> self.b == other.b:</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># 若写了__eq__而不写__hash__方法，用作字典的key时会报错：unhashable type: 'Position'</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__hash__</span><span class="hljs-params">(self)</span>:</span></span><br><span class="line">        <span class="hljs-keyword">return</span> hash((self.a, self.b))</span><br><span class="line">    </span><br><span class="line"><span class="hljs-meta">    @property</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">row</span><span class="hljs-params">(self)</span>:</span></span><br><span class="line">        <span class="hljs-keyword">return</span> self.a</span><br><span class="line">    </span><br><span class="line"><span class="hljs-meta">    @property</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">column</span><span class="hljs-params">(self)</span>:</span></span><br><span class="line">        <span class="hljs-keyword">return</span> self.b</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建了一个枚举类，模拟Position类上下左右的情况"><a href="#2-创建了一个枚举类，模拟Position类上下左右的情况" class="headerlink" title="2. 创建了一个枚举类，模拟Position类上下左右的情况"></a>2. 创建了一个枚举类，模拟Position类上下左右的情况</h3><blockquote>
+<p>以3X3为例，右下角<code>p = Positon(2, 2)</code>向左移就得到<code>p + LEFT</code> –&gt; <code>Position(2, 1)</code></p>
+</blockquote>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> enum <span class="hljs-keyword">import</span> Enum</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Move</span><span class="hljs-params">(Enum)</span>:</span></span><br><span class="line">    LEFT = Position(<span class="hljs-number">0</span>, <span class="hljs-number">-1</span>)</span><br><span class="line">    RIGHT = Position(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)</span><br><span class="line">    UP = Position(<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>)</span><br><span class="line">    DOWN = Position(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">LEFT = Move.LEFT.value</span><br><span class="line">RIGHT = Move.RIGHT.value</span><br><span class="line">UP = Move.UP.value</span><br><span class="line">DOWN = Move.DOWN.value</span><br><span class="line">CHOICES = [LEFT, UP, RIGHT, DOWN]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-最基本的两个类写完，下面代码就不列举了，说下主要的思路"><a href="#3-最基本的两个类写完，下面代码就不列举了，说下主要的思路" class="headerlink" title="3. 最基本的两个类写完，下面代码就不列举了，说下主要的思路"></a>3. 最基本的两个类写完，下面代码就不列举了，说下主要的思路</h3><blockquote>
+<p>我的求解是逆推方式</p>
+<p>下面的以3X3的数字推盘为例</p>
+</blockquote>
+<ul>
+<li><p><code>0</code>代表数字推盘里的空位</p>
+</li>
+<li><p>最初始的状态，也就是还原后的答案为<code>123456780</code></p>
+</li>
+</ul>
+<img src="/images/blog/3x3_0.jpg" alt="3x3_0" style="zoom:50%;">
+
+<ul>
+<li><p>它走一步可以有向左<code>123456708</code>和向上<code>123450786</code>两种情况：</p>
+<ul>
+<li>向左，记录一下<code>123456708</code>：<code>l</code></li>
+</ul>
+<img src="/images/blog/3x3_1_l.jpg" alt="3x3_1_l" style="zoom:50%;">
+
+<ul>
+<li>向上，记录一下<code>123450786</code>: <code>u</code></li>
+</ul>
+</li>
+</ul>
+<img src="/images/blog/3x3_1_u.jpg" alt="3x3_1_u" style="zoom:50%;">
+
+<ul>
+<li><p>走两步的情况：</p>
+<ul>
+<li><code>123456708</code>可以向左，向上，记录下4种情况<ul>
+<li><code>...: ll</code></li>
+<li><code>...: lu</code></li>
+</ul>
+</li>
+<li><code>123450786</code>可以向左，向上<ul>
+<li><code>...: ul</code></li>
+<li><code>...: uu</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>以此类推，把所有的可能性走完，就把3x3的解法全部记录完成</p>
+</li>
+</ul>
+<h3 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="4. 遇到的问题"></a>4. 遇到的问题</h3><ol>
+<li><p>3×3所有的可能情况有<code>9X8X7X6X5X4X3</code>即181440种情况，包括了最初状态，没有乘以2是因为有一半是无解的，无法还原。我用<code>mysql</code>来记录，18万条数据用了<code>36M</code>。</p>
+<p>4x4所有的可能情况有<code>16!/2</code>有大约<code>10万亿</code>条数据，存储所有的4x4大约需要2000TB，个人电脑明显存储不了，所有4x4只存了174万条。</p>
+</li>
+<li><p>像4x4这么多的情况，计算到后面步数越多，计算量巨大，同时写入数据库也巨慢。</p>
+</li>
+</ol>
+<h3 id="5-展示其他的数字华容道"><a href="#5-展示其他的数字华容道" class="headerlink" title="5. 展示其他的数字华容道"></a>5. 展示其他的数字华容道</h3><p><img src="/images/blog/1X10%E8%BF%98%E5%8E%9F%E5%8D%8E%E5%AE%B9%E9%81%93_hard.gif" alt="1X10还原华容道_hard"></p>
+<hr>
+<p><img src="/images/blog/3X2%E8%BF%98%E5%8E%9F%E5%8D%8E%E5%AE%B9%E9%81%93_hard.gif" alt="3X2还原华容道_hard"></p>
+<hr>
+<p><img src="/images/blog/4X4%E8%BF%98%E5%8E%9F%E5%8D%8E%E5%AE%B9%E9%81%93_hard.gif" alt="4X4还原华容道_hard"></p>
 
         </div>
         
@@ -200,7 +259,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/linux/" rel="tag">linux</a>, <a class="has-link-grey -link" href="/tags/ubuntu/" rel="tag">ubuntu</a>
+                    <a class="has-link-grey -link" href="/tags/python/" rel="tag">python</a>, <a class="has-link-grey -link" href="/tags/%E5%8D%8E%E5%AE%B9%E9%81%93/" rel="tag">华容道</a>
                 </div>
             </div>
         </div>
@@ -250,13 +309,13 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/08/04/hexo%E5%8D%9A%E5%AE%A2icarus%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">hexo博客icarus主题的修改</span>
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/">
+                <span class="level-item">分享一个按照模板文件格式自动汇总统计的脚本</span>
+                <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
-        
         
     </div>
 </div>
@@ -285,13 +344,25 @@
                 目录
             </h3>
             <ul class="menu-list"><li>
-        <a class="is-flex" href="#ubuntu硬盘分区ntfs加载">
+        <a class="is-flex" href="#1-创建了一个Position类">
         <span class="has-mr-6">1</span>
-        <span>ubuntu硬盘分区ntfs加载</span>
+        <span>1. 创建了一个Position类</span>
         </a></li><li>
-        <a class="is-flex" href="#linux解压文件名乱码处理">
+        <a class="is-flex" href="#2-创建了一个枚举类，模拟Position类上下左右的情况">
         <span class="has-mr-6">2</span>
-        <span>linux解压文件名乱码处理</span>
+        <span>2. 创建了一个枚举类，模拟Position类上下左右的情况</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-最基本的两个类写完，下面代码就不列举了，说下主要的思路">
+        <span class="has-mr-6">3</span>
+        <span>3. 最基本的两个类写完，下面代码就不列举了，说下主要的思路</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-遇到的问题">
+        <span class="has-mr-6">4</span>
+        <span>4. 遇到的问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#5-展示其他的数字华容道">
+        <span class="has-mr-6">5</span>
+        <span>5. 展示其他的数字华容道</span>
         </a></li></ul>
         </div>
     </div>
@@ -386,7 +457,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/grid.svg" alt="linux系统问题杂锦" height="28">
+                    <img src="/images/grid.svg" alt="用python写了一个解数字华容道游戏的程序" height="28">
                 
                 </a>
                 <p class="is-size-7">
