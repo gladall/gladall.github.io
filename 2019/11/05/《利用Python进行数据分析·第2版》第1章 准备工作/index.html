@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>《利用Python进行数据分析·第2版》第1章 准备工作 - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="《利用Python进行数据分析·第2版》第1章 准备工作 转载自简书 第1章 准备工作  第2章 Python语法基础，IPython和Jupyter Notebooks  第3章 Python的数据结构、函数和文件  第4章 NumPy基础：数组和矢量计算  第5章 pandas入门  第6章 数据加载、存储与文件格式  第7章 数据清洗和准备  第8章 数据规整：聚合、合并和重塑  第9章 绘">
+<meta name="keywords" content="数据分析,pandas,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《利用Python进行数据分析·第2版》第1章 准备工作">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;11&#x2F;05&#x2F;%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC1%E7%AB%A0%20%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="《利用Python进行数据分析·第2版》第1章 准备工作 转载自简书 第1章 准备工作  第2章 Python语法基础，IPython和Jupyter Notebooks  第3章 Python的数据结构、函数和文件  第4章 NumPy基础：数组和矢量计算  第5章 pandas入门  第6章 数据加载、存储与文件格式  第7章 数据清洗和准备  第8章 数据规整：聚合、合并和重塑  第9章 绘">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-12-11T00:46:26.393Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/atom.xml" title="Lanhoo's blog" type="application/atom+xml">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="《利用Python进行数据分析·第2版》第1章 准备工作" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <time class="level-item has-text-grey" datetime="2019-11-05T01:50:26.000Z">2019-11-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 小时 读完 (大约 8225 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                《利用Python进行数据分析·第2版》第1章 准备工作
+            
+        </h1>
+        <div class="content">
+            <h1 id="《利用Python进行数据分析·第2版》第1章-准备工作"><a href="#《利用Python进行数据分析·第2版》第1章-准备工作" class="headerlink" title="《利用Python进行数据分析·第2版》第1章 准备工作"></a>《利用Python进行数据分析·第2版》第1章 准备工作</h1><hr>
+<p>转载自<a href="https://www.jianshu.com/p/04d180d90a3f" target="_blank" rel="noopener">简书</a></p>
+<p>第1章 准备工作
+ <a href="https://www.jianshu.com/p/fc93e943e94a" target="_blank" rel="noopener">第2章 Python语法基础，IPython和Jupyter Notebooks</a>
+ <a href="https://www.jianshu.com/p/b444cda10aa0" target="_blank" rel="noopener">第3章 Python的数据结构、函数和文件</a>
+ <a href="https://www.jianshu.com/p/a380222a3292" target="_blank" rel="noopener">第4章 NumPy基础：数组和矢量计算</a>
+ <a href="https://www.jianshu.com/p/161364dd0acf" target="_blank" rel="noopener">第5章 pandas入门</a>
+ <a href="https://www.jianshu.com/p/047d8c1c7e14" target="_blank" rel="noopener">第6章 数据加载、存储与文件格式</a>
+ <a href="https://www.jianshu.com/p/ac7bec000dad" target="_blank" rel="noopener">第7章 数据清洗和准备</a>
+ <a href="https://www.jianshu.com/p/cfc035bae567" target="_blank" rel="noopener">第8章 数据规整：聚合、合并和重塑</a>
+ <a href="https://www.jianshu.com/p/7a0eafdd1340" target="_blank" rel="noopener">第9章 绘图和可视化</a>
+ <a href="https://www.jianshu.com/p/b94deb5c7eb1" target="_blank" rel="noopener">第10章 数据聚合与分组运算</a>
+ <a href="https://www.jianshu.com/p/29ece4592178" target="_blank" rel="noopener">第11章 时间序列</a>
+ <a href="https://www.jianshu.com/p/9d093ebcc5d8" target="_blank" rel="noopener">第12章 pandas高级应用</a>
+ <a href="https://www.jianshu.com/p/e46a1ac36aa5" target="_blank" rel="noopener">第13章 Python建模库介绍</a>
+ <a href="https://www.jianshu.com/p/72b6c83bb69e" target="_blank" rel="noopener">第14章 数据分析案例</a>
+ <a href="https://www.jianshu.com/p/3c3f7da88516" target="_blank" rel="noopener">附录A NumPy高级应用</a>
+ <a href="https://www.jianshu.com/p/fb6719a18cea" target="_blank" rel="noopener">附录B 更多关于IPython的内容（完）</a></p>
+<hr>
+<p><img src="https:////upload-images.jianshu.io/upload_images/7178691-0d965cf51eb5af9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/516/format/webp" alt="img"></p>
+<p>下载本书：<a href="https://www.jianshu.com/p/fad9e41c1a42" target="_blank" rel="noopener">http://www.jianshu.com/p/fad9e41c1a42</a></p>
+<p>GitHub（欢迎提pull request，GitHub上的md文件可以用来自制电子书，pdf、mobi、epub格式的都行）：
+ <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fiamseancheney%2Fpython_for_data_analysis_2nd_chinese_version" target="_blank" rel="noopener">https://github.com/iamseancheney/python_for_data_analysis_2nd_chinese_version</a></p>
+<p>GitBook（有锚点功能）：
+ <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fseancheney.gitbook.io%2Fpython-for-data-analysis-2nd%2F" target="_blank" rel="noopener">https://seancheney.gitbook.io/python-for-data-analysis-2nd/</a></p>
+<p>下载本书代码：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fwesm%2Fpydata-book" target="_blank" rel="noopener">https://github.com/wesm/pydata-book</a>（建议把代码下载下来之后，安装好Anaconda 3.6，在目录文件夹中用Jupyter notebook打开）</p>
+<hr>
+<p>本书是2017年10月20号正式出版的，和第1版的不同之处有：</p>
+<ul>
+<li>包括Python教程内的所有代码升级为Python 3.6（第1版使用的是Python 2.7）</li>
+<li>更新了Anaconda和其它包的Python安装方法</li>
+<li>更新了Pandas为2017最新版</li>
+<li>新增了一章，关于更高级的Pandas工具，外加一些tips</li>
+<li>简要介绍了使用StatsModels和scikit-learn</li>
+</ul>
+<p>对有些内容进行了重新排版。（译者注1：最大的改变是把第1版附录中的Python教程，单列成了现在的第2章和第3章，并且进行了扩充。可以说，本书第2版对新手更为友好了！）</p>
+<p>（译者注2：毫无疑问，本书是学习Python数据分析最好的参考书（另一本不错的是<a href="https://www.jianshu.com/p/5809f6cf78ca" target="_blank" rel="noopener">《Pandas Cookbook》</a>）。本来想把书名直接译为《Python数据分析》，这样更简短。但是为了尊重第1版的翻译，考虑到继承性，还是用老书名。这样读过第一版的老读者可以方便的用之前的书名检索到第二版。作者在写第二版的时候，有些文字是照搬第一版的。所以第二版的翻译也借鉴copy了第一版翻译：即，如果第二版中有和第一版相同的文字，则copy第一版的中文译本，觉得不妥的地方会稍加修改，剩下的不同的内容就自己翻译。这样做也是为读过第一版的老读者考虑——相同的内容可以直接跳过。）</p>
+<hr>
+<h1 id="1-1-本书的内容"><a href="#1-1-本书的内容" class="headerlink" title="1.1 本书的内容"></a>1.1 本书的内容</h1><p>本书讲的是利用Python进行数据控制、处理、整理、分析等方面的具体细节和基本要点。我的目标是介绍Python编程和用于数据处理的库和工具环境，掌握这些，可以让你成为一个数据分析专家。虽然本书的标题是“数据分析”，重点却是Python编程、库，以及用于数据分析的工具。这就是数据分析要用到的Python编程。</p>
+<h2 id="什么样的数据？"><a href="#什么样的数据？" class="headerlink" title="什么样的数据？"></a>什么样的数据？</h2><p>当书中出现“数据”时，究竟指的是什么呢？主要指的是结构化数据（structured data），这个故意含糊其辞的术语代指了所有通用格式的数据，例如：</p>
+<ul>
+<li>表格型数据，其中各列可能是不同的类型（字符串、数值、日期等）。比如保存在关系型数据库中或以制表符/逗号为分隔符的文本文件中的那些数据。</li>
+<li>多维数组（矩阵）。</li>
+<li>通过关键列（对于SQL用户而言，就是主键和外键）相互联系的多个表。</li>
+<li>间隔平均或不平均的时间序列。</li>
+</ul>
+<p>这绝不是一个完整的列表。大部分数据集都能被转化为更加适合分析和建模的结构化形式，虽然有时这并不是很明显。如果不行的话，也可以将数据集的特征提取为某种结构化形式。例如，一组新闻文章可以被处理为一张词频表，而这张词频表就可以用于情感分析。</p>
+<p>大部分电子表格软件（比如Microsoft Excel，它可能是世界上使用最广泛的数据分析工具了）的用户不会对此类数据感到陌生。</p>
+<h1 id="1-2-为什么要使用Python进行数据分析"><a href="#1-2-为什么要使用Python进行数据分析" class="headerlink" title="1.2 为什么要使用Python进行数据分析"></a>1.2 为什么要使用Python进行数据分析</h1><p>许许多多的人（包括我自己）都很容易爱上Python这门语言。自从1991年诞生以来，Python现在已经成为最受欢迎的动态编程语言之一，其他还有Perl、Ruby等。由于拥有大量的Web框架（比如Rails（Ruby）和Django（Python）），自从2005年，使用Python和Ruby进行网站建设工作非常流行。这些语言常被称作脚本（scripting）语言，因为它们可以用于编写简短而粗糙的小程序（也就是脚本）。我个人并不喜欢“脚本语言”这个术语，因为它好像在说这些语言无法用于构建严谨的软件。在众多解释型语言中，由于各种历史和文化的原因，Python发展出了一个巨大而活跃的科学计算（scientific computing）社区。在过去的10年，Python从一个边缘或“自担风险”的科学计算语言，成为了数据科学、机器学习、学界和工业界软件开发最重要的语言之一。</p>
+<p>在数据分析、交互式计算以及数据可视化方面，Python将不可避免地与其他开源和商业的领域特定编程语言/工具进行对比，如R、MATLAB、SAS、Stata等。近年来，由于Python的库（例如pandas和scikit-learn）不断改良，使其成为数据分析任务的一个优选方案。结合其在通用编程方面的强大实力，我们完全可以只使用Python这一种语言构建以数据为中心的应用。</p>
+<h2 id="Python作为胶水语言"><a href="#Python作为胶水语言" class="headerlink" title="Python作为胶水语言"></a>Python作为胶水语言</h2><p>Python成为成功的科学计算工具的部分原因是，它能够轻松地集成C、C++以及Fortran代码。大部分现代计算环境都利用了一些Fortran和C库来实现线性代数、优选、积分、快速傅里叶变换以及其他诸如此类的算法。许多企业和国家实验室也利用Python来“粘合”那些已经用了多年的遗留软件系统。</p>
+<p>大多数软件都是由两部分代码组成的：少量需要占用大部分执行时间的代码，以及大量不经常执行的“胶水代码”。大部分情况下，胶水代码的执行时间是微不足道的。开发人员的精力几乎都是花在优化计算瓶颈上面，有时更是直接转用更低级的语言（比如C）。</p>
+<h2 id="解决“两种语言”问题"><a href="#解决“两种语言”问题" class="headerlink" title="解决“两种语言”问题"></a>解决“两种语言”问题</h2><p>很多组织通常都会用一种类似于领域特定的计算语言（如SAS和R）对新想法做研究、原型构建和测试，然后再将这些想法移植到某个更大的生产系统中去（可能是用Java、C#或C++编写的）。人们逐渐意识到，Python不仅适用于研究和原型构建，同时也适用于构建生产系统。为什么一种语言就够了，却要使用两个语言的开发环境呢？我相信越来越多的企业也会这样看，因为研究人员和工程技术人员使用同一种编程工具将会给企业带来非常显著的组织效益。</p>
+<h2 id="为什么不选Python"><a href="#为什么不选Python" class="headerlink" title="为什么不选Python"></a>为什么不选Python</h2><p>虽然Python非常适合构建分析应用以及通用系统，但它对不少应用场景适用性较差。</p>
+<p>由于Python是一种解释型编程语言，因此大部分Python代码都要比用编译型语言（比如Java和C++）编写的代码运行慢得多。由于程序员的时间通常都比CPU时间值钱，因此许多人也愿意对此做一些取舍。但是，在那些延迟要求非常小或高资源利用率的应用中（例如高频交易系统），耗费时间使用诸如C++这样更低级、更低生产率的语言进行编程也是值得的。</p>
+<p>对于高并发、多线程的应用程序而言（尤其是拥有许多计算密集型线程的应用程序），Python并不是一种理想的编程语言。这是因为Python有一个叫做全局解释器锁（Global Interpreter Lock，GIL）的组件，这是一种防止解释器同时执行多条Python字节码指令的机制。有关“为什么会存在GIL”的技术性原因超出了本书的范围。虽然很多大数据处理应用程序为了能在较短的时间内完成数据集的处理工作都需要运行在计算机集群上，但是仍然有一些情况需要用单进程多线程系统来解决。</p>
+<p>这并不是说Python不能执行真正的多线程并行代码。例如，Python的C插件使用原生的C或C++的多线程，可以并行运行而不被GIL影响，只要它们不频繁地与Python对象交互。</p>
+<h1 id="1-3-重要的Python库"><a href="#1-3-重要的Python库" class="headerlink" title="1.3 重要的Python库"></a>1.3 重要的Python库</h1><p>考虑到那些还不太了解Python科学计算生态系统和库的读者，下面我先对各个库做一个简单的介绍。</p>
+<h2 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h2><p>NumPy（Numerical Python的简称）是Python科学计算的基础包。本书大部分内容都基于NumPy以及构建于其上的库。它提供了以下功能（不限于此）：</p>
+<ul>
+<li>快速高效的多维数组对象ndarray。</li>
+<li>用于对数组执行元素级计算以及直接对数组执行数学运算的函数。</li>
+<li>用于读写硬盘上基于数组的数据集的工具。</li>
+<li>线性代数运算、傅里叶变换，以及随机数生成。
+-成熟的C API， 用于Python插件和原生C、C++、Fortran代码访问NumPy的数据结构和计算工具。</li>
+</ul>
+<p>除了为Python提供快速的数组处理能力，NumPy在数据分析方面还有另外一个主要作用，即作为在算法和库之间传递数据的容器。对于数值型数据，NumPy数组在存储和处理数据时要比内置的Python数据结构高效得多。此外，由低级语言（比如C和Fortran）编写的库可以直接操作NumPy数组中的数据，无需进行任何数据复制工作。因此，许多Python的数值计算工具要么使用NumPy数组作为主要的数据结构，要么可以与NumPy进行无缝交互操作。</p>
+<h2 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h2><p>pandas提供了快速便捷处理结构化数据的大量数据结构和函数。自从2010年出现以来，它助使Python成为强大而高效的数据分析环境。本书用得最多的pandas对象是DataFrame，它是一个面向列（column-oriented）的二维表结构，另一个是Series，一个一维的标签化数组对象。</p>
+<p>pandas兼具NumPy高性能的数组计算功能以及电子表格和关系型数据库（如SQL）灵活的数据处理功能。它提供了复杂精细的索引功能，能更加便捷地完成重塑、切片和切块、聚合以及选取数据子集等操作。因为数据操作、准备、清洗是数据分析最重要的技能，pandas是本书的重点。</p>
+<p>作为背景，我是在2008年初开始开发pandas的，那时我任职于AQR Capital Management，一家量化投资管理公司，我有许多工作需求都不能用任何单一的工具解决：</p>
+<ul>
+<li>有标签轴的数据结构，支持自动或清晰的数据对齐。这可以防止由于数据不对齐，或处理来源不同的索引不同的数据，所造成的错误。</li>
+<li>集成时间序列功能。</li>
+<li>相同的数据结构用于处理时间序列数据和非时间序列数据。</li>
+<li>保存元数据的算术运算和压缩。</li>
+<li>灵活处理缺失数据。</li>
+<li>合并和其它流行数据库（例如基于SQL的数据库）的关系操作。</li>
+</ul>
+<p>我想只用一种工具就实现所有功能，并使用通用软件开发语言。Python是一个不错的候选语言，但是此时没有集成的数据结构和工具来实现。我一开始就是想把pandas设计为一款适用于金融和商业分析的工具，pandas专注于深度时间序列功能和工具，适用于时间索引化的数据。</p>
+<p>对于使用R语言进行统计计算的用户，肯定不会对DataFrame这个名字感到陌生，因为它源自于R的data.frame对象。但与Python不同，data frames是构建于R和它的标准库。因此，pandas的许多功能不属于R或它的扩展包。</p>
+<p>pandas这个名字源于panel data（面板数据，这是多维结构化数据集在计量经济学中的术语）以及Python data analysis（Python数据分析）。</p>
+<h1 id="matplotlib"><a href="#matplotlib" class="headerlink" title="matplotlib"></a>matplotlib</h1><p>matplotlib是最流行的用于绘制图表和其它二维数据可视化的Python库。它最初由John D.Hunter（JDH）创建，目前由一个庞大的开发团队维护。它非常适合创建出版物上用的图表。虽然还有其它的Python可视化库，matplotlib却是使用最广泛的，并且它和其它生态工具配合也非常完美。我认为，可以使用它作为默认的可视化工具。</p>
+<h1 id="IPython和Jupyter"><a href="#IPython和Jupyter" class="headerlink" title="IPython和Jupyter"></a>IPython和Jupyter</h1><p>IPython项目起初是Fernando Pérez在2001年的一个用以加强和Python交互的子项目。在随后的16年中，它成为了Python数据栈最重要的工具之一。虽然IPython本身没有提供计算和数据分析的工具，它却可以大大提高交互式计算和软件开发的生产率。IPython鼓励“执行-探索”的工作流，区别于其它编程软件的“编辑-编译-运行”的工作流。它还可以方便地访问系统的shell和文件系统。因为大部分的数据分析代码包括探索、试错和重复，IPython可以使工作更快。</p>
+<p>2014年，Fernando和IPython团队宣布了Jupyter项目，一个更宽泛的多语言交互计算工具的计划。IPython web notebook变成了Jupyter notebook，现在支持40种编程语言。IPython现在可以作为Jupyter使用Python的内核（一种编程语言模式）。</p>
+<p>IPython变成了Jupyter庞大开源项目（一个交互和探索式计算的高效环境）中的一个组件。它最老也是最简单的模式，现在是一个用于编写、测试、调试Python代码的强化shell。你还可以使用通过Jupyter Notebook，一个支持多种语言的交互式网络代码“笔记本”，来使用IPython。IPython shell 和Jupyter notebooks特别适合进行数据探索和可视化。</p>
+<p>Jupyter notebooks还可以编写Markdown和HTML内容，它提供了一种创建代码和文本的富文本方法。其它编程语言也在Jupyter中植入了内核，好让在Jupyter中可以使用Python以外的语言。</p>
+<p>对我个人而言，我的大部分Python工作都要用到IPython，包括运行、调试和测试代码。</p>
+<p>在本书的GitHub页面，你可以找到包含各章节所有代码实例的Jupyter notebooks。</p>
+<h1 id="SciPy"><a href="#SciPy" class="headerlink" title="SciPy"></a>SciPy</h1><p>SciPy是一组专门解决科学计算中各种标准问题域的包的集合，主要包括下面这些包：</p>
+<ul>
+<li>scipy.integrate：数值积分例程和微分方程求解器。</li>
+<li>scipy.linalg：扩展了由numpy.linalg提供的线性代数例程和矩阵分解功能。</li>
+<li>scipy.optimize：函数优化器（最小化器）以及根查找算法。</li>
+<li>scipy.signal：信号处理工具。</li>
+<li>scipy.sparse：稀疏矩阵和稀疏线性系统求解器。</li>
+<li>scipy.special：SPECFUN（这是一个实现了许多常用数学函数（如伽玛函数）的Fortran库）的包装器。</li>
+<li>scipy.stats：标准连续和离散概率分布（如密度函数、采样器、连续分布函数等）、各种统计检验方法，以及更好的描述统计法。</li>
+</ul>
+<p>NumPy和SciPy结合使用，便形成了一个相当完备和成熟的计算平台，可以处理多种传统的科学计算问题。</p>
+<h1 id="scikit-learn"><a href="#scikit-learn" class="headerlink" title="scikit-learn"></a>scikit-learn</h1><p>2010年诞生以来，scikit-learn成为了Python的通用机器学习工具包。仅仅七年，就汇聚了全世界超过1500名贡献者。它的子模块包括：</p>
+<ul>
+<li>分类：SVM、近邻、随机森林、逻辑回归等等。</li>
+<li>回归：Lasso、岭回归等等。</li>
+<li>聚类：k-均值、谱聚类等等。</li>
+<li>降维：PCA、特征选择、矩阵分解等等。</li>
+<li>选型：网格搜索、交叉验证、度量。</li>
+<li>预处理：特征提取、标准化。</li>
+</ul>
+<p>与pandas、statsmodels和IPython一起，scikit-learn对于Python成为高效数据科学编程语言起到了关键作用。虽然本书不会详细讲解scikit-learn，我会简要介绍它的一些模型，以及用其它工具如何使用这些模型。</p>
+<h1 id="statsmodels"><a href="#statsmodels" class="headerlink" title="statsmodels"></a>statsmodels</h1><p>statsmodels是一个统计分析包，起源于斯坦福大学统计学教授Jonathan Taylor，他设计了多种流行于R语言的回归分析模型。Skipper Seabold和Josef Perktold在2010年正式创建了statsmodels项目，随后汇聚了大量的使用者和贡献者。受到R的公式系统的启发，Nathaniel Smith发展出了Patsy项目，它提供了statsmodels的公式或模型的规范框架。</p>
+<p>与scikit-learn比较，statsmodels包含经典统计学和经济计量学的算法。包括如下子模块：</p>
+<ul>
+<li>回归模型：线性回归，广义线性模型，健壮线性模型，线性混合效应模型等等。</li>
+<li>方差分析（ANOVA）。</li>
+<li>时间序列分析：AR，ARMA，ARIMA，VAR和其它模型。</li>
+<li>非参数方法： 核密度估计，核回归。</li>
+<li>统计模型结果可视化。</li>
+</ul>
+<p>statsmodels更关注与统计推断，提供不确定估计和参数p-值。相反的，scikit-learn注重预测。</p>
+<p>同scikit-learn一样，我也只是简要介绍statsmodels，以及如何用NumPy和pandas使用它。</p>
+<h1 id="1-4-安装和设置"><a href="#1-4-安装和设置" class="headerlink" title="1.4 安装和设置"></a>1.4 安装和设置</h1><p>由于人们用Python所做的事情不同，所以没有一个普适的Python及其插件包的安装方案。由于许多读者的Python科学计算环境都不能完全满足本书的需要，所以接下来我将详细介绍各个操作系统上的安装方法。我推荐免费的Anaconda安装包。写作本书时，Anaconda提供Python 2.7和3.6两个版本，以后可能发生变化。本书使用的是Python 3.6，因此推荐选择Python 3.6或更高版本。</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>要在Windows上运行，先下载<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fwww.anaconda.com%2Fdownload%2F" target="_blank" rel="noopener">Anaconda安装包</a>。推荐跟随Anaconda下载页面的Windows安装指导，安装指导在写作本书和读者看到此文的的这段时间内可能发生变化。</p>
+<p>现在，来确认设置是否正确。打开命令行窗口（<code>cmd.exe</code>），输入<code>python</code>以打开Python解释器。可以看到类似下面的Anaconda版本的输出：</p>
+<figure class="highlight csharp hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\wesm&gt;python</span><br><span class="line">Python <span class="hljs-number">3.5</span><span class="hljs-number">.2</span> |Anaconda <span class="hljs-number">4.1</span><span class="hljs-number">.1</span> (<span class="hljs-number">64</span>-bit)| (<span class="hljs-keyword">default</span>, Jul  <span class="hljs-number">5</span> <span class="hljs-number">2016</span>, <span class="hljs-number">11</span>:<span class="hljs-number">41</span>:<span class="hljs-number">13</span>)</span><br><span class="line">[<span class="hljs-meta">MSC v.1900 64 bit (AMD64)</span>] <span class="hljs-keyword">on</span> win32</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>要退出shell，按Ctrl-D（Linux或macOS上），Ctrl-Z（Windows上），或输入命令<code>exit()</code>，再按Enter。</p>
+<h2 id="Apple-OS-X-macOS"><a href="#Apple-OS-X-macOS" class="headerlink" title="Apple (OS X, macOS)"></a>Apple (OS X, macOS)</h2><p>下载OS X Anaconda安装包，它的名字类似Anaconda3-4.1.0-MacOSX-x86_64.pkg。双击.pkg文件，运行安装包。安装包运行时，会自动将Anaconda执行路径添加到<code>.bash_profile</code>文件，它位于<code>/Users/$USER/.bash_profile</code>。</p>
+<p>为了确认成功，在系统shell打开IPython：</p>
+<figure class="highlight ruby hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ipython</span><br></pre></td></tr></table></figure>
+
+<p>要退出shell，按Ctrl-D，或输入命令<code>exit()</code>，再按Enter。</p>
+<h2 id="GNU-Linux"><a href="#GNU-Linux" class="headerlink" title="GNU/Linux"></a>GNU/Linux</h2><p>Linux版本很多，这里给出Debian、Ubantu、CentOS和Fedora的安装方法。安装包是一个脚本文件，必须在shell中运行。取决于系统是32位还是64位，要么选择x86 (32位)或x86_64 (64位)安装包。随后你会得到一个文件，名字类似于<code>Anaconda3-4.1.0-Linux-x86_64.sh</code>。用bash进行安装：</p>
+<figure class="highlight ruby hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bash Anaconda3-<span class="hljs-number">4.1</span>.<span class="hljs-number">0</span>-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>笔记：某些Linux版本在包管理器中有满足需求的Python包，只需用类似apt的工具安装就行。这里讲的用Anaconda安装，适用于不同的Linux安装包，也很容易将包升级到最新版本。</p>
+</blockquote>
+<p>接受许可之后，会向你询问在哪里放置Anaconda的文件。我推荐将文件安装到默认的home目录，例如<code>/home/$USER/anaconda</code>。</p>
+<p>Anaconda安装包可能会询问你是否将<code>bin/</code>目录添加到<code>$PATH</code>变量。如果在安装之后有任何问题，你可以修改文件<code>.bashrc</code>（或<code>.zshrc</code>，如果使用的是zsh shell）为类似以下的内容：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">export</span> PATH=/home/<span class="hljs-variable">$USER</span>/anaconda/bin:<span class="hljs-variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>做完之后，你可以开启一个新窗口，或再次用<code>~/.bashrc</code>执行<code>.bashrc</code>。</p>
+<h2 id="安装或升级Python包"><a href="#安装或升级Python包" class="headerlink" title="安装或升级Python包"></a>安装或升级Python包</h2><p>在你阅读本书的时候，你可能想安装另外的不在Anaconda中的Python包。通常，可以用以下命令安装：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install package_name</span><br></pre></td></tr></table></figure>
+
+<p>如果这个命令不行，也可以用pip包管理工具：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install package_name</span><br></pre></td></tr></table></figure>
+
+<p>你可以用<code>conda update</code>命令升级包：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda update package_name</span><br></pre></td></tr></table></figure>
+
+<p>pip可以用<code>--upgrade</code>升级：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade package_name</span><br></pre></td></tr></table></figure>
+
+<p>本书中，你有许多机会尝试这些命令。</p>
+<blockquote>
+<p>注意：当你使用conda和pip二者安装包时，千万不要用pip升级conda的包，这样会导致环境发生问题。当使用Anaconda或Miniconda时，最好首先使用conda进行升级。</p>
+</blockquote>
+<p>Python 2 和 Python 3</p>
+<p>第一版的Python 3.x出现于2008年。它有一系列的变化，与之前的Python 2.x代码有不兼容的地方。因为从1991年Python出现算起，已经过了17年，Python 3 的出现被视为吸取一些列教训的更优结果。</p>
+<p>2012年，因为许多包还没有完全支持Python 3，许多科学和数据分析社区还是在使用Python 2.x。因此，本书第一版使用的是Python 2.7。现在，用户可以在Python 2.x和Python 3.x间自由选择，二者都有良好的支持。</p>
+<p>但是，Python 2.x在2020年就会到期（包括重要的安全补丁），因此再用Python 2.7就不是好的选择了。因此，本书使用了Python 3.6，这一广泛使用、支持良好的稳定版本。我们已经称Python 2.x为“遗留版本”，简称Python 3.x为“Python”。我建议你也是如此。</p>
+<p>本书基于Python 3.6。你的Python版本也许高于3.6，但是示例代码应该是向前兼容的。一些示例代码可能在Python 2.7上有所不同，或完全不兼容。</p>
+<h2 id="集成开发环境（IDEs）和文本编辑器"><a href="#集成开发环境（IDEs）和文本编辑器" class="headerlink" title="集成开发环境（IDEs）和文本编辑器"></a>集成开发环境（IDEs）和文本编辑器</h2><p>当被问到我的标准开发环境，我几乎总是回答“IPython加文本编辑器”。我通常在编程时，反复在IPython或Jupyter notebooks中测试和调试每条代码。也可以交互式操作数据，和可视化验证数据操作中某一特殊集合。在shell中使用pandas和NumPy也很容易。</p>
+<p>但是，当创建软件时，一些用户可能更想使用特点更为丰富的IDE，而不仅仅是原始的Emacs或Vim的文本编辑器。以下是一些IDE：</p>
+<ul>
+<li>PyDev（免费），基于Eclipse平台的IDE；</li>
+<li>JetBrains的PyCharm（商业用户需要订阅，开源开发者免费）；</li>
+<li>Visual Studio（Windows用户）的Python Tools；</li>
+<li>Spyder（免费），Anaconda附带的IDE；</li>
+<li>Komodo IDE（商业）。</li>
+</ul>
+<p>因为Python的流行，大多数文本编辑器，比如Atom和Sublime Text 3，对Python的支持也非常好。</p>
+<h1 id="1-5-社区和会议"><a href="#1-5-社区和会议" class="headerlink" title="1.5 社区和会议"></a>1.5 社区和会议</h1><p>除了在网上搜索，各式各样的科学和数据相关的Python邮件列表是非常有帮助的，很容易获得回答。包括：</p>
+<ul>
+<li>pydata：一个Google群组列表，用以回答Python数据分析和pandas的问题；</li>
+<li>pystatsmodels： statsmodels或pandas相关的问题；</li>
+<li>scikit-learn和Python机器学习邮件列表，<a href="https://links.jianshu.com/go?to=mailto%3Ascikit-learn%40python.org" target="_blank" rel="noopener">scikit-learn@python.org</a>；</li>
+<li>numpy-discussion：和NumPy相关的问题；</li>
+<li>scipy-user：SciPy和科学计算的问题；</li>
+</ul>
+<p>因为这些邮件列表的URLs可以很容易搜索到，但因为可能发生变化，所以没有给出。</p>
+<p>每年，世界各地会举办许多Python开发者大会。如果你想结识其他有相同兴趣的人，如果可能的话，我建议你去参加一个。许多会议会对无力支付入场费和差旅费的人提供财力帮助。下面是一些会议：</p>
+<ul>
+<li>PyCon和EuroPython：北美和欧洲的两大Python会议；</li>
+<li>SciPy和EuroSciPy：北美和欧洲两大面向科学计算的会议；</li>
+<li>PyData：世界范围内，一些列的地区性会议，专注数据科学和数据分析；</li>
+<li>国际和地区的PyCon会议（<a href="https://links.jianshu.com/go?to=http%3A%2F%2Fpycon.org" target="_blank" rel="noopener">http://pycon.org</a>有完整列表） 。</li>
+</ul>
+<h1 id="1-6-本书导航"><a href="#1-6-本书导航" class="headerlink" title="1.6 本书导航"></a>1.6 本书导航</h1><p>如果之前从未使用过Python，那你可能需要先看看本书的第2章和第3章，我简要介绍了Python的特点，IPython和Jupyter notebooks。这些知识是为本书后面的内容做铺垫。如果你已经掌握Python，可以选择跳过。</p>
+<p>接下来，简单地介绍了NumPy的关键特性，附录A中是更高级的NumPy功能。然后，我介绍了pandas，本书剩余的内容全部是使用pandas、NumPy和matplotlib处理数据分析的问题。我已经尽量让全书的结构循序渐进，但偶尔会有章节之间的交叉，有时用到的概念还没有介绍过。</p>
+<p>尽管读者各自的工作任务不同，大体可以分为几类：</p>
+<ul>
+<li>与外部世界交互
+阅读编写多种文件格式和数据存储；</li>
+<li>数据准备
+清洗、修改、结合、标准化、重塑、切片、切割、转换数据，以进行分析；</li>
+<li>转换数据
+对旧的数据集进行数学和统计操作，生成新的数据集（例如，通过各组变量聚类成大的表）；</li>
+<li>建模和计算
+将数据绑定统计模型、机器学习算法、或其他计算工具；</li>
+<li>展示
+创建交互式和静态的图表可视化和文本总结。</li>
+</ul>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>本书大部分代码示例的输入形式和输出结果都会按照其在IPython shell或Jupyter notebooks中执行时的样子进行排版：</p>
+<figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">In</span> <span class="hljs-selector-attr">[5]</span>: <span class="hljs-selector-tag">CODE</span> <span class="hljs-selector-tag">EXAMPLE</span></span><br><span class="line"><span class="hljs-selector-tag">Out</span><span class="hljs-selector-attr">[5]</span>: <span class="hljs-selector-tag">OUTPUT</span></span><br></pre></td></tr></table></figure>
+
+<p>但你看到类似的示例代码，就是让你在<code>in</code>的部分输入代码，按Enter键执行（Jupyter中是按Shift-Enter）。然后就可以在<code>out</code>看到输出。</p>
+<h2 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h2><p>各章的示例数据都存放在GitHub上：<a href="https://links.jianshu.com/go?to=http%3A%2F%2Fgithub.com%2Fpydata%2Fpydata-book" target="_blank" rel="noopener">http://github.com/pydata/pydata-book</a>。下载这些数据的方法有二：使用git版本控制命令行程序；直接从网站上下载该GitHub库的zip文件。如果遇到了问题，可以到我的个人主页，<a href="https://links.jianshu.com/go?to=http%3A%2F%2Fwesmckinney.com%2F" target="_blank" rel="noopener">http://wesmckinney.com/</a>，获取最新的指导。</p>
+<p>为了让所有示例都能重现，我已经尽我所能使其包含所有必需的东西，但仍然可能会有一些错误或遗漏。如果出现这种情况的话，请给我发邮件：<a href="https://links.jianshu.com/go?to=mailto%3Awesmckinn%40gmail.com" target="_blank" rel="noopener">wesmckinn@gmail.com</a>。报告本书错误的最好方法是O’Reilly的errata页面，<a href="https://links.jianshu.com/go?to=http%3A%2F%2Fwww.bit.ly%2FpyDataAnalysis_errata" target="_blank" rel="noopener">http://www.bit.ly/pyDataAnalysis_errata</a>。</p>
+<h2 id="引入惯例"><a href="#引入惯例" class="headerlink" title="引入惯例"></a>引入惯例</h2><p>Python社区已经广泛采取了一些常用模块的命名惯例：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt</span><br><span class="line"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</span><br><span class="line"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns</span><br><span class="line"><span class="hljs-keyword">import</span> statsmodels <span class="hljs-keyword">as</span> sm</span><br></pre></td></tr></table></figure>
+
+<p>undefined也就是说，当你看到np.arange时，就应该想到它引用的是NumPy中的arange函数。这样做的原因是：在Python软件开发过程中，不建议直接引入类似NumPy这种大型库的全部内容（from numpy import *）。</p>
+<h2 id="行话"><a href="#行话" class="headerlink" title="行话"></a>行话</h2><p>由于你可能不太熟悉书中使用的一些有关编程和数据科学方面的常用术语，所以我在这里先给出其简单定义：</p>
+<p>数据规整（Munge/Munging/Wrangling）
+指的是将非结构化和（或）散乱数据处理为结构化或整洁形式的整个过程。这几个词已经悄悄成为当今数据黑客们的行话了。Munge这个词跟Lunge押韵。</p>
+<p>伪码（Pseudocode）
+算法或过程的“代码式”描述，而这些代码本身并不是实际有效的源代码。</p>
+<p>语法糖（Syntactic sugar）
+这是一种编程语法，它并不会带来新的特性，但却能使代码更易读、更易写。</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/python/" rel="tag">python</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC2%E7%AB%A0%20Python%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80%EF%BC%8CIPython%E5%92%8CJupyter%20Notebooks/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">《利用Python进行数据分析·第2版》第2章 Python语法基础，IPython和Jupyter Notebooks</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/">
+                <span class="level-item">Mysql开启慢日志</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#《利用Python进行数据分析·第2版》第1章-准备工作">
+        <span class="has-mr-6">1</span>
+        <span>《利用Python进行数据分析·第2版》第1章 准备工作</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-1-本书的内容">
+        <span class="has-mr-6">2</span>
+        <span>1.1 本书的内容</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#什么样的数据？">
+        <span class="has-mr-6">2.1</span>
+        <span>什么样的数据？</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1-2-为什么要使用Python进行数据分析">
+        <span class="has-mr-6">3</span>
+        <span>1.2 为什么要使用Python进行数据分析</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Python作为胶水语言">
+        <span class="has-mr-6">3.1</span>
+        <span>Python作为胶水语言</span>
+        </a></li><li>
+        <a class="is-flex" href="#解决“两种语言”问题">
+        <span class="has-mr-6">3.2</span>
+        <span>解决“两种语言”问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#为什么不选Python">
+        <span class="has-mr-6">3.3</span>
+        <span>为什么不选Python</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1-3-重要的Python库">
+        <span class="has-mr-6">4</span>
+        <span>1.3 重要的Python库</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#NumPy">
+        <span class="has-mr-6">4.1</span>
+        <span>NumPy</span>
+        </a></li><li>
+        <a class="is-flex" href="#pandas">
+        <span class="has-mr-6">4.2</span>
+        <span>pandas</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#matplotlib">
+        <span class="has-mr-6">5</span>
+        <span>matplotlib</span>
+        </a></li><li>
+        <a class="is-flex" href="#IPython和Jupyter">
+        <span class="has-mr-6">6</span>
+        <span>IPython和Jupyter</span>
+        </a></li><li>
+        <a class="is-flex" href="#SciPy">
+        <span class="has-mr-6">7</span>
+        <span>SciPy</span>
+        </a></li><li>
+        <a class="is-flex" href="#scikit-learn">
+        <span class="has-mr-6">8</span>
+        <span>scikit-learn</span>
+        </a></li><li>
+        <a class="is-flex" href="#statsmodels">
+        <span class="has-mr-6">9</span>
+        <span>statsmodels</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-4-安装和设置">
+        <span class="has-mr-6">10</span>
+        <span>1.4 安装和设置</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Windows">
+        <span class="has-mr-6">10.1</span>
+        <span>Windows</span>
+        </a></li><li>
+        <a class="is-flex" href="#Apple-OS-X-macOS">
+        <span class="has-mr-6">10.2</span>
+        <span>Apple (OS X, macOS)</span>
+        </a></li><li>
+        <a class="is-flex" href="#GNU-Linux">
+        <span class="has-mr-6">10.3</span>
+        <span>GNU/Linux</span>
+        </a></li><li>
+        <a class="is-flex" href="#安装或升级Python包">
+        <span class="has-mr-6">10.4</span>
+        <span>安装或升级Python包</span>
+        </a></li><li>
+        <a class="is-flex" href="#集成开发环境（IDEs）和文本编辑器">
+        <span class="has-mr-6">10.5</span>
+        <span>集成开发环境（IDEs）和文本编辑器</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#1-5-社区和会议">
+        <span class="has-mr-6">11</span>
+        <span>1.5 社区和会议</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-6-本书导航">
+        <span class="has-mr-6">12</span>
+        <span>1.6 本书导航</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#代码示例">
+        <span class="has-mr-6">12.1</span>
+        <span>代码示例</span>
+        </a></li><li>
+        <a class="is-flex" href="#示例数据">
+        <span class="has-mr-6">12.2</span>
+        <span>示例数据</span>
+        </a></li><li>
+        <a class="is-flex" href="#引入惯例">
+        <span class="has-mr-6">12.3</span>
+        <span>引入惯例</span>
+        </a></li><li>
+        <a class="is-flex" href="#行话">
+        <span class="has-mr-6">12.4</span>
+        <span>行话</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-10T11:48:06.000Z">2019-11-10</time></div>
+                    <a href="/2019/11/10/%E7%94%A8python%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E8%A7%A3%E6%95%B0%E5%AD%97%E5%8D%8E%E5%AE%B9%E9%81%93%E6%B8%B8%E6%88%8F%E7%9A%84%E7%A8%8B%E5%BA%8F/" class="has-link-black-ter is-size-6">用python写了一个解数字华容道游戏的程序</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:53:33.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC4%E7%AB%A0%20NumPy%E5%9F%BA%E7%A1%80%EF%BC%9A%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A2%E9%87%8F%E8%AE%A1%E7%AE%97/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第4章 NumPy基础：数组和矢量计算</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:52:29.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC3%E7%AB%A0%20Python%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%87%E4%BB%B6/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第3章 Python的数据结构、函数和文件</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:51:17.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC2%E7%AB%A0%20Python%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80%EF%BC%8CIPython%E5%92%8CJupyter%20Notebooks/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第2章 Python语法基础，IPython和Jupyter Notebooks</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="《利用Python进行数据分析·第2版》第1章 准备工作" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

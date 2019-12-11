@@ -16,7 +16,7 @@
 <meta property="og:description" content="华容道游戏，可以有数字型，也可以有图像型。这里介绍的是数字华容道，也叫数字推盘。市面上一般有3X3、4X4、5X5、6X6等，其中4X4数字华容道常作为《最强大脑》第一轮节目来选拔选手。 网络上有很多与之相关的编程话题，但很多都只是把数字打乱，并调整为有解的玩法。而我想要做的是怎样从一个有解的数字推盘一步一步地还原并且是最少的步数。 下面这张图就是程序完成后的结果">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-11-26T07:54:59.994Z">
+<meta property="og:updated_time" content="2019-12-05T02:36:41.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
 
@@ -249,7 +249,7 @@
 </ul>
 <h3 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="4. 遇到的问题"></a>4. 遇到的问题</h3><ol>
 <li><p>3×3所有的可能情况有<code>9X8X7X6X5X4X3</code>即181440种情况，包括了最初状态，没有乘以2是因为有一半是无解的，无法还原。我用<code>mysql</code>来记录，18万条数据用了<code>36M</code>。</p>
-<p>4x4所有的可能情况有<code>16!/2</code>有大约<code>10万亿</code>条数据，存储所有的4x4大约需要2000TB，个人电脑明显存储不了，所有4x4只存了174万条。</p>
+<p>4x4所有的可能情况有<code>16!/2</code>有大约<code>10万亿</code>条数据，存储所有的4x4大约需要2000TB，个人电脑明显存储不了，所以4x4只存了174万条。</p>
 </li>
 <li><p>像4x4这么多的情况，计算到后面步数越多，计算量巨大，同时写入数据库也巨慢。</p>
 </li>
@@ -413,10 +413,10 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-16T01:21:17.000Z">2019-10-16</time></div>
-                    <a href="/2019/10/16/Mysql%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97/" class="has-link-black-ter is-size-6">Mysql开启慢日志</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:53:33.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC4%E7%AB%A0%20NumPy%E5%9F%BA%E7%A1%80%EF%BC%9A%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A2%E9%87%8F%E8%AE%A1%E7%AE%97/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第4章 NumPy基础：数组和矢量计算</a>
                     <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
                     </p>
                 </div>
             </div>
@@ -426,10 +426,10 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T13:27:32.000Z">2019-10-05</time></div>
-                    <a href="/2019/10/05/mariadb%E7%9A%84%E5%AE%89%E8%A3%85/" class="has-link-black-ter is-size-6">mariadb的安装</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:52:29.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC3%E7%AB%A0%20Python%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%87%E4%BB%B6/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第3章 Python的数据结构、函数和文件</a>
                     <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
                     </p>
                 </div>
             </div>
@@ -439,8 +439,8 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time></div>
-                    <a href="/2019/10/05/%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5/" class="has-link-black-ter is-size-6">摘录一个关于jupyter-notebook技巧的网页</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:51:17.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC2%E7%AB%A0%20Python%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80%EF%BC%8CIPython%E5%92%8CJupyter%20Notebooks/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第2章 Python语法基础，IPython和Jupyter Notebooks</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
                     </p>

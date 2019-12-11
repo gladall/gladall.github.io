@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8">
+<title>《利用Python进行数据分析·第2版》 附录A NumPy高级应用 - Lanhoo&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+
+    <meta name="description" content="《利用Python进行数据分析·第2版》 附录A NumPy高级应用 转载自简书 第1章 准备工作 第2章 Python语法基础，IPython和Jupyter 第3章 Python的数据结构、函数和文件 第4章 NumPy基础：数组和矢量计算 第5章 pandas入门 第6章 数据加载、存储与文件格式 第7章 数据清洗和准备 第8章 数据规整：聚合、合并和重塑 第9章 绘图和可视化 第10章 数">
+<meta name="keywords" content="数据分析,pandas,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《利用Python进行数据分析·第2版》 附录A NumPy高级应用">
+<meta property="og:url" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;2019&#x2F;10&#x2F;05&#x2F;%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%20%E9%99%84%E5%BD%95A%20NumPy%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8&#x2F;index.html">
+<meta property="og:site_name" content="Lanhoo&#39;s blog">
+<meta property="og:description" content="《利用Python进行数据分析·第2版》 附录A NumPy高级应用 转载自简书 第1章 准备工作 第2章 Python语法基础，IPython和Jupyter 第3章 Python的数据结构、函数和文件 第4章 NumPy基础：数组和矢量计算 第5章 pandas入门 第6章 数据加载、存储与文件格式 第7章 数据清洗和准备 第8章 数据规整：聚合、合并和重塑 第9章 绘图和可视化 第10章 数">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2019-12-11T00:54:29.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;glanhoo.coding.me&#x2F;images&#x2F;og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/grid32.ico">
+
+
+<!-- 添加用户的样式，用来修改表格样式 -->
+<!-- 效果不好，代码块也是表格，把代码块也变了 -->
+<link rel="stylesheet" href="/css/user2.css" media="screen" type="text/css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146455672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146455672-1');
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/atom.xml" title="Lanhoo's blog" type="application/atom+xml">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/grid.svg" alt="《利用Python进行数据分析·第2版》 附录A NumPy高级应用" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;" target="_blank" rel="noopener">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- 将main_column_class() 改为 col() -->
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <time class="level-item has-text-grey" datetime="2019-10-05T01:51:29.000Z">2019-10-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 小时 读完 (大约 8516 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                《利用Python进行数据分析·第2版》 附录A NumPy高级应用
+            
+        </h1>
+        <div class="content">
+            <h1 id="《利用Python进行数据分析·第2版》-附录A-NumPy高级应用"><a href="#《利用Python进行数据分析·第2版》-附录A-NumPy高级应用" class="headerlink" title="《利用Python进行数据分析·第2版》 附录A NumPy高级应用"></a>《利用Python进行数据分析·第2版》 附录A NumPy高级应用</h1><hr>
+<p>转载自<a href="https://www.jianshu.com/p/3c3f7da88516" target="_blank" rel="noopener">简书</a></p>
+<p><a href="https://www.jianshu.com/p/04d180d90a3f" target="_blank" rel="noopener">第1章 准备工作</a>
+<a href="https://www.jianshu.com/p/fc93e943e94a" target="_blank" rel="noopener">第2章 Python语法基础，IPython和Jupyter</a>
+<a href="https://www.jianshu.com/p/b444cda10aa0" target="_blank" rel="noopener">第3章 Python的数据结构、函数和文件</a>
+<a href="https://www.jianshu.com/p/a380222a3292" target="_blank" rel="noopener">第4章 NumPy基础：数组和矢量计算</a>
+<a href="https://www.jianshu.com/p/161364dd0acf" target="_blank" rel="noopener">第5章 pandas入门</a>
+<a href="https://www.jianshu.com/p/047d8c1c7e14" target="_blank" rel="noopener">第6章 数据加载、存储与文件格式</a>
+<a href="https://www.jianshu.com/p/ac7bec000dad" target="_blank" rel="noopener">第7章 数据清洗和准备</a>
+<a href="https://www.jianshu.com/p/cfc035bae567" target="_blank" rel="noopener">第8章 数据规整：聚合、合并和重塑</a>
+<a href="https://www.jianshu.com/p/7a0eafdd1340" target="_blank" rel="noopener">第9章 绘图和可视化</a>
+<a href="https://www.jianshu.com/p/b94deb5c7eb1" target="_blank" rel="noopener">第10章 数据聚合与分组运算</a>
+<a href="https://www.jianshu.com/p/29ece4592178" target="_blank" rel="noopener">第11章 时间序列</a>
+<a href="https://www.jianshu.com/p/9d093ebcc5d8" target="_blank" rel="noopener">第12章 pandas高级应用</a>
+<a href="https://www.jianshu.com/p/e46a1ac36aa5" target="_blank" rel="noopener">第13章 Python建模库介绍</a>
+<a href="https://www.jianshu.com/p/72b6c83bb69e" target="_blank" rel="noopener">第14章 数据分析案例</a>
+附录A NumPy高级应用
+<a href="https://www.jianshu.com/p/fb6719a18cea" target="_blank" rel="noopener">附录B 更多关于IPython的内容（完）</a></p>
+<hr>
+<p>在这篇附录中，我会深入NumPy库的数组计算。这会包括ndarray更内部的细节，和更高级的数组操作和算法。</p>
+<p>本章包括了一些杂乱的章节，不需要仔细研究。</p>
+<h1 id="A-1-ndarray对象的内部机理"><a href="#A-1-ndarray对象的内部机理" class="headerlink" title="A.1 ndarray对象的内部机理"></a>A.1 ndarray对象的内部机理</h1><p>NumPy的ndarray提供了一种将同质数据块（可以是连续或跨越）解释为多维数组对象的方式。正如你之前所看到的那样，数据类型（dtype）决定了数据的解释方式，比如浮点数、整数、布尔值等。</p>
+<p>ndarray如此强大的部分原因是所有数组对象都是数据块的一个跨度视图（strided view）。你可能想知道数组视图arr[::2,::-1]不复制任何数据的原因是什么。简单地说，ndarray不只是一块内存和一个dtype，它还有跨度信息，这使得数组能以各种步幅（step size）在内存中移动。更准确地讲，ndarray内部由以下内容组成：</p>
+<ul>
+<li>一个指向数据（内存或内存映射文件中的一块数据）的指针。</li>
+<li>数据类型或dtype，描述在数组中的固定大小值的格子。</li>
+<li>一个表示数组形状（shape）的元组。</li>
+<li>一个跨度元组（stride），其中的整数指的是为了前进到当前维度下一个元素需要“跨过”的字节数。</li>
+</ul>
+<p>图A-1简单地说明了ndarray的内部结构。</p>
+<p><img src="/images/blog/7178691-43452f2f413e5094.webp" alt="img"></p>
+<p>图A-1 Numpy的ndarray对象</p>
+<p>例如，一个10×5的数组，其形状为(10,5)：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">10</span>]: np.ones((<span class="hljs-number">10</span>, <span class="hljs-number">5</span>)).shape</span><br><span class="line">Out[<span class="hljs-number">10</span>]: (<span class="hljs-number">10</span>, <span class="hljs-number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>一个典型的（C顺序，稍后将详细讲解）3×4×5的float64（8个字节）数组，其跨度为(160,40,8) —— 知道跨度是非常有用的，通常，跨度在一个轴上越大，沿这个轴进行计算的开销就越大：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">11</span>]: np.ones((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>), dtype=np.float64).strides</span><br><span class="line">Out[<span class="hljs-number">11</span>]: (<span class="hljs-number">160</span>, <span class="hljs-number">40</span>, <span class="hljs-number">8</span>)</span><br></pre></td></tr></table></figure>
+
+<p>虽然NumPy用户很少会对数组的跨度信息感兴趣，但它们却是构建非复制式数组视图的重要因素。跨度甚至可以是负数，这样会使数组在内存中后向移动，比如在切片obj[::-1]或obj[:,::-1]中就是这样的。</p>
+<h2 id="NumPy数据类型体系"><a href="#NumPy数据类型体系" class="headerlink" title="NumPy数据类型体系"></a>NumPy数据类型体系</h2><p>你可能偶尔需要检查数组中所包含的是否是整数、浮点数、字符串或Python对象。因为浮点数的种类很多（从float16到float128），判断dtype是否属于某个大类的工作非常繁琐。幸运的是，dtype都有一个超类（比如np.integer和np.floating），它们可以跟np.issubdtype函数结合使用：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">12</span>]: ints = np.ones(<span class="hljs-number">10</span>, dtype=np.uint16)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">13</span>]: floats = np.ones(<span class="hljs-number">10</span>, dtype=np.float32)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">14</span>]: np.issubdtype(ints.dtype, np.integer)</span><br><span class="line">Out[<span class="hljs-number">14</span>]: <span class="hljs-literal">True</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">15</span>]: np.issubdtype(floats.dtype, np.floating)</span><br><span class="line">Out[<span class="hljs-number">15</span>]: <span class="hljs-literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>调用dtype的mro方法即可查看其所有的父类：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">16</span>]: np.float64.mro()</span><br><span class="line">Out[<span class="hljs-number">16</span>]:</span><br><span class="line">[numpy.float64,</span><br><span class="line"> numpy.floating,</span><br><span class="line"> numpy.inexact,</span><br><span class="line"> numpy.number,</span><br><span class="line"> numpy.generic,</span><br><span class="line"> float,</span><br><span class="line"> object]</span><br></pre></td></tr></table></figure>
+
+<p>然后得到：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">17</span>]: np.issubdtype(ints.dtype, np.number)</span><br><span class="line">Out[<span class="hljs-number">17</span>]: <span class="hljs-literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>大部分NumPy用户完全不需要了解这些知识，但是这些知识偶尔还是能派上用场的。图A-2说明了dtype体系以及父子类关系。</p>
+<p><img src="/images/blog/7178691-b8996bf943a06ab9.webp" alt="img"></p>
+<p>图A-2 NumPy的dtype体系</p>
+<h1 id="A-2-高级数组操作"><a href="#A-2-高级数组操作" class="headerlink" title="A.2 高级数组操作"></a>A.2 高级数组操作</h1><p>除花式索引、切片、布尔条件取子集等操作之外，数组的操作方式还有很多。虽然pandas中的高级函数可以处理数据分析工作中的许多重型任务，但有时你还是需要编写一些在现有库中找不到的数据算法。</p>
+<h2 id="数组重塑"><a href="#数组重塑" class="headerlink" title="数组重塑"></a>数组重塑</h2><p>多数情况下，你可以无需复制任何数据，就将数组从一个形状转换为另一个形状。只需向数组的实例方法reshape传入一个表示新形状的元组即可实现该目的。例如，假设有一个一维数组，我们希望将其重新排列为一个矩阵（结果见图A-3）：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">18</span>]: arr = np.arange(<span class="hljs-number">8</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">19</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">19</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">20</span>]: arr.reshape((<span class="hljs-number">4</span>, <span class="hljs-number">2</span>))</span><br><span class="line">Out[<span class="hljs-number">20</span>]: </span><br><span class="line">array([[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>],</span><br><span class="line">       [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>],</span><br><span class="line">       [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>],</span><br><span class="line">       [<span class="hljs-number">6</span>, <span class="hljs-number">7</span>]])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/7178691-95bbca6d8d04e4c7.webp" alt="img"></p>
+<p>图A-3 按C顺序（按行）和按Fortran顺序（按列）进行重塑</p>
+<p>多维数组也能被重塑：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">21</span>]: arr.reshape((<span class="hljs-number">4</span>, <span class="hljs-number">2</span>)).reshape((<span class="hljs-number">2</span>, <span class="hljs-number">4</span>))</span><br><span class="line">Out[<span class="hljs-number">21</span>]: </span><br><span class="line">array([[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],</span><br><span class="line">       [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>作为参数的形状的其中一维可以是－1，它表示该维度的大小由数据本身推断而来：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">22</span>]: arr = np.arange(<span class="hljs-number">15</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">23</span>]: arr.reshape((<span class="hljs-number">5</span>, <span class="hljs-number">-1</span>))</span><br><span class="line">Out[<span class="hljs-number">23</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>],</span><br><span class="line">       [ <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>],</span><br><span class="line">       [ <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>],</span><br><span class="line">       [ <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>],</span><br><span class="line">       [<span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>与reshape将一维数组转换为多维数组的运算过程相反的运算通常称为扁平化（flattening）或散开（raveling）：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">27</span>]: arr = np.arange(<span class="hljs-number">15</span>).reshape((<span class="hljs-number">5</span>, <span class="hljs-number">3</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">28</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">28</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>],</span><br><span class="line">       [ <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>],</span><br><span class="line">       [ <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>],</span><br><span class="line">       [ <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>],</span><br><span class="line">       [<span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">29</span>]: arr.ravel()</span><br><span class="line">Out[<span class="hljs-number">29</span>]: array([ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>])</span><br></pre></td></tr></table></figure>
+
+<p>如果结果中的值与原始数组相同，ravel不会产生源数据的副本。flatten方法的行为类似于ravel，只不过它总是返回数据的副本：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">30</span>]: arr.flatten()</span><br><span class="line">Out[<span class="hljs-number">30</span>]: array([ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>])</span><br></pre></td></tr></table></figure>
+
+<p>数组可以被重塑或散开为别的顺序。这对NumPy新手来说是一个比较微妙的问题，所以在下一小节中我们将专门讲解这个问题。</p>
+<h2 id="C和Fortran顺序"><a href="#C和Fortran顺序" class="headerlink" title="C和Fortran顺序"></a>C和Fortran顺序</h2><p>NumPy允许你更为灵活地控制数据在内存中的布局。默认情况下，NumPy数组是按行优先顺序创建的。在空间方面，这就意味着，对于一个二维数组，每行中的数据项是被存放在相邻内存位置上的。另一种顺序是列优先顺序，它意味着每列中的数据项是被存放在相邻内存位置上的。</p>
+<p>由于一些历史原因，行和列优先顺序又分别称为C和Fortran顺序。在FORTRAN 77中，矩阵全都是列优先的。</p>
+<p>像reshape和reval这样的函数，都可以接受一个表示数组数据存放顺序的order参数。一般可以是’C’或’F’（还有’A’和’K’等不常用的选项，具体请参考NumPy的文档）。图A-3对此进行了说明：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">31</span>]: arr = np.arange(<span class="hljs-number">12</span>).reshape((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">32</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">32</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>],</span><br><span class="line">       [ <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>],</span><br><span class="line">       [ <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">33</span>]: arr.ravel()</span><br><span class="line">Out[<span class="hljs-number">33</span>]: array([ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">34</span>]: arr.ravel(<span class="hljs-string">'F'</span>)</span><br><span class="line">Out[<span class="hljs-number">34</span>]: array([ <span class="hljs-number">0</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">9</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">6</span>, <span class="hljs-number">10</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">7</span>, <span class="hljs-number">11</span>])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/blog/7178691-f486e7c41d7e0eec.webp" alt="img"></p>
+<p>图A-3 按C（行优先）或Fortran（列优先）顺序进行重塑</p>
+<p>二维或更高维数组的重塑过程比较令人费解（见图A-3）。C和Fortran顺序的关键区别就是维度的行进顺序：</p>
+<ul>
+<li>C/行优先顺序：先经过更高的维度（例如，轴1会先于轴0被处理）。</li>
+<li>Fortran/列优先顺序：后经过更高的维度（例如，轴0会先于轴1被处理）。</li>
+</ul>
+<h2 id="数组的合并和拆分"><a href="#数组的合并和拆分" class="headerlink" title="数组的合并和拆分"></a>数组的合并和拆分</h2><p>numpy.concatenate可以按指定轴将一个由数组组成的序列（如元组、列表等）连接到一起：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">35</span>]: arr1 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">36</span>]: arr2 = np.array([[<span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>], [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">37</span>]: np.concatenate([arr1, arr2], axis=<span class="hljs-number">0</span>)</span><br><span class="line">Out[<span class="hljs-number">37</span>]: </span><br><span class="line">array([[ <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>],</span><br><span class="line">       [ <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>],</span><br><span class="line">       [ <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>],</span><br><span class="line">       [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">38</span>]: np.concatenate([arr1, arr2], axis=<span class="hljs-number">1</span>)</span><br><span class="line">Out[<span class="hljs-number">38</span>]: </span><br><span class="line">array([[ <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>],</span><br><span class="line">       [ <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>对于常见的连接操作，NumPy提供了一些比较方便的方法（如vstack和hstack）。因此，上面的运算还可以表达为：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">39</span>]: np.vstack((arr1, arr2))</span><br><span class="line">Out[<span class="hljs-number">39</span>]: </span><br><span class="line">array([[ <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>],</span><br><span class="line">       [ <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>],</span><br><span class="line">       [ <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>],</span><br><span class="line">       [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">40</span>]: np.hstack((arr1, arr2))</span><br><span class="line">Out[<span class="hljs-number">40</span>]: </span><br><span class="line">array([[ <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>],</span><br><span class="line">[ <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>与此相反，split用于将一个数组沿指定轴拆分为多个数组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">41</span>]: arr = np.random.randn(<span class="hljs-number">5</span>, <span class="hljs-number">2</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">42</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">42</span>]: </span><br><span class="line">array([[<span class="hljs-number">-0.2047</span>,  <span class="hljs-number">0.4789</span>],</span><br><span class="line">       [<span class="hljs-number">-0.5194</span>, <span class="hljs-number">-0.5557</span>],</span><br><span class="line">       [ <span class="hljs-number">1.9658</span>,  <span class="hljs-number">1.3934</span>],</span><br><span class="line">       [ <span class="hljs-number">0.0929</span>,  <span class="hljs-number">0.2817</span>],</span><br><span class="line">       [ <span class="hljs-number">0.769</span> ,  <span class="hljs-number">1.2464</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">43</span>]: first, second, third = np.split(arr, [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">44</span>]: first</span><br><span class="line">Out[<span class="hljs-number">44</span>]: array([[<span class="hljs-number">-0.2047</span>,  <span class="hljs-number">0.4789</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">45</span>]: second</span><br><span class="line">Out[<span class="hljs-number">45</span>]: </span><br><span class="line">array([[<span class="hljs-number">-0.5194</span>, <span class="hljs-number">-0.5557</span>],</span><br><span class="line">       [ <span class="hljs-number">1.9658</span>,  <span class="hljs-number">1.3934</span>]])</span><br><span class="line">In [<span class="hljs-number">46</span>]: third</span><br><span class="line">Out[<span class="hljs-number">46</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.0929</span>,  <span class="hljs-number">0.2817</span>],</span><br><span class="line">       [ <span class="hljs-number">0.769</span> ,  <span class="hljs-number">1.2464</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>传入到np.split的值[1,3]指示在哪个索引处分割数组。</p>
+<p>表A-1中列出了所有关于数组连接和拆分的函数，其中有些是专门为了方便常见的连接运算而提供的。</p>
+<p><img src="/images/blog/7178691-c597246722a6bb01.webp" alt="img"></p>
+<p>表A-1 数组连接函数</p>
+<h2 id="堆叠辅助类：r-和c"><a href="#堆叠辅助类：r-和c" class="headerlink" title="堆叠辅助类：r_和c_"></a>堆叠辅助类：r_和c_</h2><p>NumPy命名空间中有两个特殊的对象——r_和c_，它们可以使数组的堆叠操作更为简洁：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">47</span>]: arr = np.arange(<span class="hljs-number">6</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">48</span>]: arr1 = arr.reshape((<span class="hljs-number">3</span>, <span class="hljs-number">2</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">49</span>]: arr2 = np.random.randn(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">50</span>]: np.r_[arr1, arr2]</span><br><span class="line">Out[<span class="hljs-number">50</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">1.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">2.</span>    ,  <span class="hljs-number">3.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">4.</span>    ,  <span class="hljs-number">5.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">1.0072</span>, <span class="hljs-number">-1.2962</span>],</span><br><span class="line">       [ <span class="hljs-number">0.275</span> ,  <span class="hljs-number">0.2289</span>],</span><br><span class="line">       [ <span class="hljs-number">1.3529</span>,  <span class="hljs-number">0.8864</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">51</span>]: np.c_[np.r_[arr1, arr2], arr]</span><br><span class="line">Out[<span class="hljs-number">51</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">1.</span>    ,  <span class="hljs-number">0.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">2.</span>    ,  <span class="hljs-number">3.</span>    ,  <span class="hljs-number">1.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">4.</span>    ,  <span class="hljs-number">5.</span>    ,  <span class="hljs-number">2.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">1.0072</span>, <span class="hljs-number">-1.2962</span>,  <span class="hljs-number">3.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">0.275</span> ,  <span class="hljs-number">0.2289</span>,  <span class="hljs-number">4.</span>    ],</span><br><span class="line">       [ <span class="hljs-number">1.3529</span>,  <span class="hljs-number">0.8864</span>,  <span class="hljs-number">5.</span>    ]])</span><br></pre></td></tr></table></figure>
+
+<p>它还可以将切片转换成数组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">52</span>]: np.c_[<span class="hljs-number">1</span>:<span class="hljs-number">6</span>, <span class="hljs-number">-10</span>:<span class="hljs-number">-5</span>]</span><br><span class="line">Out[<span class="hljs-number">52</span>]: </span><br><span class="line">array([[  <span class="hljs-number">1</span>, <span class="hljs-number">-10</span>],</span><br><span class="line">       [  <span class="hljs-number">2</span>,  <span class="hljs-number">-9</span>],</span><br><span class="line">       [  <span class="hljs-number">3</span>,  <span class="hljs-number">-8</span>],</span><br><span class="line">       [  <span class="hljs-number">4</span>,  <span class="hljs-number">-7</span>],</span><br><span class="line">       [  <span class="hljs-number">5</span>,  <span class="hljs-number">-6</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>r_和c_的具体功能请参考其文档。</p>
+<h2 id="元素的重复操作：tile和repeat"><a href="#元素的重复操作：tile和repeat" class="headerlink" title="元素的重复操作：tile和repeat"></a>元素的重复操作：tile和repeat</h2><p>对数组进行重复以产生更大数组的工具主要是repeat和tile这两个函数。repeat会将数组中的各个元素重复一定次数，从而产生一个更大的数组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">53</span>]: arr = np.arange(<span class="hljs-number">3</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">54</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">54</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">55</span>]: arr.repeat(<span class="hljs-number">3</span>)</span><br><span class="line">Out[<span class="hljs-number">55</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>笔记：跟其他流行的数组编程语言（如MATLAB）不同，NumPy中很少需要对数组进行重复（replicate）。这主要是因为广播（broadcasting，我们将在下一节中讲解该技术）能更好地满足该需求。</p>
+</blockquote>
+<p>默认情况下，如果传入的是一个整数，则各元素就都会重复那么多次。如果传入的是一组整数，则各元素就可以重复不同的次数：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">56</span>]: arr.repeat([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])</span><br><span class="line">Out[<span class="hljs-number">56</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p>对于多维数组，还可以让它们的元素沿指定轴重复：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">57</span>]: arr = np.random.randn(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">58</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">58</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">59</span>]: arr.repeat(<span class="hljs-number">2</span>, axis=<span class="hljs-number">0</span>)</span><br><span class="line">Out[<span class="hljs-number">59</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>注意，如果没有设置轴向，则数组会被扁平化，这可能不会是你想要的结果。同样，在对多维进行重复时，也可以传入一组整数，这样就会使各切片重复不同的次数：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">60</span>]: arr.repeat([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>], axis=<span class="hljs-number">0</span>)</span><br><span class="line">Out[<span class="hljs-number">60</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">61</span>]: arr.repeat([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>], axis=<span class="hljs-number">1</span>)</span><br><span class="line">Out[<span class="hljs-number">61</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> ,  <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>, <span class="hljs-number">-0.4386</span>, <span class="hljs-number">-0.4386</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>tile的功能是沿指定轴向堆叠数组的副本。你可以形象地将其想象成“铺瓷砖”：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">62</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">62</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">63</span>]: np.tile(arr, <span class="hljs-number">2</span>)</span><br><span class="line">Out[<span class="hljs-number">63</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>,  <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>第二个参数是瓷砖的数量。对于标量，瓷砖是水平铺设的，而不是垂直铺设。它可以是一个表示“铺设”布局的元组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">64</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">64</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">65</span>]: np.tile(arr, (<span class="hljs-number">2</span>, <span class="hljs-number">1</span>))</span><br><span class="line">Out[<span class="hljs-number">65</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>],</span><br><span class="line">       [<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">66</span>]: np.tile(arr, (<span class="hljs-number">3</span>, <span class="hljs-number">2</span>))</span><br><span class="line">Out[<span class="hljs-number">66</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>,  <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>],</span><br><span class="line">       [<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>,  <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>],</span><br><span class="line">       [<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>],</span><br><span class="line">       [ <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>,  <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>]])</span><br></pre></td></tr></table></figure>
+
+<h2 id="花式索引的等价函数：take和put"><a href="#花式索引的等价函数：take和put" class="headerlink" title="花式索引的等价函数：take和put"></a>花式索引的等价函数：take和put</h2><p>在第4章中我们讲过，获取和设置数组子集的一个办法是通过整数数组使用花式索引：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">67</span>]: arr = np.arange(<span class="hljs-number">10</span>) * <span class="hljs-number">100</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">68</span>]: inds = [<span class="hljs-number">7</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">6</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">69</span>]: arr[inds]</span><br><span class="line">Out[<span class="hljs-number">69</span>]: array([<span class="hljs-number">700</span>, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>, <span class="hljs-number">600</span>])</span><br></pre></td></tr></table></figure>
+
+<p>ndarray还有其它方法用于获取单个轴向上的选区：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">70</span>]: arr.take(inds)</span><br><span class="line">Out[<span class="hljs-number">70</span>]: array([<span class="hljs-number">700</span>, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>, <span class="hljs-number">600</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">71</span>]: arr.put(inds, <span class="hljs-number">42</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">72</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">72</span>]: array([  <span class="hljs-number">0</span>,  <span class="hljs-number">42</span>,  <span class="hljs-number">42</span>, <span class="hljs-number">300</span>, <span class="hljs-number">400</span>, <span class="hljs-number">500</span>,  <span class="hljs-number">42</span>,  <span class="hljs-number">42</span>,<span class="hljs-number">800</span>, <span class="hljs-number">900</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">73</span>]: arr.put(inds, [<span class="hljs-number">40</span>, <span class="hljs-number">41</span>, <span class="hljs-number">42</span>, <span class="hljs-number">43</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">74</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">74</span>]: array([  <span class="hljs-number">0</span>,  <span class="hljs-number">41</span>,  <span class="hljs-number">42</span>, <span class="hljs-number">300</span>, <span class="hljs-number">400</span>, <span class="hljs-number">500</span>,  <span class="hljs-number">43</span>,  <span class="hljs-number">40</span>, <span class="hljs-number">800</span>, <span class="hljs-number">900</span>])</span><br></pre></td></tr></table></figure>
+
+<p>要在其它轴上使用take，只需传入axis关键字即可：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">75</span>]: inds = [<span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">76</span>]: arr = np.random.randn(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">77</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">77</span>]: </span><br><span class="line">array([[<span class="hljs-number">-0.5397</span>,  <span class="hljs-number">0.477</span> ,  <span class="hljs-number">3.2489</span>, <span class="hljs-number">-1.0212</span>],</span><br><span class="line">       [<span class="hljs-number">-0.5771</span>,  <span class="hljs-number">0.1241</span>,  <span class="hljs-number">0.3026</span>,  <span class="hljs-number">0.5238</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">78</span>]: arr.take(inds, axis=<span class="hljs-number">1</span>)</span><br><span class="line">Out[<span class="hljs-number">78</span>]: </span><br><span class="line">array([[ <span class="hljs-number">3.2489</span>, <span class="hljs-number">-0.5397</span>,  <span class="hljs-number">3.2489</span>,  <span class="hljs-number">0.477</span> ],</span><br><span class="line">       [ <span class="hljs-number">0.3026</span>, <span class="hljs-number">-0.5771</span>,  <span class="hljs-number">0.3026</span>,  <span class="hljs-number">0.1241</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>put不接受axis参数，它只会在数组的扁平化版本（一维，C顺序）上进行索引。因此，在需要用其他轴向的索引设置元素时，最好还是使用花式索引。</p>
+<h1 id="A-3-广播"><a href="#A-3-广播" class="headerlink" title="A.3 广播"></a>A.3 广播</h1><p>广播（broadcasting）指的是不同形状的数组之间的算术运算的执行方式。它是一种非常强大的功能，但也容易令人误解，即使是经验丰富的老手也是如此。将标量值跟数组合并时就会发生最简单的广播：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">79</span>]: arr = np.arange(<span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">80</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">80</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">81</span>]: arr * <span class="hljs-number">4</span></span><br><span class="line">Out[<span class="hljs-number">81</span>]: array([ <span class="hljs-number">0</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">8</span>, <span class="hljs-number">12</span>, <span class="hljs-number">16</span>])</span><br></pre></td></tr></table></figure>
+
+<p>这里我们说：在这个乘法运算中，标量值4被广播到了其他所有的元素上。</p>
+<p>看一个例子，我们可以通过减去列平均值的方式对数组的每一列进行距平化处理。这个问题解决起来非常简单：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">82</span>]: arr = np.random.randn(<span class="hljs-number">4</span>, <span class="hljs-number">3</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">83</span>]: arr.mean(<span class="hljs-number">0</span>)</span><br><span class="line">Out[<span class="hljs-number">83</span>]: array([<span class="hljs-number">-0.3928</span>, <span class="hljs-number">-0.3824</span>, <span class="hljs-number">-0.8768</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">84</span>]: demeaned = arr - arr.mean(<span class="hljs-number">0</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">85</span>]: demeaned</span><br><span class="line">Out[<span class="hljs-number">85</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.3937</span>,  <span class="hljs-number">1.7263</span>,  <span class="hljs-number">0.1633</span>],</span><br><span class="line">       [<span class="hljs-number">-0.4384</span>, <span class="hljs-number">-1.9878</span>, <span class="hljs-number">-0.9839</span>],</span><br><span class="line">       [<span class="hljs-number">-0.468</span> ,  <span class="hljs-number">0.9426</span>, <span class="hljs-number">-0.3891</span>],</span><br><span class="line">       [ <span class="hljs-number">0.5126</span>, <span class="hljs-number">-0.6811</span>,  <span class="hljs-number">1.2097</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">86</span>]: demeaned.mean(<span class="hljs-number">0</span>)</span><br><span class="line">Out[<span class="hljs-number">86</span>]: array([<span class="hljs-number">-0.</span>,  <span class="hljs-number">0.</span>, <span class="hljs-number">-0.</span>])</span><br></pre></td></tr></table></figure>
+
+<p>图A-4形象地展示了该过程。用广播的方式对行进行距平化处理会稍微麻烦一些。幸运的是，只要遵循一定的规则，低维度的值是可以被广播到数组的任意维度的（比如对二维数组各列减去行平均值）。</p>
+<p><img src="/images/blog/7178691-6aaf022ab88452a9.webp" alt="img"></p>
+<p>图A-4 一维数组在轴0上的广播</p>
+<p>于是就得到了：</p>
+<p><img src="/images/blog/7178691-fcaba8455960862a.webp" alt="img"></p>
+<p>虽然我是一名经验丰富的NumPy老手，但经常还是得停下来画张图并想想广播的原则。再来看一下最后那个例子，假设你希望对各行减去那个平均值。由于arr.mean(0)的长度为3，所以它可以在0轴向上进行广播：因为arr的后缘维度是3，所以它们是兼容的。根据该原则，要在1轴向上做减法（即各行减去行平均值），较小的那个数组的形状必须是(4,1)：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">87</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">87</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.0009</span>,  <span class="hljs-number">1.3438</span>, <span class="hljs-number">-0.7135</span>],</span><br><span class="line">       [<span class="hljs-number">-0.8312</span>, <span class="hljs-number">-2.3702</span>, <span class="hljs-number">-1.8608</span>],</span><br><span class="line">       [<span class="hljs-number">-0.8608</span>,  <span class="hljs-number">0.5601</span>, <span class="hljs-number">-1.2659</span>],</span><br><span class="line">       [ <span class="hljs-number">0.1198</span>, <span class="hljs-number">-1.0635</span>,  <span class="hljs-number">0.3329</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">88</span>]: row_means = arr.mean(<span class="hljs-number">1</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">89</span>]: row_means.shape</span><br><span class="line">Out[<span class="hljs-number">89</span>]: (<span class="hljs-number">4</span>,)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">90</span>]: row_means.reshape((<span class="hljs-number">4</span>, <span class="hljs-number">1</span>))</span><br><span class="line">Out[<span class="hljs-number">90</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.2104</span>],</span><br><span class="line">       [<span class="hljs-number">-1.6874</span>],</span><br><span class="line">       [<span class="hljs-number">-0.5222</span>],</span><br><span class="line">       [<span class="hljs-number">-0.2036</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">91</span>]: demeaned = arr - row_means.reshape((<span class="hljs-number">4</span>, <span class="hljs-number">1</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">92</span>]: demeaned.mean(<span class="hljs-number">1</span>)</span><br><span class="line">Out[<span class="hljs-number">92</span>]: array([ <span class="hljs-number">0.</span>, <span class="hljs-number">-0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>])</span><br></pre></td></tr></table></figure>
+
+<p>图A-5说明了该运算的过程。</p>
+<p><img src="/images/blog/7178691-9b0310d6773c3d38.webp" alt="img"></p>
+<p>图A-5 二维数组在轴1上的广播</p>
+<p>图A-6展示了另外一种情况，这次是在一个三维数组上沿0轴向加上一个二维数组。</p>
+<p><img src="/images/blog/7178691-965eb28b60046cd9.webp" alt="img"></p>
+<p>图A-6 三维数组在轴0上的广播</p>
+<h2 id="沿其它轴向广播"><a href="#沿其它轴向广播" class="headerlink" title="沿其它轴向广播"></a>沿其它轴向广播</h2><p>高维度数组的广播似乎更难以理解，而实际上它也是遵循广播原则的。如果不然，你就会得到下面这样一个错误：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">93</span>]: arr - arr.mean(<span class="hljs-number">1</span>)</span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">ValueError                                Traceback (most recent call last)</span><br><span class="line">&lt;ipython-input<span class="hljs-number">-93</span><span class="hljs-number">-7</span>b87b85a20b2&gt; <span class="hljs-keyword">in</span> &lt;module&gt;()</span><br><span class="line">----&gt; 1 arr - arr.mean(1)</span><br><span class="line">ValueError: operands could <span class="hljs-keyword">not</span> be broadcast together <span class="hljs-keyword">with</span> shapes (<span class="hljs-number">4</span>,<span class="hljs-number">3</span>) (<span class="hljs-number">4</span>,)</span><br></pre></td></tr></table></figure>
+
+<p>人们经常需要通过算术运算过程将较低维度的数组在除0轴以外的其他轴向上广播。根据广播的原则，较小数组的“广播维”必须为1。在上面那个行距平化的例子中，这就意味着要将行平均值的形状变成(4,1)而不是(4,)：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">94</span>]: arr - arr.mean(<span class="hljs-number">1</span>).reshape((<span class="hljs-number">4</span>, <span class="hljs-number">1</span>))</span><br><span class="line">Out[<span class="hljs-number">94</span>]: </span><br><span class="line">array([[<span class="hljs-number">-0.2095</span>,  <span class="hljs-number">1.1334</span>, <span class="hljs-number">-0.9239</span>],</span><br><span class="line">       [ <span class="hljs-number">0.8562</span>, <span class="hljs-number">-0.6828</span>, <span class="hljs-number">-0.1734</span>],</span><br><span class="line">       [<span class="hljs-number">-0.3386</span>,  <span class="hljs-number">1.0823</span>, <span class="hljs-number">-0.7438</span>],</span><br><span class="line">       [ <span class="hljs-number">0.3234</span>, <span class="hljs-number">-0.8599</span>,  <span class="hljs-number">0.5365</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>对于三维的情况，在三维中的任何一维上广播其实也就是将数据重塑为兼容的形状而已。图A-7说明了要在三维数组各维度上广播的形状需求。</p>
+<p><img src="/images/blog/7178691-b40936aab8e757d0.webp" alt="img"></p>
+<p>图A-7：能在该三维数组上广播的二维数组的形状</p>
+<p>于是就有了一个非常普遍的问题（尤其是在通用算法中），即专门为了广播而添加一个长度为1的新轴。虽然reshape是一个办法，但插入轴需要构造一个表示新形状的元组。这是一个很郁闷的过程。因此，NumPy数组提供了一种通过索引机制插入轴的特殊语法。下面这段代码通过特殊的np.newaxis属性以及“全”切片来插入新轴：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">95</span>]: arr = np.zeros((<span class="hljs-number">4</span>, <span class="hljs-number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">96</span>]: arr_3d = arr[:, np.newaxis, :]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">97</span>]: arr_3d.shape</span><br><span class="line">Out[<span class="hljs-number">97</span>]: (<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">98</span>]: arr_1d = np.random.normal(size=<span class="hljs-number">3</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">99</span>]: arr_1d[:, np.newaxis]</span><br><span class="line">Out[<span class="hljs-number">99</span>]: </span><br><span class="line">array([[<span class="hljs-number">-2.3594</span>],</span><br><span class="line">       [<span class="hljs-number">-0.1995</span>],</span><br><span class="line">       [<span class="hljs-number">-1.542</span> ]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">100</span>]: arr_1d[np.newaxis, :]</span><br><span class="line">Out[<span class="hljs-number">100</span>]: array([[<span class="hljs-number">-2.3594</span>, <span class="hljs-number">-0.1995</span>, <span class="hljs-number">-1.542</span> ]])</span><br></pre></td></tr></table></figure>
+
+<p>因此，如果我们有一个三维数组，并希望对轴2进行距平化，那么只需要编写下面这样的代码就可以了：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">101</span>]: arr = np.random.randn(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">102</span>]: depth_means = arr.mean(<span class="hljs-number">2</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">103</span>]: depth_means</span><br><span class="line">Out[<span class="hljs-number">103</span>]: </span><br><span class="line">array([[<span class="hljs-number">-0.4735</span>,  <span class="hljs-number">0.3971</span>, <span class="hljs-number">-0.0228</span>,  <span class="hljs-number">0.2001</span>],</span><br><span class="line">       [<span class="hljs-number">-0.3521</span>, <span class="hljs-number">-0.281</span> , <span class="hljs-number">-0.071</span> , <span class="hljs-number">-0.1586</span>],</span><br><span class="line">       [ <span class="hljs-number">0.6245</span>,  <span class="hljs-number">0.6047</span>,  <span class="hljs-number">0.4396</span>, <span class="hljs-number">-0.2846</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">104</span>]: depth_means.shape</span><br><span class="line">Out[<span class="hljs-number">104</span>]: (<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">105</span>]: demeaned = arr - depth_means[:, :, np.newaxis]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">106</span>]: demeaned.mean(<span class="hljs-number">2</span>)</span><br><span class="line">Out[<span class="hljs-number">106</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, <span class="hljs-number">-0.</span>, <span class="hljs-number">-0.</span>],</span><br><span class="line">       [ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, <span class="hljs-number">-0.</span>,  <span class="hljs-number">0.</span>],</span><br><span class="line">       [ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, <span class="hljs-number">-0.</span>, <span class="hljs-number">-0.</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>有些读者可能会想，在对指定轴进行距平化时，有没有一种既通用又不牺牲性能的方法呢？实际上是有的，但需要一些索引方面的技巧：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">demean_axis</span><span class="hljs-params">(arr, axis=<span class="hljs-number">0</span>)</span>:</span></span><br><span class="line">    means = arr.mean(axis)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment"># This generalizes things like [:, :, np.newaxis] to N dimensions</span></span><br><span class="line">    indexer = [slice(<span class="hljs-literal">None</span>)] * arr.ndim</span><br><span class="line">    indexer[axis] = np.newaxis</span><br><span class="line">    <span class="hljs-keyword">return</span> arr - means[indexer]</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过广播设置数组的值"><a href="#通过广播设置数组的值" class="headerlink" title="通过广播设置数组的值"></a>通过广播设置数组的值</h2><p>算术运算所遵循的广播原则同样也适用于通过索引机制设置数组值的操作。对于最简单的情况，我们可以这样做：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">107</span>]: arr = np.zeros((<span class="hljs-number">4</span>, <span class="hljs-number">3</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">108</span>]: arr[:] = <span class="hljs-number">5</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">109</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">109</span>]: </span><br><span class="line">array([[ <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>],</span><br><span class="line">       [ <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>],</span><br><span class="line">       [ <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>],</span><br><span class="line">       [ <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>,  <span class="hljs-number">5.</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>但是，假设我们想要用一个一维数组来设置目标数组的各列，只要保证形状兼容就可以了：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">110</span>]: col = np.array([<span class="hljs-number">1.28</span>, <span class="hljs-number">-0.42</span>, <span class="hljs-number">0.44</span>, <span class="hljs-number">1.6</span>])</span><br><span class="line">In [<span class="hljs-number">111</span>]: arr[:] = col[:, np.newaxis]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">112</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">112</span>]: </span><br><span class="line">array([[ <span class="hljs-number">1.28</span>,  <span class="hljs-number">1.28</span>,  <span class="hljs-number">1.28</span>],</span><br><span class="line">       [<span class="hljs-number">-0.42</span>, <span class="hljs-number">-0.42</span>, <span class="hljs-number">-0.42</span>],</span><br><span class="line">       [ <span class="hljs-number">0.44</span>,  <span class="hljs-number">0.44</span>,  <span class="hljs-number">0.44</span>],</span><br><span class="line">       [ <span class="hljs-number">1.6</span> ,  <span class="hljs-number">1.6</span> ,  <span class="hljs-number">1.6</span> ]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">113</span>]: arr[:<span class="hljs-number">2</span>] = [[<span class="hljs-number">-1.37</span>], [<span class="hljs-number">0.509</span>]]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">114</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">114</span>]: </span><br><span class="line">array([[<span class="hljs-number">-1.37</span> , <span class="hljs-number">-1.37</span> , <span class="hljs-number">-1.37</span> ],</span><br><span class="line">       [ <span class="hljs-number">0.509</span>,  <span class="hljs-number">0.509</span>,  <span class="hljs-number">0.509</span>],</span><br><span class="line">       [ <span class="hljs-number">0.44</span> ,  <span class="hljs-number">0.44</span> ,  <span class="hljs-number">0.44</span> ],</span><br><span class="line">       [ <span class="hljs-number">1.6</span>  ,  <span class="hljs-number">1.6</span>  ,  <span class="hljs-number">1.6</span>  ]])</span><br></pre></td></tr></table></figure>
+
+<h1 id="A-4-ufunc高级应用"><a href="#A-4-ufunc高级应用" class="headerlink" title="A.4 ufunc高级应用"></a>A.4 ufunc高级应用</h1><p>虽然许多NumPy用户只会用到通用函数所提供的快速的元素级运算，但通用函数实际上还有一些高级用法能使我们丢开循环而编写出更为简洁的代码。</p>
+<h2 id="ufunc实例方法"><a href="#ufunc实例方法" class="headerlink" title="ufunc实例方法"></a>ufunc实例方法</h2><p>NumPy的各个二元ufunc都有一些用于执行特定矢量化运算的特殊方法。表A-2汇总了这些方法，下面我将通过几个具体的例子对它们进行说明。</p>
+<p>reduce接受一个数组参数，并通过一系列的二元运算对其值进行聚合（可指明轴向）。例如，我们可以用np.add.reduce对数组中各个元素进行求和：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">115</span>]: arr = np.arange(<span class="hljs-number">10</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">116</span>]: np.add.reduce(arr)</span><br><span class="line">Out[<span class="hljs-number">116</span>]: <span class="hljs-number">45</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">117</span>]: arr.sum()</span><br><span class="line">Out[<span class="hljs-number">117</span>]: <span class="hljs-number">45</span></span><br></pre></td></tr></table></figure>
+
+<p>起始值取决于ufunc（对于add的情况，就是0）。如果设置了轴号，约简运算就会沿该轴向执行。这就使你能用一种比较简洁的方式得到某些问题的答案。在下面这个例子中，我们用np.logical_and检查数组各行中的值是否是有序的：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">118</span>]: np.random.seed(<span class="hljs-number">12346</span>)  <span class="hljs-comment"># for reproducibility</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">119</span>]: arr = np.random.randn(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">120</span>]: arr[::<span class="hljs-number">2</span>].sort(<span class="hljs-number">1</span>) <span class="hljs-comment"># sort a few rows</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">121</span>]: arr[:, :<span class="hljs-number">-1</span>] &lt; arr[:, <span class="hljs-number">1</span>:]</span><br><span class="line">Out[<span class="hljs-number">121</span>]: </span><br><span class="line">array([[ <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>],</span><br><span class="line">       [<span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>, <span class="hljs-literal">False</span>],</span><br><span class="line">       [ <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>],</span><br><span class="line">       [ <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>],</span><br><span class="line">       [ <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>]], dtype=bool)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">122</span>]: np.logical_and.reduce(arr[:, :<span class="hljs-number">-1</span>] &lt; arr[:, <span class="hljs-number">1</span>:], axis=<span class="hljs-number">1</span>)</span><br><span class="line">Out[<span class="hljs-number">122</span>]: array([ <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>], dtype=bool)</span><br></pre></td></tr></table></figure>
+
+<p>注意，logical_and.reduce跟all方法是等价的。</p>
+<p>ccumulate跟reduce的关系就像cumsum跟sum的关系那样。它产生一个跟原数组大小相同的中间“累计”值数组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">123</span>]: arr = np.arange(<span class="hljs-number">15</span>).reshape((<span class="hljs-number">3</span>, <span class="hljs-number">5</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">124</span>]: np.add.accumulate(arr, axis=<span class="hljs-number">1</span>)</span><br><span class="line">Out[<span class="hljs-number">124</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">6</span>, <span class="hljs-number">10</span>],</span><br><span class="line">       [ <span class="hljs-number">5</span>, <span class="hljs-number">11</span>, <span class="hljs-number">18</span>, <span class="hljs-number">26</span>, <span class="hljs-number">35</span>],</span><br><span class="line">       [<span class="hljs-number">10</span>, <span class="hljs-number">21</span>, <span class="hljs-number">33</span>, <span class="hljs-number">46</span>, <span class="hljs-number">60</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>outer用于计算两个数组的叉积：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">125</span>]: arr = np.arange(<span class="hljs-number">3</span>).repeat([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">126</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">126</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">127</span>]: np.multiply.outer(arr, np.arange(<span class="hljs-number">5</span>))</span><br><span class="line">Out[<span class="hljs-number">127</span>]: </span><br><span class="line">array([[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],</span><br><span class="line">       [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],</span><br><span class="line">       [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],</span><br><span class="line">       [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>],</span><br><span class="line">       [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>outer输出结果的维度是两个输入数据的维度之和：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">128</span>]: x, y = np.random.randn(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>), np.random.randn(<span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">129</span>]: result = np.subtract.outer(x, y)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">130</span>]: result.shape</span><br><span class="line">Out[<span class="hljs-number">130</span>]: (<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>最后一个方法reduceat用于计算“局部约简”，其实就是一个对数据各切片进行聚合的groupby运算。它接受一组用于指示如何对值进行拆分和聚合的“面元边界”：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">131</span>]: arr = np.arange(<span class="hljs-number">10</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">132</span>]: np.add.reduceat(arr, [<span class="hljs-number">0</span>, <span class="hljs-number">5</span>, <span class="hljs-number">8</span>])</span><br><span class="line">Out[<span class="hljs-number">132</span>]: array([<span class="hljs-number">10</span>, <span class="hljs-number">18</span>, <span class="hljs-number">17</span>])</span><br></pre></td></tr></table></figure>
+
+<p>最终结果是在arr[0:5]、arr[5:8]以及arr[8:]上执行的约简。跟其他方法一样，这里也可以传入一个axis参数：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">133</span>]: arr = np.multiply.outer(np.arange(<span class="hljs-number">4</span>), np.arange(<span class="hljs-number">5</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">134</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">134</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0</span>,  <span class="hljs-number">0</span>,  <span class="hljs-number">0</span>,  <span class="hljs-number">0</span>,  <span class="hljs-number">0</span>],</span><br><span class="line">       [ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>],</span><br><span class="line">       [ <span class="hljs-number">0</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">4</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">8</span>],</span><br><span class="line">       [ <span class="hljs-number">0</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">9</span>, <span class="hljs-number">12</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">135</span>]: np.add.reduceat(arr, [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], axis=<span class="hljs-number">1</span>)</span><br><span class="line">Out[<span class="hljs-number">135</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0</span>,  <span class="hljs-number">0</span>,  <span class="hljs-number">0</span>],</span><br><span class="line">       [ <span class="hljs-number">1</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">4</span>],</span><br><span class="line">       [ <span class="hljs-number">2</span>, <span class="hljs-number">10</span>,  <span class="hljs-number">8</span>],</span><br><span class="line">       [ <span class="hljs-number">3</span>, <span class="hljs-number">15</span>, <span class="hljs-number">12</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>表A-2总结了部分的ufunc方法。</p>
+<p><img src="/images/blog/7178691-c997bd45000f7b72.webp" alt="img"></p>
+<p>表A ufunc方法</p>
+<h2 id="编写新的ufunc"><a href="#编写新的ufunc" class="headerlink" title="编写新的ufunc"></a>编写新的ufunc</h2><p>有多种方法可以让你编写自己的NumPy ufuncs。最常见的是使用NumPy C API，但它超越了本书的范围。在本节，我们讲纯粹的Python ufunc。</p>
+<p>numpy.frompyfunc接受一个Python函数以及两个分别表示输入输出参数数量的参数。例如，下面是一个能够实现元素级加法的简单函数：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">136</span>]: <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_elements</span><span class="hljs-params">(x, y)</span>:</span></span><br><span class="line">   .....:     <span class="hljs-keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">137</span>]: add_them = np.frompyfunc(add_elements, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">138</span>]: add_them(np.arange(<span class="hljs-number">8</span>), np.arange(<span class="hljs-number">8</span>))</span><br><span class="line">Out[<span class="hljs-number">138</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span>, <span class="hljs-number">12</span>, <span class="hljs-number">14</span>], dtype=object)</span><br></pre></td></tr></table></figure>
+
+<p>用frompyfunc创建的函数总是返回Python对象数组，这一点很不方便。幸运的是，还有另一个办法，即numpy.vectorize。虽然没有frompyfunc那么强大，但可以让你指定输出类型：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">139</span>]: add_them = np.vectorize(add_elements, otypes=[np.float64])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">140</span>]: add_them(np.arange(<span class="hljs-number">8</span>), np.arange(<span class="hljs-number">8</span>))</span><br><span class="line">Out[<span class="hljs-number">140</span>]: array([  <span class="hljs-number">0.</span>,   <span class="hljs-number">2.</span>,   <span class="hljs-number">4.</span>,   <span class="hljs-number">6.</span>,   <span class="hljs-number">8.</span>,  <span class="hljs-number">10.</span>,  <span class="hljs-number">12.</span>,  <span class="hljs-number">14.</span>])</span><br></pre></td></tr></table></figure>
+
+<p>虽然这两个函数提供了一种创建ufunc型函数的手段，但它们非常慢，因为它们在计算每个元素时都要执行一次Python函数调用，这就会比NumPy自带的基于C的ufunc慢很多：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">141</span>]: arr = np.random.randn(<span class="hljs-number">10000</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">142</span>]: %timeit add_them(arr, arr)</span><br><span class="line"><span class="hljs-number">4.12</span> ms +- <span class="hljs-number">182</span> us per loop (mean +- std. dev. of <span class="hljs-number">7</span> runs, <span class="hljs-number">100</span> loops each)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">143</span>]: %timeit np.add(arr, arr)</span><br><span class="line"><span class="hljs-number">6.89</span> us +- <span class="hljs-number">504</span> ns per loop (mean +- std. dev. of <span class="hljs-number">7</span> runs, <span class="hljs-number">100000</span> loops each)</span><br></pre></td></tr></table></figure>
+
+<p>本章的后面，我会介绍使用Numba（<a href="http://numba.pydata.org/），创建快速Python" target="_blank" rel="noopener">http://numba.pydata.org/），创建快速Python</a> ufuncs。</p>
+<h1 id="A-5-结构化和记录式数组"><a href="#A-5-结构化和记录式数组" class="headerlink" title="A.5 结构化和记录式数组"></a>A.5 结构化和记录式数组</h1><p>你可能已经注意到了，到目前为止我们所讨论的ndarray都是一种同质数据容器，也就是说，在它所表示的内存块中，各元素占用的字节数相同（具体根据dtype而定）。从表面上看，它似乎不能用于表示异质或表格型的数据。结构化数组是一种特殊的ndarray，其中的各个元素可以被看做C语言中的结构体（struct，这就是“结构化”的由来）或SQL表中带有多个命名字段的行：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">144</span>]: dtype = [(<span class="hljs-string">'x'</span>, np.float64), (<span class="hljs-string">'y'</span>, np.int32)]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">145</span>]: sarr = np.array([(<span class="hljs-number">1.5</span>, <span class="hljs-number">6</span>), (np.pi, <span class="hljs-number">-2</span>)], dtype=dtype)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">146</span>]: sarr</span><br><span class="line">Out[<span class="hljs-number">146</span>]: </span><br><span class="line">array([( <span class="hljs-number">1.5</span>   ,  <span class="hljs-number">6</span>), ( <span class="hljs-number">3.1416</span>, <span class="hljs-number">-2</span>)],</span><br><span class="line">      dtype=[(<span class="hljs-string">'x'</span>, <span class="hljs-string">'&lt;f8'</span>), (<span class="hljs-string">'y'</span>, <span class="hljs-string">'&lt;i4'</span>)])</span><br></pre></td></tr></table></figure>
+
+<p>定义结构化dtype（请参考NumPy的在线文档）的方式有很多。最典型的办法是元组列表，各元组的格式为(field_name,field_data_type)。这样，数组的元素就成了元组式的对象，该对象中各个元素可以像字典那样进行访问：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">147</span>]: sarr[<span class="hljs-number">0</span>]</span><br><span class="line">Out[<span class="hljs-number">147</span>]: ( <span class="hljs-number">1.5</span>, <span class="hljs-number">6</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">148</span>]: sarr[<span class="hljs-number">0</span>][<span class="hljs-string">'y'</span>]</span><br><span class="line">Out[<span class="hljs-number">148</span>]: <span class="hljs-number">6</span></span><br></pre></td></tr></table></figure>
+
+<p>字段名保存在dtype.names属性中。在访问结构化数组的某个字段时，返回的是该数据的视图，所以不会发生数据复制：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">149</span>]: sarr[<span class="hljs-string">'x'</span>]</span><br><span class="line">Out[<span class="hljs-number">149</span>]: array([ <span class="hljs-number">1.5</span>   ,  <span class="hljs-number">3.1416</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id="嵌套dtype和多维字段"><a href="#嵌套dtype和多维字段" class="headerlink" title="嵌套dtype和多维字段"></a>嵌套dtype和多维字段</h2><p>在定义结构化dtype时，你可以再设置一个形状（可以是一个整数，也可以是一个元组）：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">150</span>]: dtype = [(<span class="hljs-string">'x'</span>, np.int64, <span class="hljs-number">3</span>), (<span class="hljs-string">'y'</span>, np.int32)]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">151</span>]: arr = np.zeros(<span class="hljs-number">4</span>, dtype=dtype)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">152</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">152</span>]: </span><br><span class="line">array([([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], <span class="hljs-number">0</span>), ([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], <span class="hljs-number">0</span>), ([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], <span class="hljs-number">0</span>), ([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], <span class="hljs-number">0</span>)],</span><br><span class="line">      dtype=[(<span class="hljs-string">'x'</span>, <span class="hljs-string">'&lt;i8'</span>, (<span class="hljs-number">3</span>,)), (<span class="hljs-string">'y'</span>, <span class="hljs-string">'&lt;i4'</span>)])</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，各个记录的x字段所表示的是一个长度为3的数组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">153</span>]: arr[<span class="hljs-number">0</span>][<span class="hljs-string">'x'</span>]</span><br><span class="line">Out[<span class="hljs-number">153</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<p>这样，访问arr[‘x’]即可得到一个二维数组，而不是前面那个例子中的一维数组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">154</span>]: arr[<span class="hljs-string">'x'</span>]</span><br><span class="line">Out[<span class="hljs-number">154</span>]: </span><br><span class="line">array([[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],</span><br><span class="line">       [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],</span><br><span class="line">       [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],</span><br><span class="line">       [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>这就使你能用单个数组的内存块存放复杂的嵌套结构。你还可以嵌套dtype，作出更复杂的结构。下面是一个简单的例子：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">155</span>]: dtype = [(<span class="hljs-string">'x'</span>, [(<span class="hljs-string">'a'</span>, <span class="hljs-string">'f8'</span>), (<span class="hljs-string">'b'</span>, <span class="hljs-string">'f4'</span>)]), (<span class="hljs-string">'y'</span>, np.int32)]</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">156</span>]: data = np.array([((<span class="hljs-number">1</span>, <span class="hljs-number">2</span>), <span class="hljs-number">5</span>), ((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>), <span class="hljs-number">6</span>)], dtype=dtype)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">157</span>]: data[<span class="hljs-string">'x'</span>]</span><br><span class="line">Out[<span class="hljs-number">157</span>]: </span><br><span class="line">array([( <span class="hljs-number">1.</span>,  <span class="hljs-number">2.</span>), ( <span class="hljs-number">3.</span>,  <span class="hljs-number">4.</span>)],</span><br><span class="line">      dtype=[(<span class="hljs-string">'a'</span>, <span class="hljs-string">'&lt;f8'</span>), (<span class="hljs-string">'b'</span>, <span class="hljs-string">'&lt;f4'</span>)])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">158</span>]: data[<span class="hljs-string">'y'</span>]</span><br><span class="line">Out[<span class="hljs-number">158</span>]: array([<span class="hljs-number">5</span>, <span class="hljs-number">6</span>], dtype=int32)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">159</span>]: data[<span class="hljs-string">'x'</span>][<span class="hljs-string">'a'</span>]</span><br><span class="line">Out[<span class="hljs-number">159</span>]: array([ <span class="hljs-number">1.</span>,  <span class="hljs-number">3.</span>])</span><br></pre></td></tr></table></figure>
+
+<p>pandas的DataFrame并不直接支持该功能，但它的分层索引机制跟这个差不多。</p>
+<h2 id="为什么要用结构化数组"><a href="#为什么要用结构化数组" class="headerlink" title="为什么要用结构化数组"></a>为什么要用结构化数组</h2><p>跟pandas的DataFrame相比，NumPy的结构化数组是一种相对较低级的工具。它可以将单个内存块解释为带有任意复杂嵌套列的表格型结构。由于数组中的每个元素在内存中都被表示为固定的字节数，所以结构化数组能够提供非常快速高效的磁盘数据读写（包括内存映像）、网络传输等功能。</p>
+<p>结构化数组的另一个常见用法是，将数据文件写成定长记录字节流，这是C和C++代码中常见的数据序列化手段（业界许多历史系统中都能找得到）。只要知道文件的格式（记录的大小、元素的顺序、字节数以及数据类型等），就可以用np.fromfile将数据读入内存。这种用法超出了本书的范围，知道这点就可以了。</p>
+<h1 id="A-6-更多有关排序的话题"><a href="#A-6-更多有关排序的话题" class="headerlink" title="A.6 更多有关排序的话题"></a>A.6 更多有关排序的话题</h1><p>跟Python内置的列表一样，ndarray的sort实例方法也是就地排序。也就是说，数组内容的重新排列是不会产生新数组的：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">160</span>]: arr = np.random.randn(<span class="hljs-number">6</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">161</span>]: arr.sort()</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">162</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">162</span>]: array([<span class="hljs-number">-1.082</span> ,  <span class="hljs-number">0.3759</span>,  <span class="hljs-number">0.8014</span>,  <span class="hljs-number">1.1397</span>,  <span class="hljs-number">1.2888</span>,  <span class="hljs-number">1.8413</span>])</span><br></pre></td></tr></table></figure>
+
+<p>在对数组进行就地排序时要注意一点，如果目标数组只是一个视图，则原始数组将会被修改：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">163</span>]: arr = np.random.randn(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">164</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">164</span>]: </span><br><span class="line">array([[<span class="hljs-number">-0.3318</span>, <span class="hljs-number">-1.4711</span>,  <span class="hljs-number">0.8705</span>, <span class="hljs-number">-0.0847</span>, <span class="hljs-number">-1.1329</span>],</span><br><span class="line">       [<span class="hljs-number">-1.0111</span>, <span class="hljs-number">-0.3436</span>,  <span class="hljs-number">2.1714</span>,  <span class="hljs-number">0.1234</span>, <span class="hljs-number">-0.0189</span>],</span><br><span class="line">       [ <span class="hljs-number">0.1773</span>,  <span class="hljs-number">0.7424</span>,  <span class="hljs-number">0.8548</span>,  <span class="hljs-number">1.038</span> , <span class="hljs-number">-0.329</span> ]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">165</span>]: arr[:, <span class="hljs-number">0</span>].sort()  <span class="hljs-comment"># Sort first column values in-place</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">166</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">166</span>]: </span><br><span class="line">array([[<span class="hljs-number">-1.0111</span>, <span class="hljs-number">-1.4711</span>,  <span class="hljs-number">0.8705</span>, <span class="hljs-number">-0.0847</span>, <span class="hljs-number">-1.1329</span>],</span><br><span class="line">       [<span class="hljs-number">-0.3318</span>, <span class="hljs-number">-0.3436</span>,  <span class="hljs-number">2.1714</span>,  <span class="hljs-number">0.1234</span>, <span class="hljs-number">-0.0189</span>],</span><br><span class="line">       [ <span class="hljs-number">0.1773</span>,  <span class="hljs-number">0.7424</span>,  <span class="hljs-number">0.8548</span>,  <span class="hljs-number">1.038</span> , <span class="hljs-number">-0.329</span> ]])</span><br></pre></td></tr></table></figure>
+
+<p>相反，numpy.sort会为原数组创建一个已排序副本。另外，它所接受的参数（比如kind）跟ndarray.sort一样：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">167</span>]: arr = np.random.randn(<span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">168</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">168</span>]: array([<span class="hljs-number">-1.1181</span>, <span class="hljs-number">-0.2415</span>, <span class="hljs-number">-2.0051</span>,  <span class="hljs-number">0.7379</span>, <span class="hljs-number">-1.0614</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">169</span>]: np.sort(arr)</span><br><span class="line">Out[<span class="hljs-number">169</span>]: array([<span class="hljs-number">-2.0051</span>, <span class="hljs-number">-1.1181</span>, <span class="hljs-number">-1.0614</span>, <span class="hljs-number">-0.2415</span>,  <span class="hljs-number">0.7379</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">170</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">170</span>]: array([<span class="hljs-number">-1.1181</span>, <span class="hljs-number">-0.2415</span>, <span class="hljs-number">-2.0051</span>,  <span class="hljs-number">0.7379</span>, <span class="hljs-number">-1.0614</span>])</span><br></pre></td></tr></table></figure>
+
+<p>这两个排序方法都可以接受一个axis参数，以便沿指定轴向对各块数据进行单独排序：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">171</span>]: arr = np.random.randn(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">172</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">172</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.5955</span>, <span class="hljs-number">-0.2682</span>,  <span class="hljs-number">1.3389</span>, <span class="hljs-number">-0.1872</span>,  <span class="hljs-number">0.9111</span>],</span><br><span class="line">       [<span class="hljs-number">-0.3215</span>,  <span class="hljs-number">1.0054</span>, <span class="hljs-number">-0.5168</span>,  <span class="hljs-number">1.1925</span>, <span class="hljs-number">-0.1989</span>],</span><br><span class="line">       [ <span class="hljs-number">0.3969</span>, <span class="hljs-number">-1.7638</span>,  <span class="hljs-number">0.6071</span>, <span class="hljs-number">-0.2222</span>, <span class="hljs-number">-0.2171</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">173</span>]: arr.sort(axis=<span class="hljs-number">1</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">174</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">174</span>]: </span><br><span class="line">array([[<span class="hljs-number">-0.2682</span>, <span class="hljs-number">-0.1872</span>,  <span class="hljs-number">0.5955</span>,  <span class="hljs-number">0.9111</span>,  <span class="hljs-number">1.3389</span>],</span><br><span class="line">       [<span class="hljs-number">-0.5168</span>, <span class="hljs-number">-0.3215</span>, <span class="hljs-number">-0.1989</span>,  <span class="hljs-number">1.0054</span>,  <span class="hljs-number">1.1925</span>],</span><br><span class="line">       [<span class="hljs-number">-1.7638</span>, <span class="hljs-number">-0.2222</span>, <span class="hljs-number">-0.2171</span>,  <span class="hljs-number">0.3969</span>,  <span class="hljs-number">0.6071</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>你可能注意到了，这两个排序方法都不可以被设置为降序。其实这也无所谓，因为数组切片会产生视图（也就是说，不会产生副本，也不需要任何其他的计算工作）。许多Python用户都很熟悉一个有关列表的小技巧：values[::-1]可以返回一个反序的列表。对ndarray也是如此：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">175</span>]: arr[:, ::<span class="hljs-number">-1</span>]</span><br><span class="line">Out[<span class="hljs-number">175</span>]: </span><br><span class="line">array([[ <span class="hljs-number">1.3389</span>,  <span class="hljs-number">0.9111</span>,  <span class="hljs-number">0.5955</span>, <span class="hljs-number">-0.1872</span>, <span class="hljs-number">-0.2682</span>],</span><br><span class="line">       [ <span class="hljs-number">1.1925</span>,  <span class="hljs-number">1.0054</span>, <span class="hljs-number">-0.1989</span>, <span class="hljs-number">-0.3215</span>, <span class="hljs-number">-0.5168</span>],</span><br><span class="line">       [ <span class="hljs-number">0.6071</span>,  <span class="hljs-number">0.3969</span>, <span class="hljs-number">-0.2171</span>, <span class="hljs-number">-0.2222</span>, <span class="hljs-number">-1.7638</span>]])</span><br></pre></td></tr></table></figure>
+
+<h2 id="间接排序：argsort和lexsort"><a href="#间接排序：argsort和lexsort" class="headerlink" title="间接排序：argsort和lexsort"></a>间接排序：argsort和lexsort</h2><p>在数据分析工作中，常常需要根据一个或多个键对数据集进行排序。例如，一个有关学生信息的数据表可能需要以姓和名进行排序（先姓后名）。这就是间接排序的一个例子，如果你阅读过有关pandas的章节，那就已经见过不少高级例子了。给定一个或多个键，你就可以得到一个由整数组成的索引数组（我亲切地称之为索引器），其中的索引值说明了数据在新顺序下的位置。argsort和numpy.lexsort就是实现该功能的两个主要方法。下面是一个简单的例子：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">176</span>]: values = np.array([<span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">177</span>]: indexer = values.argsort()</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">178</span>]: indexer</span><br><span class="line">Out[<span class="hljs-number">178</span>]: array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">179</span>]: values[indexer]</span><br><span class="line">Out[<span class="hljs-number">179</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<p>一个更复杂的例子，下面这段代码根据数组的第一行对其进行排序：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">180</span>]: arr = np.random.randn(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">181</span>]: arr[<span class="hljs-number">0</span>] = values</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">182</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">182</span>]: </span><br><span class="line">array([[ <span class="hljs-number">5.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">1.</span>    ,  <span class="hljs-number">3.</span>    ,  <span class="hljs-number">2.</span>    ],</span><br><span class="line">       [<span class="hljs-number">-0.3636</span>, <span class="hljs-number">-0.1378</span>,  <span class="hljs-number">2.1777</span>, <span class="hljs-number">-0.4728</span>,  <span class="hljs-number">0.8356</span>],</span><br><span class="line">       [<span class="hljs-number">-0.2089</span>,  <span class="hljs-number">0.2316</span>,  <span class="hljs-number">0.728</span> , <span class="hljs-number">-1.3918</span>,  <span class="hljs-number">1.9956</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">183</span>]: arr[:, arr[<span class="hljs-number">0</span>].argsort()]</span><br><span class="line">Out[<span class="hljs-number">183</span>]: </span><br><span class="line">array([[ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">1.</span>    ,  <span class="hljs-number">2.</span>    ,  <span class="hljs-number">3.</span>    ,  <span class="hljs-number">5.</span>    ],</span><br><span class="line">       [<span class="hljs-number">-0.1378</span>,  <span class="hljs-number">2.1777</span>,  <span class="hljs-number">0.8356</span>, <span class="hljs-number">-0.4728</span>, <span class="hljs-number">-0.3636</span>],</span><br><span class="line">       [ <span class="hljs-number">0.2316</span>,  <span class="hljs-number">0.728</span> ,  <span class="hljs-number">1.9956</span>, <span class="hljs-number">-1.3918</span>, <span class="hljs-number">-0.2089</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>lexsort跟argsort差不多，只不过它可以一次性对多个键数组执行间接排序（字典序）。假设我们想对一些以姓和名标识的数据进行排序：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">184</span>]: first_name = np.array([<span class="hljs-string">'Bob'</span>, <span class="hljs-string">'Jane'</span>, <span class="hljs-string">'Steve'</span>, <span class="hljs-string">'Bill'</span>, <span class="hljs-string">'Barbara'</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">185</span>]: last_name = np.array([<span class="hljs-string">'Jones'</span>, <span class="hljs-string">'Arnold'</span>, <span class="hljs-string">'Arnold'</span>, <span class="hljs-string">'Jones'</span>, <span class="hljs-string">'Walters'</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">186</span>]: sorter = np.lexsort((first_name, last_name))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">187</span>]: sorter</span><br><span class="line">Out[<span class="hljs-number">187</span>]: array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">188</span>]: zip(last_name[sorter], first_name[sorter])</span><br><span class="line">Out[<span class="hljs-number">188</span>]: &lt;zip at <span class="hljs-number">0x7fa203eda1c8</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>刚开始使用lexsort的时候可能会比较容易头晕，这是因为键的应用顺序是从最后一个传入的算起的。不难看出，last_name是先于first_name被应用的。</p>
+<blockquote>
+<p>笔记：Series和DataFrame的sort_index以及Series的order方法就是通过这些函数的变体（它们还必须考虑缺失值）实现的。</p>
+</blockquote>
+<h2 id="其他排序算法"><a href="#其他排序算法" class="headerlink" title="其他排序算法"></a>其他排序算法</h2><p>稳定的（stable）排序算法会保持等价元素的相对位置。对于相对位置具有实际意义的那些间接排序而言，这一点非常重要：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">189</span>]: values = np.array([<span class="hljs-string">'2:first'</span>, <span class="hljs-string">'2:second'</span>, <span class="hljs-string">'1:first'</span>, <span class="hljs-string">'1:second'</span>,</span><br><span class="line">.....:                    <span class="hljs-string">'1:third'</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">190</span>]: key = np.array([<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">191</span>]: indexer = key.argsort(kind=<span class="hljs-string">'mergesort'</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">192</span>]: indexer</span><br><span class="line">Out[<span class="hljs-number">192</span>]: array([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">193</span>]: values.take(indexer)</span><br><span class="line">Out[<span class="hljs-number">193</span>]: </span><br><span class="line">array([<span class="hljs-string">'1:first'</span>, <span class="hljs-string">'1:second'</span>, <span class="hljs-string">'1:third'</span>, <span class="hljs-string">'2:first'</span>, <span class="hljs-string">'2:second'</span>],</span><br><span class="line">      dtype=<span class="hljs-string">'&lt;U8'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>mergesort（合并排序）是唯一的稳定排序，它保证有O(n log n)的性能（空间复杂度），但是其平均性能比默认的quicksort（快速排序）要差。表A-3列出了可用的排序算法及其相关的性能指标。大部分用户完全不需要知道这些东西，但了解一下总是好的。</p>
+<p><img src="/images/blog/7178691-970f54f58b6b3356.webp" alt="img"></p>
+<p>表A-3 数组排序算法</p>
+<h2 id="部分排序数组"><a href="#部分排序数组" class="headerlink" title="部分排序数组"></a>部分排序数组</h2><p>排序的目的之一可能是确定数组中最大或最小的元素。NumPy有两个优化方法，numpy.partition和np.argpartition，可以在第k个最小元素划分的数组：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">194</span>]: np.random.seed(<span class="hljs-number">12345</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">195</span>]: arr = np.random.randn(<span class="hljs-number">20</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">196</span>]: arr</span><br><span class="line">Out[<span class="hljs-number">196</span>]: </span><br><span class="line">array([<span class="hljs-number">-0.2047</span>,  <span class="hljs-number">0.4789</span>, <span class="hljs-number">-0.5194</span>, <span class="hljs-number">-0.5557</span>,  <span class="hljs-number">1.9658</span>,  <span class="hljs-number">1.3934</span>,  <span class="hljs-number">0.0929</span>,</span><br><span class="line">        <span class="hljs-number">0.2817</span>,  <span class="hljs-number">0.769</span> ,  <span class="hljs-number">1.2464</span>,  <span class="hljs-number">1.0072</span>, <span class="hljs-number">-1.2962</span>,  <span class="hljs-number">0.275</span> ,  <span class="hljs-number">0.2289</span>,</span><br><span class="line">        <span class="hljs-number">1.3529</span>,  <span class="hljs-number">0.8864</span>, <span class="hljs-number">-2.0016</span>, <span class="hljs-number">-0.3718</span>,  <span class="hljs-number">1.669</span> , <span class="hljs-number">-0.4386</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">197</span>]: np.partition(arr, <span class="hljs-number">3</span>)</span><br><span class="line">Out[<span class="hljs-number">197</span>]: </span><br><span class="line">array([<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-1.2962</span>, <span class="hljs-number">-0.5557</span>, <span class="hljs-number">-0.5194</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-0.4386</span>, <span class="hljs-number">-0.2047</span>,</span><br><span class="line">        <span class="hljs-number">0.2817</span>,  <span class="hljs-number">0.769</span> ,  <span class="hljs-number">0.4789</span>,  <span class="hljs-number">1.0072</span>,  <span class="hljs-number">0.0929</span>,  <span class="hljs-number">0.275</span> ,  <span class="hljs-number">0.2289</span>,</span><br><span class="line">        <span class="hljs-number">1.3529</span>,  <span class="hljs-number">0.8864</span>,  <span class="hljs-number">1.3934</span>,  <span class="hljs-number">1.9658</span>,  <span class="hljs-number">1.669</span> ,  <span class="hljs-number">1.2464</span>])</span><br></pre></td></tr></table></figure>
+
+<p>当你调用partition(arr, 3)，结果中的头三个元素是最小的三个，没有特定的顺序。numpy.argpartition与numpy.argsort相似，会返回索引，重排数据为等价的顺序：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">198</span>]: indices = np.argpartition(arr, <span class="hljs-number">3</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">199</span>]: indices</span><br><span class="line">Out[<span class="hljs-number">199</span>]: </span><br><span class="line">array([<span class="hljs-number">16</span>, <span class="hljs-number">11</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">2</span>, <span class="hljs-number">17</span>, <span class="hljs-number">19</span>,  <span class="hljs-number">0</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">1</span>, <span class="hljs-number">10</span>,  <span class="hljs-number">6</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>,  <span class="hljs-number">5</span>,</span><br><span class="line">        <span class="hljs-number">4</span>, <span class="hljs-number">18</span>,  <span class="hljs-number">9</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">200</span>]: arr.take(indices)</span><br><span class="line">Out[<span class="hljs-number">200</span>]: </span><br><span class="line">array([<span class="hljs-number">-2.0016</span>, <span class="hljs-number">-1.2962</span>, <span class="hljs-number">-0.5557</span>, <span class="hljs-number">-0.5194</span>, <span class="hljs-number">-0.3718</span>, <span class="hljs-number">-0.4386</span>, <span class="hljs-number">-0.2047</span>,</span><br><span class="line">        <span class="hljs-number">0.2817</span>,  <span class="hljs-number">0.769</span> ,  <span class="hljs-number">0.4789</span>,  <span class="hljs-number">1.0072</span>,  <span class="hljs-number">0.0929</span>,  <span class="hljs-number">0.275</span> ,  <span class="hljs-number">0.2289</span>,</span><br><span class="line">        <span class="hljs-number">1.3529</span>,  <span class="hljs-number">0.8864</span>,  <span class="hljs-number">1.3934</span>,  <span class="hljs-number">1.9658</span>,  <span class="hljs-number">1.669</span> ,  <span class="hljs-number">1.2464</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id="numpy-searchsorted：在有序数组中查找元素"><a href="#numpy-searchsorted：在有序数组中查找元素" class="headerlink" title="numpy.searchsorted：在有序数组中查找元素"></a>numpy.searchsorted：在有序数组中查找元素</h2><p>searchsorted是一个在有序数组上执行二分查找的数组方法，只要将值插入到它返回的那个位置就能维持数组的有序性：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">201</span>]: arr = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">7</span>, <span class="hljs-number">12</span>, <span class="hljs-number">15</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">202</span>]: arr.searchsorted(<span class="hljs-number">9</span>)</span><br><span class="line">Out[<span class="hljs-number">202</span>]: <span class="hljs-number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>你可以传入一组值就能得到一组索引：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">203</span>]: arr.searchsorted([<span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-number">11</span>, <span class="hljs-number">16</span>])</span><br><span class="line">Out[<span class="hljs-number">203</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<p>从上面的结果中可以看出，对于元素0，searchsorted会返回0。这是因为其默认行为是返回相等值组的左侧索引：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">204</span>]: arr = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">205</span>]: arr.searchsorted([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])</span><br><span class="line">Out[<span class="hljs-number">205</span>]: array([<span class="hljs-number">0</span>, <span class="hljs-number">3</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">206</span>]: arr.searchsorted([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], side=<span class="hljs-string">'right'</span>)</span><br><span class="line">Out[<span class="hljs-number">206</span>]: array([<span class="hljs-number">3</span>, <span class="hljs-number">7</span>])</span><br></pre></td></tr></table></figure>
+
+<p>再来看searchsorted的另一个用法，假设我们有一个数据数组（其中的值在0到10000之间），还有一个表示“面元边界”的数组，我们希望用它将数据数组拆分开：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">207</span>]: data = np.floor(np.random.uniform(<span class="hljs-number">0</span>, <span class="hljs-number">10000</span>, size=<span class="hljs-number">50</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">208</span>]: bins = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">5000</span>, <span class="hljs-number">10000</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">209</span>]: data</span><br><span class="line">Out[<span class="hljs-number">209</span>]: </span><br><span class="line">array([ <span class="hljs-number">9940.</span>,  <span class="hljs-number">6768.</span>,  <span class="hljs-number">7908.</span>,  <span class="hljs-number">1709.</span>,   <span class="hljs-number">268.</span>,  <span class="hljs-number">8003.</span>, <span class="hljs-number">9037.</span>,   <span class="hljs-number">246.</span>,</span><br><span class="line">        <span class="hljs-number">4917.</span>,  <span class="hljs-number">5262.</span>,  <span class="hljs-number">5963.</span>,   <span class="hljs-number">519.</span>,  <span class="hljs-number">8950.</span>,  <span class="hljs-number">7282.</span>,  <span class="hljs-number">8183.</span>,  <span class="hljs-number">5002.</span>,</span><br><span class="line">        <span class="hljs-number">8101.</span>,   <span class="hljs-number">959.</span>,  <span class="hljs-number">2189.</span>,  <span class="hljs-number">2587.</span>,  <span class="hljs-number">4681.</span>,  <span class="hljs-number">4593.</span>,  <span class="hljs-number">7095.</span>,  <span class="hljs-number">1780.</span>,</span><br><span class="line">        <span class="hljs-number">5314.</span>,  <span class="hljs-number">1677.</span>,  <span class="hljs-number">7688.</span>,  <span class="hljs-number">9281.</span>,  <span class="hljs-number">6094.</span>,  <span class="hljs-number">1501.</span>,  <span class="hljs-number">4896.</span>,  <span class="hljs-number">3773.</span>,</span><br><span class="line">        <span class="hljs-number">8486.</span>,  <span class="hljs-number">9110.</span>,  <span class="hljs-number">3838.</span>,  <span class="hljs-number">3154.</span>,  <span class="hljs-number">5683.</span>,  <span class="hljs-number">1878.</span>,  <span class="hljs-number">1258.</span>,  <span class="hljs-number">6875.</span>,</span><br><span class="line">        <span class="hljs-number">7996.</span>,  <span class="hljs-number">5735.</span>,  <span class="hljs-number">9732.</span>,  <span class="hljs-number">6340.</span>,  <span class="hljs-number">8884.</span>,  <span class="hljs-number">4954.</span>,  <span class="hljs-number">3516.</span>,  <span class="hljs-number">7142.</span>,</span><br><span class="line">        <span class="hljs-number">5039.</span>,  <span class="hljs-number">2256.</span>])</span><br></pre></td></tr></table></figure>
+
+<p>然后，为了得到各数据点所属区间的编号（其中1表示面元[0,100)），我们可以直接使用searchsorted：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">210</span>]: labels = bins.searchsorted(data)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">211</span>]: labels</span><br><span class="line">Out[<span class="hljs-number">211</span>]: </span><br><span class="line">array([<span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>,</span><br><span class="line">       <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>,</span><br><span class="line">       <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>])</span><br></pre></td></tr></table></figure>
+
+<p>通过pandas的groupby使用该结果即可非常轻松地对原数据集进行拆分：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">212</span>]: pd.Series(data).groupby(labels).mean()</span><br><span class="line">Out[<span class="hljs-number">212</span>]: </span><br><span class="line"><span class="hljs-number">2</span>     <span class="hljs-number">498.000000</span></span><br><span class="line"><span class="hljs-number">3</span>    <span class="hljs-number">3064.277778</span></span><br><span class="line"><span class="hljs-number">4</span>    <span class="hljs-number">7389.035714</span></span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure>
+
+<h1 id="A-7-用Numba编写快速NumPy函数"><a href="#A-7-用Numba编写快速NumPy函数" class="headerlink" title="A.7 用Numba编写快速NumPy函数"></a>A.7 用Numba编写快速NumPy函数</h1><p>Numba是一个开源项目，它可以利用CPUs、GPUs或其它硬件为类似NumPy的数据创建快速函数。它使用了LLVM项目（<a href="http://llvm.org/），将Python代码转换为机器代码。" target="_blank" rel="noopener">http://llvm.org/），将Python代码转换为机器代码。</a></p>
+<p>为了介绍Numba，来考虑一个纯粹的Python函数，它使用for循环计算表达式(x - y).mean()：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mean_distance</span><span class="hljs-params">(x, y)</span>:</span></span><br><span class="line">    nx = len(x)</span><br><span class="line">    result = <span class="hljs-number">0.0</span></span><br><span class="line">    count = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(nx):</span><br><span class="line">        result += x[i] - y[i]</span><br><span class="line">        count += <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">return</span> result / count</span><br></pre></td></tr></table></figure>
+
+<p>这个函数很慢：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">209</span>]: x = np.random.randn(<span class="hljs-number">10000000</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">210</span>]: y = np.random.randn(<span class="hljs-number">10000000</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">211</span>]: %timeit mean_distance(x, y)</span><br><span class="line"><span class="hljs-number">1</span> loop, best of <span class="hljs-number">3</span>: <span class="hljs-number">2</span> s per loop</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">212</span>]: %timeit (x - y).mean()</span><br><span class="line"><span class="hljs-number">100</span> loops, best of <span class="hljs-number">3</span>: <span class="hljs-number">14.7</span> ms per loop</span><br></pre></td></tr></table></figure>
+
+<p>NumPy的版本要比它快过100倍。我们可以转换这个函数为编译的Numba函数，使用numba.jit函数：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">213</span>]: <span class="hljs-keyword">import</span> numba <span class="hljs-keyword">as</span> nb</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">214</span>]: numba_mean_distance = nb.jit(mean_distance)</span><br></pre></td></tr></table></figure>
+
+<p>也可以写成装饰器：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@nb.jit</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mean_distance</span><span class="hljs-params">(x, y)</span>:</span></span><br><span class="line">    nx = len(x)</span><br><span class="line">    result = <span class="hljs-number">0.0</span></span><br><span class="line">    count = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(nx):</span><br><span class="line">        result += x[i] - y[i]</span><br><span class="line">        count += <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">return</span> result / count</span><br></pre></td></tr></table></figure>
+
+<p>它要比矢量化的NumPy快：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">215</span>]: %timeit numba_mean_distance(x, y)</span><br><span class="line"><span class="hljs-number">100</span> loops, best of <span class="hljs-number">3</span>: <span class="hljs-number">10.3</span> ms per loop</span><br></pre></td></tr></table></figure>
+
+<p>Numba不能编译Python代码，但它支持纯Python写的一个部分，可以编写数值算法。</p>
+<p>Numba是一个深厚的库，支持多种硬件、编译模式和用户插件。它还可以编译NumPy Python API的一部分，而不用for循环。Numba也可以识别可以便以为机器编码的结构体，但是若调用CPython API，它就不知道如何编译。Numba的jit函数有一个选项，nopython=True，它限制了可以被转换为Python代码的代码，这些代码可以编译为LLVM，但没有任何Python C API调用。jit(nopython=True)有一个简短的别名numba.njit。</p>
+<p>前面的例子，我们还可以这样写：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> numba <span class="hljs-keyword">import</span> float64, njit</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@njit(float64(float64[:], float64[:]))</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mean_distance</span><span class="hljs-params">(x, y)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> (x - y).mean()</span><br></pre></td></tr></table></figure>
+
+<p>我建议你学习Numba的线上文档（<a href="http://numba.pydata.org/）。下一节介绍一个创建自定义Numpy" target="_blank" rel="noopener">http://numba.pydata.org/）。下一节介绍一个创建自定义Numpy</a> ufunc对象的例子。</p>
+<h2 id="用Numba创建自定义numpy-ufunc对象"><a href="#用Numba创建自定义numpy-ufunc对象" class="headerlink" title="用Numba创建自定义numpy.ufunc对象"></a>用Numba创建自定义numpy.ufunc对象</h2><p>numba.vectorize创建了一个编译的NumPy ufunc，它与内置的ufunc很像。考虑一个numpy.add的Python例子：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> numba <span class="hljs-keyword">import</span> vectorize</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@vectorize</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">nb_add</span><span class="hljs-params">(x, y)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> x + y</span><br></pre></td></tr></table></figure>
+
+<p>现在有：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">13</span>]: x = np.arange(<span class="hljs-number">10</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">14</span>]: nb_add(x, x)</span><br><span class="line">Out[<span class="hljs-number">14</span>]: array([  <span class="hljs-number">0.</span>,   <span class="hljs-number">2.</span>,   <span class="hljs-number">4.</span>,   <span class="hljs-number">6.</span>,   <span class="hljs-number">8.</span>,  <span class="hljs-number">10.</span>,  <span class="hljs-number">12.</span>,  <span class="hljs-number">14.</span>,  <span class="hljs-number">16.</span>,  <span class="hljs-number">18.</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">15</span>]: nb_add.accumulate(x, <span class="hljs-number">0</span>)</span><br><span class="line">Out[<span class="hljs-number">15</span>]: array([  <span class="hljs-number">0.</span>,   <span class="hljs-number">1.</span>,   <span class="hljs-number">3.</span>,   <span class="hljs-number">6.</span>,  <span class="hljs-number">10.</span>,  <span class="hljs-number">15.</span>,  <span class="hljs-number">21.</span>,  <span class="hljs-number">28.</span>,  <span class="hljs-number">36.</span>,  <span class="hljs-number">45.</span>])</span><br></pre></td></tr></table></figure>
+
+<h1 id="A-8-高级数组输入输出"><a href="#A-8-高级数组输入输出" class="headerlink" title="A.8 高级数组输入输出"></a>A.8 高级数组输入输出</h1><p>我在第4章中讲过，np.save和np.load可用于读写磁盘上以二进制格式存储的数组。其实还有一些工具可用于更为复杂的场景。尤其是内存映像（memory map），它使你能处理在内存中放不下的数据集。</p>
+<h2 id="内存映像文件"><a href="#内存映像文件" class="headerlink" title="内存映像文件"></a>内存映像文件</h2><p>内存映像文件是一种将磁盘上的非常大的二进制数据文件当做内存中的数组进行处理的方式。NumPy实现了一个类似于ndarray的memmap对象，它允许将大文件分成小段进行读写，而不是一次性将整个数组读入内存。另外，memmap也拥有跟普通数组一样的方法，因此，基本上只要是能用于ndarray的算法就也能用于memmap。</p>
+<p>要创建一个内存映像，可以使用函数np.memmap并传入一个文件路径、数据类型、形状以及文件模式：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">214</span>]: mmap = np.memmap(<span class="hljs-string">'mymmap'</span>, dtype=<span class="hljs-string">'float64'</span>, mode=<span class="hljs-string">'w+'</span>,</span><br><span class="line">   .....:                  shape=(<span class="hljs-number">10000</span>, <span class="hljs-number">10000</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">215</span>]: mmap</span><br><span class="line">Out[<span class="hljs-number">215</span>]: </span><br><span class="line">memmap([[ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, ...,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>],</span><br><span class="line">        [ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, ...,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>],</span><br><span class="line">        [ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, ...,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>],</span><br><span class="line">        ..., </span><br><span class="line">        [ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, ...,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>],</span><br><span class="line">        [ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, ...,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>],</span><br><span class="line">        [ <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>, ...,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>,  <span class="hljs-number">0.</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>对memmap切片将会返回磁盘上的数据的视图：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">216</span>]: section = mmap[:<span class="hljs-number">5</span>]</span><br></pre></td></tr></table></figure>
+
+<p>如果将数据赋值给这些视图：数据会先被缓存在内存中（就像是Python的文件对象），调用flush即可将其写入磁盘：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">217</span>]: section[:] = np.random.randn(<span class="hljs-number">5</span>, <span class="hljs-number">10000</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">218</span>]: mmap.flush()</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">219</span>]: mmap</span><br><span class="line">Out[<span class="hljs-number">219</span>]: </span><br><span class="line">memmap([[ <span class="hljs-number">0.7584</span>, <span class="hljs-number">-0.6605</span>,  <span class="hljs-number">0.8626</span>, ...,  <span class="hljs-number">0.6046</span>, <span class="hljs-number">-0.6212</span>,  <span class="hljs-number">2.0542</span>],</span><br><span class="line">        [<span class="hljs-number">-1.2113</span>, <span class="hljs-number">-1.0375</span>,  <span class="hljs-number">0.7093</span>, ..., <span class="hljs-number">-1.4117</span>, <span class="hljs-number">-0.1719</span>, <span class="hljs-number">-0.8957</span>],</span><br><span class="line">        [<span class="hljs-number">-0.1419</span>, <span class="hljs-number">-0.3375</span>,  <span class="hljs-number">0.4329</span>, ...,  <span class="hljs-number">1.2914</span>, <span class="hljs-number">-0.752</span> , <span class="hljs-number">-0.44</span>  ],</span><br><span class="line">        ..., </span><br><span class="line">        [ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    , ...,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ],</span><br><span class="line">        [ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    , ...,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ],</span><br><span class="line">        [ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    , ...,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ]])</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">220</span>]: <span class="hljs-keyword">del</span> mmap</span><br></pre></td></tr></table></figure>
+
+<p>只要某个内存映像超出了作用域，它就会被垃圾回收器回收，之前对其所做的任何修改都会被写入磁盘。当打开一个已经存在的内存映像时，仍然需要指明数据类型和形状，因为磁盘上的那个文件只是一块二进制数据而已，没有任何元数据：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">221</span>]: mmap = np.memmap(<span class="hljs-string">'mymmap'</span>, dtype=<span class="hljs-string">'float64'</span>, shape=(<span class="hljs-number">10000</span>, <span class="hljs-number">10000</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">222</span>]: mmap</span><br><span class="line">Out[<span class="hljs-number">222</span>]: </span><br><span class="line">memmap([[ <span class="hljs-number">0.7584</span>, <span class="hljs-number">-0.6605</span>,  <span class="hljs-number">0.8626</span>, ...,  <span class="hljs-number">0.6046</span>, <span class="hljs-number">-0.6212</span>,  <span class="hljs-number">2.0542</span>],</span><br><span class="line">        [<span class="hljs-number">-1.2113</span>, <span class="hljs-number">-1.0375</span>,  <span class="hljs-number">0.7093</span>, ..., <span class="hljs-number">-1.4117</span>, <span class="hljs-number">-0.1719</span>, <span class="hljs-number">-0.8957</span>],</span><br><span class="line">        [<span class="hljs-number">-0.1419</span>, <span class="hljs-number">-0.3375</span>,  <span class="hljs-number">0.4329</span>, ...,  <span class="hljs-number">1.2914</span>, <span class="hljs-number">-0.752</span> , <span class="hljs-number">-0.44</span>  ],</span><br><span class="line">        ..., </span><br><span class="line">        [ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    , ...,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ],</span><br><span class="line">        [ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    , ...,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ],</span><br><span class="line">        [ <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    , ...,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ,  <span class="hljs-number">0.</span>    ]])</span><br></pre></td></tr></table></figure>
+
+<p>内存映像可以使用前面介绍的结构化或嵌套dtype。</p>
+<h2 id="HDF5及其他数组存储方式"><a href="#HDF5及其他数组存储方式" class="headerlink" title="HDF5及其他数组存储方式"></a>HDF5及其他数组存储方式</h2><p>PyTables和h5py这两个Python项目可以将NumPy的数组数据存储为高效且可压缩的HDF5格式（HDF意思是“层次化数据格式”）。你可以安全地将好几百GB甚至TB的数据存储为HDF5格式。要学习Python使用HDF5，请参考pandas线上文档。</p>
+<h1 id="A-9-性能建议"><a href="#A-9-性能建议" class="headerlink" title="A.9 性能建议"></a>A.9 性能建议</h1><p>使用NumPy的代码的性能一般都很不错，因为数组运算一般都比纯Python循环快得多。下面大致列出了一些需要注意的事项：</p>
+<ul>
+<li>将Python循环和条件逻辑转换为数组运算和布尔数组运算。</li>
+<li>尽量使用广播。</li>
+<li>避免复制数据，尽量使用数组视图（即切片）。</li>
+<li>利用ufunc及其各种方法。</li>
+</ul>
+<p>如果单用NumPy无论如何都达不到所需的性能指标，就可以考虑一下用C、Fortran或Cython（等下会稍微介绍一下）来编写代码。我自己在工作中经常会用到Cython（<a href="http://cython.org/" target="_blank" rel="noopener">http://cython.org</a>），因为它不用花费我太多精力就能得到C语言那样的性能。</p>
+<h2 id="连续内存的重要性"><a href="#连续内存的重要性" class="headerlink" title="连续内存的重要性"></a>连续内存的重要性</h2><p>虽然这个话题有点超出本书的范围，但还是要提一下，因为在某些应用场景中，数组的内存布局可以对计算速度造成极大的影响。这是因为性能差别在一定程度上跟CPU的高速缓存（cache）体系有关。运算过程中访问连续内存块（例如，对以C顺序存储的数组的行求和）一般是最快的，因为内存子系统会将适当的内存块缓存到超高速的L1或L2CPU Cache中。此外，NumPy的C语言基础代码（某些）对连续存储的情况进行了优化处理，这样就能避免一些跨越式的内存访问。</p>
+<p>一个数组的内存布局是连续的，就是说元素是以它们在数组中出现的顺序（即Fortran型（列优先）或C型（行优先））存储在内存中的。默认情况下，NumPy数组是以C型连续的方式创建的。列优先的数组（比如C型连续数组的转置）也被称为Fortran型连续。通过ndarray的flags属性即可查看这些信息：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">225</span>]: arr_c = np.ones((<span class="hljs-number">1000</span>, <span class="hljs-number">1000</span>), order=<span class="hljs-string">'C'</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">226</span>]: arr_f = np.ones((<span class="hljs-number">1000</span>, <span class="hljs-number">1000</span>), order=<span class="hljs-string">'F'</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">227</span>]: arr_c.flags</span><br><span class="line"></span><br><span class="line">Out[<span class="hljs-number">227</span>]: </span><br><span class="line">  C_CONTIGUOUS : <span class="hljs-literal">True</span></span><br><span class="line">  F_CONTIGUOUS : <span class="hljs-literal">False</span></span><br><span class="line">  OWNDATA : <span class="hljs-literal">True</span></span><br><span class="line">  WRITEABLE : <span class="hljs-literal">True</span></span><br><span class="line">  ALIGNED : <span class="hljs-literal">True</span></span><br><span class="line">  UPDATEIFCOPY : <span class="hljs-literal">False</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">228</span>]: arr_f.flags</span><br><span class="line">Out[<span class="hljs-number">228</span>]: </span><br><span class="line">  C_CONTIGUOUS : <span class="hljs-literal">False</span></span><br><span class="line">  F_CONTIGUOUS : <span class="hljs-literal">True</span></span><br><span class="line">  OWNDATA : <span class="hljs-literal">True</span></span><br><span class="line">  WRITEABLE : <span class="hljs-literal">True</span></span><br><span class="line">  ALIGNED : <span class="hljs-literal">True</span></span><br><span class="line">  UPDATEIFCOPY : <span class="hljs-literal">False</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">229</span>]: arr_f.flags.f_contiguous</span><br><span class="line">Out[<span class="hljs-number">229</span>]: <span class="hljs-literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，对两个数组的行进行求和计算，理论上说，arr_c会比arr_f快，因为arr_c的行在内存中是连续的。我们可以在IPython中用%timeit来确认一下：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">230</span>]: %timeit arr_c.sum(<span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-number">784</span> us +- <span class="hljs-number">10.4</span> us per loop (mean +- std. dev. of <span class="hljs-number">7</span> runs, <span class="hljs-number">1000</span> loops each)</span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">231</span>]: %timeit arr_f.sum(<span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-number">934</span> us +- <span class="hljs-number">29</span> us per loop (mean +- std. dev. of <span class="hljs-number">7</span> runs, <span class="hljs-number">1000</span> loops each)</span><br></pre></td></tr></table></figure>
+
+<p>如果想从NumPy中提升性能，这里就应该是下手的地方。如果数组的内存顺序不符合你的要求，使用copy并传入’C’或’F’即可解决该问题：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">232</span>]: arr_f.copy(<span class="hljs-string">'C'</span>).flags</span><br><span class="line">Out[<span class="hljs-number">232</span>]: </span><br><span class="line">  C_CONTIGUOUS : <span class="hljs-literal">True</span></span><br><span class="line">  F_CONTIGUOUS : <span class="hljs-literal">False</span></span><br><span class="line">  OWNDATA : <span class="hljs-literal">True</span></span><br><span class="line">  WRITEABLE : <span class="hljs-literal">True</span></span><br><span class="line">  ALIGNED : <span class="hljs-literal">True</span></span><br><span class="line">  UPDATEIFCOPY : <span class="hljs-literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，在构造数组的视图时，其结果不一定是连续的：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="hljs-number">233</span>]: arr_c[:<span class="hljs-number">50</span>].flags.contiguous</span><br><span class="line">Out[<span class="hljs-number">233</span>]: <span class="hljs-literal">True</span></span><br><span class="line"></span><br><span class="line">In [<span class="hljs-number">234</span>]: arr_c[:, :<span class="hljs-number">50</span>].flags</span><br><span class="line">Out[<span class="hljs-number">234</span>]: </span><br><span class="line">  C_CONTIGUOUS : <span class="hljs-literal">False</span></span><br><span class="line">  F_CONTIGUOUS : <span class="hljs-literal">False</span></span><br><span class="line">  OWNDATA : <span class="hljs-literal">False</span></span><br><span class="line">  WRITEABLE : <span class="hljs-literal">True</span></span><br><span class="line">  ALIGNED : <span class="hljs-literal">True</span></span><br><span class="line">  UPDATEIFCOPY : <span class="hljs-literal">False</span></span><br></pre></td></tr></table></figure>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/pandas/" rel="tag">pandas</a>, <a class="has-link-grey -link" href="/tags/python/" rel="tag">python</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="diandian, linkedin, douban"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/10/05/%E6%91%98%E5%BD%95%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Ejupyter-notebook%E6%8A%80%E5%B7%A7%E7%9A%84%E7%BD%91%E9%A1%B5/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">摘录一个关于jupyter-notebook技巧的网页</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%20%E9%99%84%E5%BD%95B%20%E6%9B%B4%E5%A4%9A%E5%85%B3%E4%BA%8EIPython%E7%9A%84%E5%86%85%E5%AE%B9%EF%BC%88%E5%AE%8C%EF%BC%89/">
+                <span class="level-item">《利用Python进行数据分析·第2版》 附录B 更多关于IPython的内容（完）</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+    
+    <!-- 粘贴的部分 -->
+    
+                
+    
+    <!-- 粘贴的部分 -->
+                              <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+        
+            
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#《利用Python进行数据分析·第2版》-附录A-NumPy高级应用">
+        <span class="has-mr-6">1</span>
+        <span>《利用Python进行数据分析·第2版》 附录A NumPy高级应用</span>
+        </a></li><li>
+        <a class="is-flex" href="#A-1-ndarray对象的内部机理">
+        <span class="has-mr-6">2</span>
+        <span>A.1 ndarray对象的内部机理</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#NumPy数据类型体系">
+        <span class="has-mr-6">2.1</span>
+        <span>NumPy数据类型体系</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-2-高级数组操作">
+        <span class="has-mr-6">3</span>
+        <span>A.2 高级数组操作</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#数组重塑">
+        <span class="has-mr-6">3.1</span>
+        <span>数组重塑</span>
+        </a></li><li>
+        <a class="is-flex" href="#C和Fortran顺序">
+        <span class="has-mr-6">3.2</span>
+        <span>C和Fortran顺序</span>
+        </a></li><li>
+        <a class="is-flex" href="#数组的合并和拆分">
+        <span class="has-mr-6">3.3</span>
+        <span>数组的合并和拆分</span>
+        </a></li><li>
+        <a class="is-flex" href="#堆叠辅助类：r-和c">
+        <span class="has-mr-6">3.4</span>
+        <span>堆叠辅助类：r_和c_</span>
+        </a></li><li>
+        <a class="is-flex" href="#元素的重复操作：tile和repeat">
+        <span class="has-mr-6">3.5</span>
+        <span>元素的重复操作：tile和repeat</span>
+        </a></li><li>
+        <a class="is-flex" href="#花式索引的等价函数：take和put">
+        <span class="has-mr-6">3.6</span>
+        <span>花式索引的等价函数：take和put</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-3-广播">
+        <span class="has-mr-6">4</span>
+        <span>A.3 广播</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#沿其它轴向广播">
+        <span class="has-mr-6">4.1</span>
+        <span>沿其它轴向广播</span>
+        </a></li><li>
+        <a class="is-flex" href="#通过广播设置数组的值">
+        <span class="has-mr-6">4.2</span>
+        <span>通过广播设置数组的值</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-4-ufunc高级应用">
+        <span class="has-mr-6">5</span>
+        <span>A.4 ufunc高级应用</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#ufunc实例方法">
+        <span class="has-mr-6">5.1</span>
+        <span>ufunc实例方法</span>
+        </a></li><li>
+        <a class="is-flex" href="#编写新的ufunc">
+        <span class="has-mr-6">5.2</span>
+        <span>编写新的ufunc</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-5-结构化和记录式数组">
+        <span class="has-mr-6">6</span>
+        <span>A.5 结构化和记录式数组</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#嵌套dtype和多维字段">
+        <span class="has-mr-6">6.1</span>
+        <span>嵌套dtype和多维字段</span>
+        </a></li><li>
+        <a class="is-flex" href="#为什么要用结构化数组">
+        <span class="has-mr-6">6.2</span>
+        <span>为什么要用结构化数组</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-6-更多有关排序的话题">
+        <span class="has-mr-6">7</span>
+        <span>A.6 更多有关排序的话题</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#间接排序：argsort和lexsort">
+        <span class="has-mr-6">7.1</span>
+        <span>间接排序：argsort和lexsort</span>
+        </a></li><li>
+        <a class="is-flex" href="#其他排序算法">
+        <span class="has-mr-6">7.2</span>
+        <span>其他排序算法</span>
+        </a></li><li>
+        <a class="is-flex" href="#部分排序数组">
+        <span class="has-mr-6">7.3</span>
+        <span>部分排序数组</span>
+        </a></li><li>
+        <a class="is-flex" href="#numpy-searchsorted：在有序数组中查找元素">
+        <span class="has-mr-6">7.4</span>
+        <span>numpy.searchsorted：在有序数组中查找元素</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-7-用Numba编写快速NumPy函数">
+        <span class="has-mr-6">8</span>
+        <span>A.7 用Numba编写快速NumPy函数</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#用Numba创建自定义numpy-ufunc对象">
+        <span class="has-mr-6">8.1</span>
+        <span>用Numba创建自定义numpy.ufunc对象</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-8-高级数组输入输出">
+        <span class="has-mr-6">9</span>
+        <span>A.8 高级数组输入输出</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#内存映像文件">
+        <span class="has-mr-6">9.1</span>
+        <span>内存映像文件</span>
+        </a></li><li>
+        <a class="is-flex" href="#HDF5及其他数组存储方式">
+        <span class="has-mr-6">9.2</span>
+        <span>HDF5及其他数组存储方式</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#A-9-性能建议">
+        <span class="has-mr-6">10</span>
+        <span>A.9 性能建议</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#连续内存的重要性">
+        <span class="has-mr-6">10.1</span>
+        <span>连续内存的重要性</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-10T11:48:06.000Z">2019-11-10</time></div>
+                    <a href="/2019/11/10/%E7%94%A8python%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E8%A7%A3%E6%95%B0%E5%AD%97%E5%8D%8E%E5%AE%B9%E9%81%93%E6%B8%B8%E6%88%8F%E7%9A%84%E7%A8%8B%E5%BA%8F/" class="has-link-black-ter is-size-6">用python写了一个解数字华容道游戏的程序</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-08T01:12:36.000Z">2019-11-08</time></div>
+                    <a href="/2019/11/08/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%8C%89%E7%85%A7%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%8A%A8%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%84%9A%E6%9C%AC/" class="has-link-black-ter is-size-6">分享一个按照模板文件格式自动汇总统计的脚本</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:53:33.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC4%E7%AB%A0%20NumPy%E5%9F%BA%E7%A1%80%EF%BC%9A%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A2%E9%87%8F%E8%AE%A1%E7%AE%97/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第4章 NumPy基础：数组和矢量计算</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:52:29.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC3%E7%AB%A0%20Python%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%87%E4%BB%B6/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第3章 Python的数据结构、函数和文件</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-05T01:51:17.000Z">2019-11-05</time></div>
+                    <a href="/2019/11/05/%E3%80%8A%E5%88%A9%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%C2%B7%E7%AC%AC2%E7%89%88%E3%80%8B%E7%AC%AC2%E7%AB%A0%20Python%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80%EF%BC%8CIPython%E5%92%8CJupyter%20Notebooks/" class="has-link-black-ter is-size-6">《利用Python进行数据分析·第2版》第2章 Python语法基础，IPython和Jupyter Notebooks</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+        
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/grid.svg" alt="《利用Python进行数据分析·第2版》 附录A NumPy高级应用" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Lanhoo&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;" target="_blank" rel="noopener">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+<script>
+// [].slice.call(document.querySelectorAll('table')).forEach(function(el){
+//     var wrapper = document.createElement('div');
+//     wrapper.className = 'table-area';
+//     el.parentNode.insertBefore(wrapper, el);
+//     el.parentNode.removeChild(el);
+//     wrapper.appendChild(el);
+// })
+// 这是给真正的表格添加样式
+$(".content > table").wrap("<div class='table-area'></div>");
+$("table.dataframe").wrap("<div class='table-area'></div>");
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
